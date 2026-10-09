@@ -19,6 +19,10 @@
         "pages": ["troubleshooting.ru", "cookbook.ru"]
       },
       {
+        "group": "Справочник",
+        "pages": ["SETUP", "cookbook-srl-bot"]
+      },
+      {
         "group": "Getting started",
         "pages": ["index.en", "installation.en", "quickstart.en"]
       },
