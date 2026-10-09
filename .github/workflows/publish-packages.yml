@@ -1,0 +1,35 @@
+name: Publish packages (GitHub Packages)
+
+# Зеркало пакета в GitHub Packages (npm.pkg.github.com) под scoped-именем
+# @sdamarketing/tgcloud-mcp. Нужно, чтобы пакет появился в разделе Packages репо.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  github-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: '@sdamarketing'
+
+      - run: npm ci
+      - run: npm run build
+
+      # GitHub Packages требует scoped-имя: @sdamarketing/tgcloud-mcp
+      - run: npm pkg set name=@sdamarketing/tgcloud-mcp
+
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
