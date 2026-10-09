@@ -1,63 +1,85 @@
 # tgcloud CLI — справочник
 
-Требуется Node.js 18+. Вызовы из каталога проекта: `npx tgcloud <cmd>`.
+Требуется Node.js 18+. CLI — локальная dev-зависимость проекта (`@tgcloud/cli`),
+вызов из каталога проекта: `npx tgcloud <cmd>`.
 
 ## Старт
 
 ```bash
-npm create @tgcloud/bot my-bot   # рекомендуемый скаффолд (CLI ставится в проект)
-npm install -g @tgcloud/cli      # или глобально
-tgcloud init                     # скаффолд в текущем пустом каталоге (работает офлайн)
-tgcloud login                    # привязка бота: CLI-токен из @BotFather, хранится в .tgcloud/
+npm create @tgcloud/bot my-bot    # скаффолд (CLI ставится в проект)
+npx tgcloud init                  # скаффолд в текущем каталоге (офлайн)
+npx tgcloud login                 # привязка бота — ИНТЕРАКТИВНО (нужен TTY)
+```
+
+**Токен** — CLI access token формата `app<id>:<secret>`
+(@BotFather → ваш бот → Serverless → CLI Access → Access token).
+Это НЕ Bot API токен вида `123456:AA…` — он будет отвергнут.
+
+Неинтерактивный логин:
+```bash
+printf 'app...\n' | TGCLOUD_ASSUME_TTY=1 npx tgcloud login
+# или для CI: export TGCLOUD_TOKEN='app...'  (тогда login не нужен вообще)
 ```
 
 ## Модули
 
 ```bash
-tgcloud add handlers/callback_query   # новый хендлер (типы: message, callback_query, inline_query, chat_member, …)
-tgcloud add lib/cart                  # новый общий модуль
+npx tgcloud add handlers/callback_query   # хендлер апдейта
+npx tgcloud add endpoints/getProfile      # endpoint для Mini App
+npx tgcloud add lib/cart                  # общий модуль
+npx tgcloud add handlers                  # без имени — покажет ошибку-подсказку
 ```
-Не перезаписывает существующие файлы.
+Существующие файлы не перезаписываются.
 
-## Запуск без деплоя
+## Запуск без деплоя (server-side, локальные файлы)
 
 ```bash
-tgcloud run handlers/message '{ chat: { id: 1 }, text: "hi" }'
-tgcloud run handlers/message "$(cat message.json5)"
-tgcloud run handlers/message '{...}' --ctx '{...}'
+npx tgcloud run handlers/message '{ chat: { id: 1 }, text: "hi" }'
+npx tgcloud run handlers/message "$(cat args.json5)"
+npx tgcloud run endpoints/getProfile '{}' --ctx '{ initData: { user: { id: 1 } } }'
 ```
-Аргументы и контекст — JSON5. Вывод `console.*` захватывается и отображается.
+Аргументы/контекст — JSON5. Вывод `console.*` захватывается и отображается.
 
 ## Деплой и синхронизация
 
+**Деплой никогда не трогает базу** — миграции отдельным шагом.
+
 ```bash
-tgcloud status         # локальные изменения vs облако (офлайн)
-tgcloud diff           # построчный diff (офлайн)
-tgcloud push           # атомарный деплой изменённых модулей; можно указать файлы: push [files...]
-tgcloud push --force   # пропустить проверки конкурентности (ОПАСНО)
-tgcloud fetch          # обновить референс-копию облачного состояния (рабочие файлы не трогает)
-tgcloud pull           # синхронизировать облако → референс-копия + рабочие файлы
-tgcloud reset          # отбросить локальные изменения (к состоянию облака)
+npx tgcloud status         # локальные изменения vs снапшот (офлайн)
+npx tgcloud diff [file]    # построчный diff (офлайн)
+npx tgcloud push [files..] # атомарный деплой модулей (+ static-билд мини-аппа);
+                           # сообщит о pending-изменениях БД; обновляет вебхук
+npx tgcloud push --force   # пропустить проверки конкурентности (ОПАСНО)
+npx tgcloud fetch          # обновить локальный снапшот из облака (файлы не трогает)
+npx tgcloud pull           # облако → снапшот + рабочие файлы
+npx tgcloud reset [file]   # отбросить локальные изменения (офлайн, из снапшота)
 ```
 
 ## База данных
 
 ```bash
-tgcloud push                 # сначала деплой schema.js; сообщит о pending-изменениях БД
-tgcloud migrate              # применить изменения БД (интерактивно: safe/warning/manual)
-tgcloud migrate --dry-run    # предпросмотр без применения
+npx tgcloud push                 # сначала деплой schema.js; сообщит о pending-изменениях
+npx tgcloud migrate              # применить изменения (ИНТЕРАКТИВНО)
+npx tgcloud migrate --dry-run    # предпросмотр без применения
 ```
-Удаление колонок/таблиц — только через `.deprecated('reason')` в schema.js.
+Удаление — только через `.deprecated('reason')` на колонке/таблице/индексе;
+удаление декларации ничего не дропает. Смена типа колонки — руками через `db.run()`.
+**Foreign keys нет** — `.references()`/`foreignKey()` бросают при декларации.
 
 ## Вебхук
 
+Платформа сама управляет вебхуком (из задеплоенных handlers/*) и обновляет его на push.
+
 ```bash
-tgcloud webhook                          # состояние: URL, allowed_updates, pending, ошибки доставки
-tgcloud webhook sync [--drop-pending]    # перенаправить вебхук, пересобрать allowed_updates
+npx tgcloud webhook                          # состояние и синхронность
+npx tgcloud webhook sync [--drop-pending]    # починить рассинхрон
 ```
 
 ## Прочее
 
 ```bash
-tgcloud completion <bash|zsh|fish>       # автодополнение для шелла
+npx tgcloud upgrade      # миграция layout проектов pre-0.2.0 → tgcloud/
+npx tgcloud completion <bash|zsh|fish>
+TG_CLOUD_API_URL=…       # переопределение базового URL API
+TGCLOUD_BETA=1           # /beta-окружение API
 ```

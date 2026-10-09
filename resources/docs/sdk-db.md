@@ -28,7 +28,15 @@ export const users = table('users', {
 `.default(v)`, `.generatedAlwaysAs(sql\`...\`, { mode: 'stored' | 'virtual' })`,
 `.deprecated('reason')` — пометить на удаление (применится следующим `migrate` как warning-drop).
 
-Удалить таблицу: `table(...).deprecated('unused')`.
+Удалить таблицу: `table(...).deprecated('unused')`. Дропы происходят ТОЛЬКО через
+`.deprecated()` — удаление декларации из schema.js ничего не дропает.
+Смена типа колонки не автоматическая — вручную через `db.run(...)`.
+
+**Foreign keys нет**: `.references()`/`foreignKey()` бросают при декларации
+(рантайм работает с FK off) — целостность обеспечивает код приложения.
+
+**Деплой не трогает базу**: `push` только сообщает о pending-изменениях,
+применение — отдельным `tgcloud migrate` (интерактивно).
 
 ## Запросы
 

@@ -14,14 +14,22 @@ description: Управление serverless-ботами Telegram (@tgcloud) ч
 
 ## Правила платформы (коротко)
 
-- Структура: `handlers/` (плоско, по типу апдейта), `lib/` (можно вложенно),
-  `schema.js` (один файл в корне), `.tgcloud/` (креды/кэш, не коммитить).
-- Импорты — ТОЛЬКО bare-имена: `import { users } from 'schema'`,
-  `import { api, db, fetch, BotApiError } from 'sdk'`.
-  Относительные пути (`./x`, `../x`) и расширения `.js` — НЕ компилируются.
+- Структура: весь платформенный код в `tgcloud/` — `handlers/` (плоско, по типу
+  апдейта), `endpoints/` (серверные функции Mini App), `lib/` (можно вложенно),
+  `schema.js`. Рядом `tgcloud.jsonc`, `AGENTS.md`, `docs/tgcloud-sdk.md`.
+  `.tgcloud/` (креды/кэш) не коммитить.
+- Импорты: проектные модули — ОТНОСИТЕЛЬНЫМ путём С расширением `.js`
+  (`import { users } from '../schema.js'`); SDK — по имени
+  (`import { api, db, fetch, BotApiError } from 'sdk'`). Без .js у относительного
+  импорта — НЕ компилируется. Вне tgcloud/ недоступно ничего.
 - SDK: `api` — весь Bot API (ошибки — `BotApiError` с `.code`/`.description`);
-  `db` — query builder + raw SQL; `fetch` — текстовый HTTP, лимит 32 МБ.
+  `db` — query builder + raw SQL; `fetch` — текстовый HTTP, лимит 32 МБ;
+  `EndpointError` — корректный отказ endpoint'а (400).
 - Всё асинхронно, всегда `await`. Логи — `console.*` (видны при `run_handler`).
+- БД: без foreign keys; дропы только через `.deprecated('reason')`;
+  `push` не трогает БД — миграции отдельным шагом.
+- Токен для `login_bot` — CLI access token формата `app<id>:<secret>`
+  (@BotFather → бот → Serverless → CLI Access), НЕ Bot API токен.
 
 ## Рецепты
 

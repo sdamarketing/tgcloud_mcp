@@ -19,6 +19,8 @@ export interface RunOptions {
   cwd: string;
   /** Данные для stdin (например, токен бота при login). */
   input?: string;
+  /** Дополнительные переменные окружения для процесса. */
+  env?: Record<string, string>;
   timeoutMs?: number;
 }
 
@@ -73,7 +75,7 @@ export class TgcloudRunner {
     return new Promise((resolvePromise, rejectPromise) => {
       const child = spawn(command, args, {
         cwd: opts.cwd,
-        env: { ...process.env },
+        env: { ...process.env, ...opts.env },
         stdio: ['pipe', 'pipe', 'pipe'],
       });
       let stdout = '';

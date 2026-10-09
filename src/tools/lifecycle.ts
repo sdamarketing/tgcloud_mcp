@@ -53,18 +53,29 @@ export function registerLifecycleTools(server: McpServer, runner: TgcloudRunner)
     {
       title: 'Привязать бота к проекту',
       description:
-        'Выполняет `tgcloud login`: привязывает бота к проекту по CLI-токену из @BotFather. ' +
-        'Токен передаётся в CLI через stdin и маскируется во всех выводах. ' +
-        'НИКОГДА не показывай токен пользователю после вызова.',
+        'Выполняет `tgcloud login`: привязывает бота к проекту по CLI access token ' +
+        '(формат app<id>:<secret>; @BotFather → ваш бот → Serverless → CLI Access → Access token). ' +
+        'Это НЕ API-токен бота вида 123456:AA…. ' +
+        'CLI требует интерактивный терминал, поэтому токен передаётся через stdin с ' +
+        'TGCLOUD_ASSUME_TTY=1; во всех выводах токен маскируется. ' +
+        'НИКОГДА не показывай токен пользователю после вызова. ' +
+        'Для CI вместо login достаточно переменной окружения TGCLOUD_TOKEN на shell.',
       inputSchema: z.object({
         project_dir: projectDir,
-        token: z.string().describe('CLI-токен доступа, полученный от @BotFather'),
+        token: z
+          .string()
+          .regex(/^app\d+:[A-Za-z0-9_-]+$/, 'Ожидается CLI access token формата app<id>:<secret>')
+          .describe('CLI access token из @BotFather (Serverless → CLI Access), формат app<id>:<secret>'),
       }),
     },
     async (args) =>
       runTool(async () => {
         const cwd = runner.resolveProjectDir(args.project_dir);
-        const out = await runner.tgcloud(['login'], { cwd, input: `${args.token}\n` });
+        const out = await runner.tgcloud(['login'], {
+          cwd,
+          input: `${args.token}\n`,
+          env: { TGCLOUD_ASSUME_TTY: '1' },
+        });
         return runner.format(out);
       }),
   );
@@ -74,16 +85,20 @@ export function registerLifecycleTools(server: McpServer, runner: TgcloudRunner)
     {
       title: 'Добавить модуль',
       description:
-        'Скаффолдит модуль через `tgcloud add <target>`. handlers/<type> — хендлер апдейтов ' +
-        '(плоско, один уровень; типы: message, callback_query, inline_query, chat_member и др.), ' +
-        'lib/<name> — общий модуль (допускаются вложенные, например lib/internal/util). ' +
+        'Скаффолдит модуль через `tgcloud add <target>` (в tgcloud/-layout). ' +
+        'handlers/<type> — хендлер апдейтов (плоско, один уровень; типы: message, callback_query, ' +
+        'inline_query, chat_member, my_chat_member и др.); endpoints/<name> — серверная функция ' +
+        'Mini App (POST /api/<name>); lib/<path> — общий модуль (вложенные пути допускаются). ' +
         'Существующие файлы не перезаписываются.',
       inputSchema: z.object({
         project_dir: projectDir,
         target: z
           .string()
-          .regex(/^(handlers|lib)\/[a-z0-9._/-]+$/i, 'target: handlers/<type> или lib/<path>')
-          .describe('Путь модуля, например handlers/callback_query или lib/cart'),
+          .regex(
+            /^(handlers|endpoints|lib)\/[a-z0-9._/-]+$/i,
+            'target: handlers/<type>, endpoints/<name> или lib/<path>',
+          )
+          .describe('Путь модуля, например handlers/callback_query, endpoints/getProfile или lib/cart'),
       }),
     },
     async (args) =>
