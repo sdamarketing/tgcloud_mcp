@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.sdamarketing/tgcloud-mcp",
   "title": "tgcloud — Telegram serverless bots",
-  "description": "MCP server for Telegram's serverless bot platform (@tgcloud): project lifecycle, deploys, DB migrations and webhooks via the tgcloud CLI (14 tools + platform docs as resources)",
+  "description": "MCP server for Telegram serverless bots: lifecycle, deploys, migrations, webhooks via tgcloud CLI",
   "repository": {
     "url": "https://github.com/sdamarketing/tgcloud_mcp",
     "source": "github"
