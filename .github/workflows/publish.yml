@@ -1,0 +1,39 @@
+name: Publish to npm
+
+# Публикация через Trusted Publisher (OIDC) — без NPM_TOKEN.
+# Настройка на npmjs.com: package → Settings → Trusted Publishers → GitHub Actions:
+#   repository: sdamarketing/tgcloud_mcp
+#   workflow:   publish.yml
+#   environment: (пусто)
+# Триггер — тег v* (например: git tag v0.1.0 && git push --tags).
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  id-token: write   # OIDC для trusted publishing
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke test
+        run: npm run smoke
+
+      - name: Publish (provenance + OIDC)
+        run: npm publish --provenance --access public
