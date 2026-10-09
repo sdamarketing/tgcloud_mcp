@@ -1,0 +1,11 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Telegram bots",
+      "description": "Serverless-боты Telegram на платформе @tgcloud: скаффолд, деплой, миграции БД, вебхуки, Mini Apps.",
+      "skills": ["tgcloud"]
+    }
+  ]
+}
