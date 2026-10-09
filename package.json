@@ -45,5 +45,11 @@
     "serverless",
     "tgcloud"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdamarketing/tgcloud_mcp.git"
+  },
+  "homepage": "https://github.com/sdamarketing/tgcloud_mcp",
+  "bugs": "https://github.com/sdamarketing/tgcloud_mcp/issues"
 }
