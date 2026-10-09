@@ -1,0 +1,21 @@
+---
+title: Cookbook
+description: A serverless bot with a Mini App in one evening
+---
+
+# Cookbook
+
+Full step-by-step recipe in the repo:
+[docs/cookbook-srl-bot.md](https://github.com/sdamarketing/tgcloud_mcp/blob/main/docs/cookbook-srl-bot.md)
+
+Built around a real bot ("Learning diary"):
+
+1. Scaffold and login (two token types)
+2. Message handler + DB table
+3. Deploy and migrations (`--dry-run` / `--yes`)
+4. Inline buttons (`callback_query`)
+5. Mini App: `endpoints/` + static + `tgcloud.jsonc`
+6. Debugging a silent bot
+
+CLI output formats are captured from real runs; pitfalls (relative imports
+with `.js`, no foreign keys, `.deprecated`-only drops) are covered.

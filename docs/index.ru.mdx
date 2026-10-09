@@ -1,0 +1,29 @@
+---
+title: tgcloud-mcp
+description: MCP-сервер для serverless-ботов Telegram (@tgcloud)
+---
+
+# tgcloud-mcp
+
+MCP-сервер, который учит AI-ассистента управлять **serverless-ботами Telegram**
+(платформа `@tgcloud`, core.telegram.org/bots/serverless): скаффолд проекта,
+привязка бота, хендлеры и endpoints, деплой, миграции БД, вебхуки.
+
+Работает с любым MCP-клиентом: opencode, Claude Code, Cursor, Claude Desktop,
+VS Code (Copilot), Windsurf, Zed.
+
+## Возможности
+
+- **14 инструментов** — полный срез команд `tgcloud` CLI: lifecycle, sync, data, webhook
+- **Ресурсы** `tgcloud://docs/*` — встроенная справка платформы (структура, SDK, CLI)
+- **Guardrails** — деструктивные операции требуют `confirm: true`, токены маскируются
+- **Мультипроектность** — каждый инструмент принимает `project_dir`
+
+## Быстрый старт
+
+```bash
+npm install -g tgcloud-mcp && tgcloud-mcp setup
+```
+
+Дальше: [Установка](installation.ru) → [Быстрый старт](quickstart.ru) →
+[Кукбук](cookbook.ru).

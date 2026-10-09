@@ -1,0 +1,21 @@
+---
+title: Кукбук
+description: Serverless-бот с мини-аппом за вечер
+---
+
+# Кукбук
+
+Полный пошаговый рецепт — в репозитории:
+[docs/cookbook-srl-bot.md](https://github.com/sdamarketing/tgcloud_mcp/blob/main/docs/cookbook-srl-bot.md)
+
+На примере реального бота «Дневник обучения»:
+
+1. Скаффолд и логин (два типа токенов)
+2. Хендлер сообщений + таблица БД
+3. Деплой и миграции (`--dry-run` / `--yes`)
+4. Inline-кнопки (`callback_query`)
+5. Mini App: `endpoints/` + статика + `tgcloud.jsonc`
+6. Диагностика «бот молчит»
+
+Все форматы вывода CLI в кукбуке самоснятые, грабли (импорты с `.js`,
+отсутствие FK, `.deprecated`-дропы) описаны.

@@ -1,0 +1,23 @@
+---
+title: Resources
+description: Built-in platform docs at tgcloud://docs/*
+---
+
+# Resources
+
+The server exposes the platform reference as MCP resources — the agent reads
+them without tool calls:
+
+| URI | Content |
+|---|---|
+| `tgcloud://docs/project-structure` | Project layout: `tgcloud/`, handlers/endpoints/lib/schema.js, import rules (relative paths WITH `.js`), Mini Apps |
+| `tgcloud://docs/cli` | tgcloud CLI reference: commands, flags, non-interactive modes |
+| `tgcloud://docs/sdk-db` | `sdk/db`: schema DSL, query builder, raw SQL, limits (no FKs, drops via `.deprecated`) |
+| `tgcloud://docs/sdk-api` | `sdk/api`: full Bot API, `BotApiError` |
+| `tgcloud://docs/sdk-fetch` | `sdk/fetch`: HTTP client, body helpers, 32 MB cap |
+
+Source: core.telegram.org/bots/serverless, verified against a real
+`npm create @tgcloud/bot` scaffold (@tgcloud/cli 0.2.x).
+
+Source of truth in the repo: `resources/docs/*.md`; `npm run docs:check`
+keeps resources in sync.

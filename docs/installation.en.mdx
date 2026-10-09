@@ -1,0 +1,58 @@
+---
+title: Installation
+description: Install tgcloud-mcp and connect your MCP client
+---
+
+# Installation
+
+Requires **Node.js 20+**.
+
+## From npm
+
+```bash
+npm install -g tgcloud-mcp
+tgcloud-mcp setup     # client setup wizard
+```
+
+## One-liner (macOS / Linux / WSL)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
+```
+
+Clones to `~/.tgcloud-mcp`, builds, runs the wizard. Re-running = update.
+
+## Docker
+
+```bash
+docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
+```
+
+## Manual client configs
+
+**opencode** (`~/.config/opencode/opencode.json`):
+
+```json
+{ "mcp": { "tgcloud": { "type": "local", "command": ["npx", "-y", "tgcloud-mcp"], "enabled": true } } }
+```
+
+**Claude Code / Cursor:**
+
+```json
+{ "mcpServers": { "tgcloud": { "command": "npx", "args": ["-y", "tgcloud-mcp"] } } }
+```
+
+**VS Code** (`mcp.json`):
+
+```json
+{ "servers": { "tgcloud": { "type": "stdio", "command": "npx", "args": ["-y", "tgcloud-mcp"] } } }
+```
+
+## Environment variables
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `TGCLOUD_CLI` | `npx` | CLI launcher command (can be a proxy wrapper) |
+| `TGCLOUD_CLI_ARGS` | `tgcloud` | Prefix args before the subcommand |
+| `TGCLOUD_TIMEOUT_MS` | `120000` | Per-command timeout |
+| `TGCLOUD_TOKEN` | — | CLI access token instead of `tgcloud login` |

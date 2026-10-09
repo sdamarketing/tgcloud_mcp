@@ -1,0 +1,31 @@
+---
+title: Quickstart
+description: From zero to a live bot in five minutes of dialogue
+---
+
+# Quickstart
+
+## 1. Token
+
+@BotFather → your bot → **Serverless → CLI Access → Access token**.
+Format `app<id>:<secret>` — NOT the Bot API token (`123456:AA…`).
+
+## 2. Talk to the agent
+
+```
+You:   create a bot in ~/bots/echo
+Agent: create_project → asks for the CLI access token → login_bot
+       → edits tgcloud/handlers/message.js → push → webhook_sync
+```
+
+The bot is live. Test the logic without a real chat:
+
+```
+Agent: run_handler { module: 'handlers/message', args: '{ chat: { id: 1 }, text: "hi" }' }
+```
+
+## 3. What's next
+
+- [Tools](tools.en) — all 14 commands
+- [Security](security.en) — guardrails and tokens
+- [Cookbook](cookbook.en) — a bot with DB, buttons and a Mini App

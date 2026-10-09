@@ -1,0 +1,31 @@
+---
+title: Быстрый старт
+description: От нуля до живого бота за пять минут диалога
+---
+
+# Быстрый старт
+
+## 1. Токен
+
+@BotFather → ваш бот → **Serverless → CLI Access → Access token**.
+Формат `app<id>:<secret>` — это НЕ API-токен вида `123456:AA…`.
+
+## 2. Диалог с агентом
+
+```
+Вы:    создай бота в ~/bots/echo
+Агент: create_project → попросит CLI access token → login_bot
+       → поправит tgcloud/handlers/message.js → push → webhook_sync
+```
+
+Бот жив. Проверка логики без живого чата:
+
+```
+Агент: run_handler { module: 'handlers/message', args: '{ chat: { id: 1 }, text: "hi" }' }
+```
+
+## 3. Что дальше
+
+- [Инструменты](tools.ru) — все 14 команд
+- [Безопасность](security.ru) — guardrails и токены
+- [Кукбук](cookbook.ru) — бот с БД, кнопками и мини-аппом

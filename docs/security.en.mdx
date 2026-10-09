@@ -1,0 +1,29 @@
+---
+title: Security
+description: Guardrails, tokens and confirmations
+---
+
+# Security
+
+## Destructive operations require `confirm: true`
+
+- `reset` — discard working files back to the cloud snapshot
+- `push` with `force: true` — overwrite cloud state
+- `migrate` with `dry_run: false` — apply migrations (including `.deprecated` data drops)
+- `webhook_sync` with `drop_pending: true` — drop the pending update queue
+
+Without `confirm: true` the tool refuses and instructs the agent to show the
+user exactly what will change and get explicit approval first.
+
+## Tokens
+
+- The CLI access token (`app<id>:<secret>`) goes to the CLI via stdin/env and is
+  **masked** in all tool output (as are Bot API tokens).
+- Never store tokens in project files: `.tgcloud/` (where the CLI saves
+  credentials) is gitignored by the scaffold.
+
+## Network access
+
+The server needs access to `cloud.telegram.org`. If Telegram is unreachable
+from your machine, point the CLI wrapper through a proxy
+(`TGCLOUD_CLI` → a script with `HTTPS_PROXY` and `NODE_USE_ENV_PROXY=1`).

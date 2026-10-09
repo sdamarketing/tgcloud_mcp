@@ -1,0 +1,35 @@
+{
+  "$schema": "https://context7.com/schema/docs7.json",
+  "name": "tgcloud-mcp",
+  "colors": {
+    "primary": "#229ED9"
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Начало работы",
+        "pages": ["index.ru", "installation.ru", "quickstart.ru"]
+      },
+      {
+        "group": "Эксплуатация",
+        "pages": ["tools.ru", "resources.ru", "security.ru"]
+      },
+      {
+        "group": "Помощь",
+        "pages": ["troubleshooting.ru", "cookbook.ru"]
+      },
+      {
+        "group": "Getting started",
+        "pages": ["index.en", "installation.en", "quickstart.en"]
+      },
+      {
+        "group": "Usage",
+        "pages": ["tools.en", "resources.en", "security.en"]
+      },
+      {
+        "group": "Help",
+        "pages": ["troubleshooting.en", "cookbook.en"]
+      }
+    ]
+  }
+}

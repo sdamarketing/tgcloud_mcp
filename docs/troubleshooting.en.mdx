@@ -1,0 +1,36 @@
+---
+title: Troubleshooting
+description: Common errors and fixes
+---
+
+# Troubleshooting
+
+## `"tgcloud login" requires an interactive terminal`
+
+The CLI needs a TTY. Use the `login_bot` tool — it pipes the token via stdin
+with `TGCLOUD_ASSUME_TTY=1`. For CI: `TGCLOUD_TOKEN='app...'`.
+
+## `Token format looks wrong. Expected "app<id>:<secret>"`
+
+You passed the Bot API token. Get the **CLI access token**:
+@BotFather → bot → Serverless → CLI Access.
+
+## `Could not reach the tgcloud server`
+
+`cloud.telegram.org` is unreachable. Check network/proxy; route the CLI via a
+wrapper (`HTTPS_PROXY` + `NODE_USE_ENV_PROXY=1`) through `TGCLOUD_CLI`.
+
+## `This bot already has N deployed modules (revision R)`
+
+Cloud and project are out of sync: `fetch` → `diff` → `push`
+(or consciously `push { force: true, confirm: true }`).
+
+## `non-interactive session — specify --safe, --yes, or --dry-run`
+
+Use the `migrate` tool: `--dry-run` by default; applying needs
+`dry_run: false` + `confirm: true` (maps to `--yes`).
+
+## `chat not found` in `run_handler`
+
+Expected with a fake chat id: DB writes succeed, only the real Telegram
+delivery fails. Handler logic still executes.

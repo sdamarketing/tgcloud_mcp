@@ -1,0 +1,48 @@
+---
+title: Инструменты
+description: Все 14 инструментов tgcloud-mcp
+---
+
+# Инструменты
+
+Каждый инструмент принимает `project_dir` — абсолютный путь к проекту tgcloud.
+
+## Жизненный цикл
+
+| Инструмент | Команда CLI | Описание |
+|---|---|---|
+| `create_project` | `npm create @tgcloud/bot` | Скаффолд нового проекта (`parent_dir`, `name`) |
+| `init_project` | `tgcloud init` | Скаффолд в существующем пустом каталоге |
+| `login_bot` | `tgcloud login` | Привязка бота по CLI access token (`app<id>:<secret>`), токен через stdin, маскируется |
+| `add_module` | `tgcloud add` | Новый модуль: `handlers/<type>`, `endpoints/<name>`, `lib/<path>` |
+
+## Синхронизация
+
+| Инструмент | Команда CLI | Описание |
+|---|---|---|
+| `status` | `tgcloud status` | Локальные изменения vs снапшот (офлайн) |
+| `diff` | `tgcloud diff` | Построчный diff (офлайн) |
+| `push` | `tgcloud push` | Атомарный деплой; `force: true` требует `confirm: true` |
+| `pull` | `tgcloud pull` | Облако → снапшот и рабочие файлы |
+| `fetch` | `tgcloud fetch` | Облако → только снапшот |
+| `reset` | `tgcloud reset` | ⚠️ Отбросить локальные изменения; требует `confirm: true` |
+
+## Данные
+
+| Инструмент | Команда CLI | Описание |
+|---|---|---|
+| `run_handler` | `tgcloud run` | Прогон модуля server-side без деплоя; `args`/`ctx` в JSON5; логи console |
+| `migrate` | `tgcloud migrate` | `dry_run: true` (default) — предпросмотр; применение — `dry_run: false` + `confirm: true` (идёт с `--yes`) |
+
+## Вебхук
+
+| Инструмент | Команда CLI | Описание |
+|---|---|---|
+| `webhook_status` | `tgcloud webhook` | URL, allowed_updates, pending, ошибки доставки |
+| `webhook_sync` | `tgcloud webhook sync` | Перепривязка вебхука; `drop_pending: true` требует `confirm: true` |
+
+## Рецепты
+
+- **«Бот молчит»**: `webhook_status` → `status`/`diff` → `push` → `webhook_sync`
+- **Конфликт ревизий на push**: `fetch` → `diff` → `push` (или `force` через `confirm`)
+- **Изменение схемы**: правка `schema.js` → `push` → `migrate` (dry-run) → `migrate` с `confirm`

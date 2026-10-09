@@ -1,0 +1,36 @@
+---
+title: Решение проблем
+description: Частые ошибки и их лечение
+---
+
+# Решение проблем
+
+## `"tgcloud login" requires an interactive terminal`
+
+CLI требует TTY. Используйте инструмент `login_bot` — он передаёт токен через
+stdin с `TGCLOUD_ASSUME_TTY=1`. Для CI: env `TGCLOUD_TOKEN='app...'`.
+
+## `Token format looks wrong. Expected "app<id>:<secret>"`
+
+Дан API-токен бота. Нужен **CLI access token**: @BotFather → бот → Serverless → CLI Access.
+
+## `Could not reach the tgcloud server`
+
+Нет доступа к `cloud.telegram.org`. Проверьте сеть/прокси. Обёртка:
+создайте скрипт-раннер с `HTTPS_PROXY` + `NODE_USE_ENV_PROXY=1` и укажите его
+в `TGCLOUD_CLI`, а `TGCLOUD_CLI_ARGS=""`.
+
+## `This bot already has N deployed modules (revision R)`
+
+Облако и проект рассинхронированы. `fetch` → `diff` → `push`
+(или `push { force: true, confirm: true }` осознанно).
+
+## `non-interactive session — specify --safe, --yes, or --dry-run`
+
+Миграции — через инструмент `migrate`: по умолчанию `--dry-run`;
+применение — `dry_run: false` + `confirm: true` (внутри `--yes`).
+
+## `chat not found` при `run_handler`
+
+Ожидаемо для тестового payload: БД-операции проходят, падает только реальная
+отправка ответа несуществующему чату. Логика хендлера при этом исполняется.

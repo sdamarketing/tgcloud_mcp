@@ -1,0 +1,42 @@
+---
+title: Tools
+description: All 14 tgcloud-mcp tools
+---
+
+# Tools
+
+Every tool takes `project_dir` — an absolute path to a tgcloud project.
+
+## Lifecycle
+
+| Tool | CLI command | Description |
+|---|---|---|
+| `create_project` | `npm create @tgcloud/bot` | Scaffold a new project (`parent_dir`, `name`) |
+| `init_project` | `tgcloud init` | Scaffold into an existing empty directory |
+| `login_bot` | `tgcloud login` | Link a bot via CLI access token (`app<id>:<secret>`); token via stdin, masked |
+| `add_module` | `tgcloud add` | New module: `handlers/<type>`, `endpoints/<name>`, `lib/<path>` |
+
+## Sync
+
+| Tool | CLI command | Description |
+|---|---|---|
+| `status` | `tgcloud status` | Local changes vs snapshot (offline) |
+| `diff` | `tgcloud diff` | Line-by-line diff (offline) |
+| `push` | `tgcloud push` | Atomic deploy; `force: true` requires `confirm: true` |
+| `pull` | `tgcloud pull` | Cloud → snapshot and working files |
+| `fetch` | `tgcloud fetch` | Cloud → snapshot only |
+| `reset` | `tgcloud reset` | ⚠️ Discard local changes; requires `confirm: true` |
+
+## Data
+
+| Tool | CLI command | Description |
+|---|---|---|
+| `run_handler` | `tgcloud run` | Run a module server-side without deploying; `args`/`ctx` in JSON5 |
+| `migrate` | `tgcloud migrate` | `dry_run: true` (default) previews; applying needs `dry_run: false` + `confirm: true` (runs `--yes`) |
+
+## Webhook
+
+| Tool | CLI command | Description |
+|---|---|---|
+| `webhook_status` | `tgcloud webhook` | URL, allowed_updates, pending updates, delivery errors |
+| `webhook_sync` | `tgcloud webhook sync` | Re-point the webhook; `drop_pending: true` requires `confirm: true` |

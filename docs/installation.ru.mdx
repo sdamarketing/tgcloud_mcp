@@ -1,0 +1,58 @@
+---
+title: Установка
+description: Установка tgcloud-mcp и подключение MCP-клиента
+---
+
+# Установка
+
+Требуется **Node.js 20+**.
+
+## Из npm
+
+```bash
+npm install -g tgcloud-mcp
+tgcloud-mcp setup     # мастер настройки клиента
+```
+
+## Одной командой (macOS / Linux / WSL)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
+```
+
+Клонирует в `~/.tgcloud-mcp`, собирает, запускает мастер. Повторный запуск = обновление.
+
+## Docker
+
+```bash
+docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
+```
+
+## Конфиги клиентов вручную
+
+**opencode** (`~/.config/opencode/opencode.json`):
+
+```json
+{ "mcp": { "tgcloud": { "type": "local", "command": ["npx", "-y", "tgcloud-mcp"], "enabled": true } } }
+```
+
+**Claude Code / Cursor:**
+
+```json
+{ "mcpServers": { "tgcloud": { "command": "npx", "args": ["-y", "tgcloud-mcp"] } } }
+```
+
+**VS Code** (`mcp.json`):
+
+```json
+{ "servers": { "tgcloud": { "type": "stdio", "command": "npx", "args": ["-y", "tgcloud-mcp"] } } }
+```
+
+## Переменные окружения
+
+| Переменная | По умолчанию | Назначение |
+|---|---|---|
+| `TGCLOUD_CLI` | `npx` | Команда запуска CLI (можно обёртку с прокси) |
+| `TGCLOUD_CLI_ARGS` | `tgcloud` | Аргументы перед субкомандой |
+| `TGCLOUD_TIMEOUT_MS` | `120000` | Таймаут одной команды CLI |
+| `TGCLOUD_TOKEN` | — | CLI access token вместо `tgcloud login` |

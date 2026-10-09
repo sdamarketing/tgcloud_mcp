@@ -1,0 +1,22 @@
+---
+title: Ресурсы
+description: Встроенная справка платформы tgcloud://docs/*
+---
+
+# Ресурсы
+
+Сервер отдаёт справку платформы как MCP-ресурсы — агент читает их без вызова инструментов:
+
+| URI | Содержание |
+|---|---|
+| `tgcloud://docs/project-structure` | Структура проекта: `tgcloud/`, handlers/endpoints/lib/schema.js, правила импортов (относительные пути с `.js`), Mini App |
+| `tgcloud://docs/cli` | Справочник tgcloud CLI: команды, флаги, неинтерактивные режимы |
+| `tgcloud://docs/sdk-db` | `sdk/db`: схема, query builder, insert/update/delete, raw SQL, ограничения (нет FK, дропы через `.deprecated`) |
+| `tgcloud://docs/sdk-api` | `sdk/api`: весь Bot API, `BotApiError` |
+| `tgcloud://docs/sdk-fetch` | `sdk/fetch`: HTTP-клиент, body-хелперы, лимит 32 МБ |
+
+Источник: core.telegram.org/bots/serverless, сверено с реальным скаффолдом
+`npm create @tgcloud/bot` (@tgcloud/cli 0.2.x).
+
+Держатель истины в репо: `resources/docs/*.md`; синхронность с ресурсами
+проверяет `npm run docs:check`.
