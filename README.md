@@ -1,5 +1,10 @@
 # tgcloud-mcp — MCP-сервер для Telegram serverless bots
 
+> ⚠️ **Неофициальный проект.** Это community-инструмент (автор @sdamarketing),
+> не аффилированный с Telegram. Официальный инструмент платформы — CLI `@tgcloud/cli`;
+> tgcloud-mcp лишь удобно оборачивает его в MCP. Политика безопасности и модель
+> угроз: [SECURITY.md](SECURITY.md).
+
 [![CI](https://github.com/sdamarketing/tgcloud_mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/sdamarketing/tgcloud_mcp/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/tgcloud-mcp?style=flat-square)](https://www.npmjs.com/package/tgcloud-mcp)
 [![skills.sh](https://skills.sh/b/sdamarketing/tgcloud_mcp)](https://skills.sh/sdamarketing/tgcloud_mcp)
@@ -34,6 +39,11 @@
   ассистент никогда его не видит в ответах инструментов.
 
 ## Установка
+
+Рекомендуемый путь — **npm-пакет** (публикуется через OIDC trusted publishing
+c Sigstore provenance — цепочку можно проверить). `curl | bash` есть для
+удобства, но это выполнение удалённого скрипта: сначала прочитайте его
+(уберите `| bash`), или используйте npm.
 
 Требуется Node.js 20+ (CLI платформы tgcloud требует 18+).
 
