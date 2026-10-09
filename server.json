@@ -1,0 +1,61 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.sdamarketing/tgcloud-mcp",
+  "title": "tgcloud — Telegram serverless bots",
+  "description": "MCP server for Telegram's serverless bot platform (@tgcloud): project lifecycle, deploys, DB migrations and webhooks via the tgcloud CLI (14 tools + platform docs as resources)",
+  "repository": {
+    "url": "https://github.com/sdamarketing/tgcloud_mcp",
+    "source": "github"
+  },
+  "version": "0.0.0-CI",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "tgcloud-mcp",
+      "version": "0.0.0-CI",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "TGCLOUD_CLI",
+          "description": "Команда запуска tgcloud CLI (по умолчанию npx; можно обёртку с прокси)",
+          "isRequired": false
+        },
+        {
+          "name": "TGCLOUD_CLI_ARGS",
+          "description": "Аргументы-префикс перед субкомандой (по умолчанию 'tgcloud')",
+          "isRequired": false
+        },
+        {
+          "name": "TGCLOUD_TIMEOUT_MS",
+          "description": "Таймаут одной команды CLI в миллисекундах",
+          "default": "120000",
+          "isRequired": false
+        },
+        {
+          "name": "TGCLOUD_TOKEN",
+          "description": "CLI access token из @BotFather (формат app<id>:<secret>) — вместо tgcloud login",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    },
+    {
+      "registryType": "oci",
+      "identifier": "ghcr.io/sdamarketing/tgcloud-mcp:0.0.0-CI",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "TGCLOUD_TOKEN",
+          "description": "CLI access token из @BotFather (формат app<id>:<secret>)",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

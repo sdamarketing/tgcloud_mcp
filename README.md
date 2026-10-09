@@ -1,5 +1,9 @@
 # tgcloud-mcp — MCP-сервер для Telegram serverless bots
 
+[![CI](https://github.com/sdamarketing/tgcloud_mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/sdamarketing/tgcloud_mcp/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/tgcloud-mcp?style=flat-square)](https://www.npmjs.com/package/tgcloud-mcp)
+[![ghcr](https://img.shields.io/badge/ghcr-sdamarketing%2Ftgcloud--mcp-blue?style=flat-square)](https://github.com/sdamarketing/tgcloud_mcp/pkgs/container/tgcloud-mcp)
+
 Учит AI-ассистента управлять serverless-ботами Telegram ([core.telegram.org/bots/serverless](https://core.telegram.org/bots/serverless)):
 вы говорите ассистенту «создай бота», «задеплой», «покажи статус вебхука» — а он выполняет
 это через `tgcloud` CLI, не трогая терминал руками.
@@ -30,21 +34,36 @@
 
 ## Установка
 
-Требуется Node.js 20+ (самой платформе tgcloud достаточно 18+).
+Требуется Node.js 20+ (CLI платформы tgcloud требует 18+).
+
+**Из npm:**
 
 ```bash
 npm install -g tgcloud-mcp
+tgcloud-mcp setup     # мастер: настройка MCP-клиента
 ```
 
-или из исходников:
+**В одну команду (macOS / Linux / WSL)** — клон в `~/.tgcloud-mcp` + мастер:
 
 ```bash
-git clone <адрес-репозитория>
-cd tgcloud_mcp
-npm install
-npm run build
-npm run smoke    # проверка: "OK: server \"tgcloud\" v…, 14 tools, 5 resources listed"
+curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
 ```
+
+**Docker:**
+
+```bash
+docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
+```
+
+**Из исходников:**
+
+```bash
+git clone https://github.com/sdamarketing/tgcloud_mcp.git
+cd tgcloud_mcp
+npm install && npm test    # build + smoke + e2e
+```
+
+Подробно (токены, клиенты, переменные, решение проблем) — **[docs/SETUP.md](docs/SETUP.md)**.
 
 ## Подключение к агенту
 
