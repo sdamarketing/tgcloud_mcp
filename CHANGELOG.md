@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.1] — 2026-10-09
+
+- package.json: `mcpName` (требование Official MCP Registry), `repository`/`homepage`/`bugs` (требование npm provenance)
+- publish.yml: setup-node без registry-url, `npm publish --access public` (OIDC сам ставит provenance)
+
 ## [0.2.0] — 2026-10-09
 
 Дистрибуция по образцу tracker-mcp:
