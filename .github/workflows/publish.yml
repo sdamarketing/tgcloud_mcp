@@ -24,8 +24,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: 'https://registry.npmjs.org'
+          node-version: 24
 
       - run: npm ci
 
@@ -35,5 +34,5 @@ jobs:
       - name: Smoke test
         run: npm run smoke
 
-      - name: Publish (provenance + OIDC)
-        run: npm publish --provenance --access public
+      - name: Publish to npm (OIDC trusted publishing; provenance — автоматически)
+        run: npm publish --access public
