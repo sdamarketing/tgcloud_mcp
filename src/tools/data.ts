@@ -47,9 +47,11 @@ export function registerDataTools(server: McpServer, runner: TgcloudRunner) {
       title: 'Миграции базы данных',
       description:
         'Применяет изменения schema.js к базе (tgcloud migrate). ' +
-        'По умолчанию dry_run=true — только показывает diff без изменений. ' +
-        'Применение (dry_run=false) требует confirm: true: если в схеме есть ' +
-        '.deprecated(...)-колонки/таблицы, данные будут удалены безвозвратно.',
+        'По умолчанию dry_run=true — только показывает diff без изменений (--dry-run). ' +
+        'Применение (dry_run=false) требует confirm: true и идёт неинтерактивно через --yes: ' +
+        'если в схеме есть .deprecated(...)-колонки/таблицы, данные будут удалены безвозвратно. ' +
+        'В интерактивном терминале migrate без флагов спрашивает по каждому изменению ' +
+        '([y]es / [n]o / [q]uit); для агента используй только --dry-run и --yes.',
       inputSchema: z.object({
         project_dir: projectDir,
         dry_run: z
@@ -68,7 +70,7 @@ export function registerDataTools(server: McpServer, runner: TgcloudRunner) {
       }
       return dangerTool(args, async () => {
         const cwd = runner.resolveProjectDir(args.project_dir);
-        const out = await runner.tgcloud(['migrate'], { cwd, input: 'y\n' });
+        const out = await runner.tgcloud(['migrate', '--yes'], { cwd });
         return runner.format(out);
       });
     },
