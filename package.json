@@ -1,0 +1,45 @@
+{
+  "name": "tgcloud-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Telegram serverless bots (@tgcloud) — project lifecycle, deploys, migrations and webhooks through the tgcloud CLI",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "tgcloud-mcp": "bin/tgcloud-mcp.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "smoke": "node scripts/smoke-test.mjs",
+    "test": "npm run build && npm run smoke",
+    "prepublishOnly": "npm run build && npm run smoke"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.1.0",
+    "zod": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.7.0"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "resources",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "mcp",
+    "telegram",
+    "bots",
+    "serverless",
+    "tgcloud"
+  ],
+  "license": "MIT"
+}
