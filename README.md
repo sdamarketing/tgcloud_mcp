@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/sdamarketing/tgcloud_mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/sdamarketing/tgcloud_mcp/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/tgcloud-mcp?style=flat-square)](https://www.npmjs.com/package/tgcloud-mcp)
-[![skills.sh](https://skills.sh/b/sdamarketing/tgcloud_mcp/tgcloud)](https://skills.sh/sdamarketing/tgcloud_mcp)
+[![skills.sh](https://skills.sh/b/sdamarketing/tgcloud_mcp)](https://skills.sh/sdamarketing/tgcloud_mcp)
 [![ghcr](https://img.shields.io/badge/ghcr-sdamarketing%2Ftgcloud--mcp-blue?style=flat-square)](https://github.com/sdamarketing/tgcloud_mcp/pkgs/container/tgcloud-mcp)
 
 Учит AI-ассистента управлять serverless-ботами Telegram ([core.telegram.org/bots/serverless](https://core.telegram.org/bots/serverless)):
