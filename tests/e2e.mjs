@@ -54,7 +54,7 @@ const tools = await req('tools/list');
 check('tools/list = 14', (tools.result?.tools ?? []).length === 14);
 
 const resources = await req('resources/list');
-check('resources/list = 5', (resources.result?.resources ?? []).length === 5);
+check('resources/list = 6', (resources.result?.resources ?? []).length === 6);
 
 const doc = await req('resources/read', { uri: 'tgcloud://docs/cli' });
 check('resources/read cli', doc.result?.contents?.[0]?.text?.includes('tgcloud run'));

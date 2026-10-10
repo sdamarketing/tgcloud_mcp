@@ -39,7 +39,14 @@ const DOCS: Array<{ name: string; uri: string; title: string; file: string; desc
     uri: 'tgcloud://docs/sdk-fetch',
     title: 'sdk/fetch — HTTP-клиент',
     file: 'sdk-fetch.md',
-    description: 'fetch с body-хелперами (json/form/text), лимит 32 МБ, только текстовые ответы',
+    description: 'fetch с body-хелперами и бинарными телами (InputFile/FormData), потоки, лимит 32 МБ',
+  },
+  {
+    name: 'tgcloud-limits',
+    uri: 'tgcloud://docs/limits',
+    title: 'Лимиты и квоты платформы',
+    file: 'limits.md',
+    description: 'Задокументированные лимиты (upload/getFile/fetch) и честный список того, что не опубликовано (память, CPU, таймауты)',
   },
 ];
 

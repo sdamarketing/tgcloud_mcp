@@ -29,3 +29,24 @@ try {
   }
 }
 ```
+
+## Файлы (upload/download)
+
+Байты, не только `file_id`.
+
+```javascript
+import { InputFile } from 'sdk';
+
+// Upload — InputFile в любом файловом параметре на любой глубине:
+await api.sendDocument({ chat_id, document: new InputFile(bytes, 'a.pdf', { type: 'application/pdf' }) });
+await api.sendMediaGroup({ chat_id, media: [
+  { type: 'photo', media: new InputFile(a, 'a.jpg', { type: 'image/jpeg' }) },
+]});
+// Лимиты Bot API: 50 МБ/файл, 10 МБ для фото.
+
+// Download — только по file_id:
+const bytes = await api.getFileContent(file_id);              // → Uint8Array
+const stream = await api.getFileStream(file_id);              // { file, body, bytes() }
+for await (const chunk of stream.body) { /* Uint8Array */ }
+// Лимит getFile: 20 МБ. Битый file_id → BotApiError(400).
+```
