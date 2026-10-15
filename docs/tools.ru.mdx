@@ -8,7 +8,22 @@ description: Все 16 инструментов tgcloud-mcp
 Каждый инструмент принимает `project_dir` — абсолютный путь к проекту tgcloud
 (`create_project` вместо этого принимает `parent_dir` и `name`).
 
-## Жизненный цикл
+<CardGroup cols={2}>
+  <Card title="Жизненный цикл" icon="hammer" href="#lifecycle">
+    create, init, login, add, upgrade
+  </Card>
+  <Card title="Синхронизация" icon="refresh" href="#sync">
+    status, diff, push, deploy, pull, fetch, reset
+  </Card>
+  <Card title="Данные" icon="database" href="#data">
+    прогон handler или endpoint, migrate
+  </Card>
+  <Card title="Вебхук" icon="link" href="#webhook">
+    статус и sync, в том числе молчащий бот
+  </Card>
+</CardGroup>
+
+## Жизненный цикл {#lifecycle}
 
 | Инструмент | Команда CLI | Описание |
 |---|---|---|
@@ -18,7 +33,7 @@ description: Все 16 инструментов tgcloud-mcp
 | `add_module` | `tgcloud add` | Новый модуль: `handlers/<type>`, `endpoints/<name>`, `lib/<path>` |
 | `upgrade` | `tgcloud upgrade` | Перенос layout до 0.2.0 в `tgcloud/`. По умолчанию `dry_run: true`; применение требует `confirm: true` |
 
-## Синхронизация
+## Синхронизация {#sync}
 
 | Инструмент | Команда CLI | Описание |
 |---|---|---|
@@ -30,14 +45,14 @@ description: Все 16 инструментов tgcloud-mcp
 | `fetch` | `tgcloud fetch` | Облако → только снапшот |
 | `reset` | `tgcloud reset` | Откатить локальные правки модулей; требует `confirm: true` |
 
-## Данные
+## Данные {#data}
 
 | Инструмент | Команда CLI | Описание |
 |---|---|---|
 | `run_handler` | `tgcloud run` | Прогон handler или endpoint без деплоя. `args` и `ctx` — JSON5 |
 | `migrate` | `tgcloud migrate` | `dry_run: true` (по умолчанию) — предпросмотр. Применение: `dry_run: false` и `confirm: true`. `apply: "safe"` — это `--safe`; `apply: "yes"` (по умолчанию при применении) — `--yes`. `local: true` — `--local` |
 
-## Вебхук
+## Вебхук {#webhook}
 
 | Инструмент | Команда CLI | Описание |
 |---|---|---|

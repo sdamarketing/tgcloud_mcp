@@ -7,7 +7,22 @@ description: Install tgcloud-mcp and connect your MCP client
 
 Requires **Node.js 20+**. The platform CLI itself requires Node.js 18+.
 
-## From npm
+<CardGroup cols={2}>
+  <Card title="npm" icon="box" href="#npm">
+    npm install -g tgcloud-mcp, then tgcloud-mcp setup
+  </Card>
+  <Card title="One command" icon="terminal" href="#curl-bash">
+    curl | bash — clone, build, banner, wizard
+  </Card>
+  <Card title="Docker" icon="layers" href="#docker">
+    ghcr.io/sdamarketing/tgcloud-mcp, stdio, no Node on the host
+  </Card>
+  <Card title="Client configs" icon="plug" href="#clients">
+    opencode, Claude Code, Cursor, VS Code
+  </Card>
+</CardGroup>
+
+## From npm {#npm}
 
 ```bash
 npm install -g tgcloud-mcp
@@ -26,21 +41,24 @@ Claude Code and opencode keep using the MCP config. Add the skill with:
 npx skills add sdamarketing/tgcloud_mcp
 ```
 
-## One-liner (macOS / Linux / WSL)
+## One command {#curl-bash}
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
 ```
 
 Clones to `~/.tgcloud-mcp`, builds, runs the wizard. Re-running updates.
+The script prints a boxed banner (blue gradient on a truecolor terminal) and a
+spinner while it clones, installs, and builds. The wizard reads `/dev/tty`, so
+it still asks questions when you pipe the script with `curl | bash`.
 
-## Docker
+## Docker {#docker}
 
 ```bash
 docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
 ```
 
-## Manual client configs
+## Client configs {#clients}
 
 **opencode** (`~/.config/opencode/opencode.json`):
 

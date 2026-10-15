@@ -7,7 +7,22 @@ description: Installer tgcloud-mcp et brancher le client MCP
 
 **Node.js 20+** est requis. La CLI de la plateforme demande Node.js 18+.
 
-## Depuis npm
+<CardGroup cols={2}>
+  <Card title="npm" icon="box" href="#npm">
+    npm install -g tgcloud-mcp, puis tgcloud-mcp setup
+  </Card>
+  <Card title="Une commande" icon="terminal" href="#curl-bash">
+    curl | bash — clone, build, bannière et assistant
+  </Card>
+  <Card title="Docker" icon="layers" href="#docker">
+    ghcr.io/sdamarketing/tgcloud-mcp, stdio, sans Node sur l'hôte
+  </Card>
+  <Card title="Configs client" icon="plug" href="#clients">
+    opencode, Claude Code, Cursor, VS Code
+  </Card>
+</CardGroup>
+
+## Depuis npm {#npm}
 
 ```bash
 npm install -g tgcloud-mcp
@@ -22,21 +37,24 @@ Claude Code et opencode restent sur la configuration MCP. Le skill :
 npx skills add sdamarketing/tgcloud_mcp
 ```
 
-## Une commande (macOS / Linux / WSL)
+## Une commande {#curl-bash}
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
 ```
 
 Clone dans `~/.tgcloud-mcp`, construit, lance l'assistant. Le relancer met à jour.
+Le script affiche une bannière encadrée (dégradé bleu en truecolor) et un
+spinner pendant le clone, l'installation et la compilation. L'assistant lit
+`/dev/tty`, donc il pose encore des questions avec `curl | bash`.
 
-## Docker
+## Docker {#docker}
 
 ```bash
 docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
 ```
 
-## Configuration manuelle
+## Configuration manuelle {#clients}
 
 **opencode** (`~/.config/opencode/opencode.json`) :
 

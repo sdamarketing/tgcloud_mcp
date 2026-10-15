@@ -7,7 +7,22 @@ description: أدوات tgcloud-mcp الست عشرة
 
 كل أداة تأخذ `project_dir`، وهو مسار مطلق لمشروع tgcloud (`create_project` يأخذ `parent_dir` و`name` بدلًا من ذلك).
 
-## دورة الحياة
+<CardGroup cols={2}>
+  <Card title="دورة الحياة" icon="hammer" href="#lifecycle">
+    create وinit وlogin وadd وupgrade
+  </Card>
+  <Card title="المزامنة" icon="refresh" href="#sync">
+    status وdiff وpush وdeploy وpull وfetch وreset
+  </Card>
+  <Card title="البيانات" icon="database" href="#data">
+    تشغيل handler أو endpoint، وmigrate
+  </Card>
+  <Card title="Webhook" icon="link" href="#webhook">
+    الحالة والمزامنة، بما فيها البوت الصامت
+  </Card>
+</CardGroup>
+
+## دورة الحياة {#lifecycle}
 
 | الأداة | أمر CLI | الوصف |
 |---|---|---|
@@ -17,7 +32,7 @@ description: أدوات tgcloud-mcp الست عشرة
 | `add_module` | `tgcloud add` | وحدة جديدة: `handlers/<type>` أو `endpoints/<name>` أو `lib/<path>` |
 | `upgrade` | `tgcloud upgrade` | نقل تخطيط ما قبل 0.2.0 إلى `tgcloud/`. الافتراضي `dry_run: true`؛ التطبيق يتطلب `confirm: true` |
 
-## المزامنة
+## المزامنة {#sync}
 
 | الأداة | أمر CLI | الوصف |
 |---|---|---|
@@ -29,14 +44,14 @@ description: أدوات tgcloud-mcp الست عشرة
 | `fetch` | `tgcloud fetch` | السحابة ← اللقطة فقط |
 | `reset` | `tgcloud reset` | إلغاء تعديلات الوحدات المحلية؛ يتطلب `confirm: true` |
 
-## البيانات
+## البيانات {#data}
 
 | الأداة | أمر CLI | الوصف |
 |---|---|---|
 | `run_handler` | `tgcloud run` | تشغيل handler أو endpoint من غير نشر. `args` و`ctx` بصيغة JSON5 |
 | `migrate` | `tgcloud migrate` | `dry_run: true` افتراضيًا للمعاينة. التطبيق يحتاج `dry_run: false` و`confirm: true`. `apply: "safe"` هو `--safe`، و`apply: "yes"` (الافتراضي عند التطبيق) هو `--yes`. `local: true` هو `--local` |
 
-## Webhook
+## Webhook {#webhook}
 
 | الأداة | أمر CLI | الوصف |
 |---|---|---|

@@ -7,7 +7,22 @@ description: تثبيت tgcloud-mcp وربطه بعميل MCP
 
 يلزم **Node.js 20+**. واجهة المنصة نفسها تتطلب Node.js 18+.
 
-## من npm
+<CardGroup cols={2}>
+  <Card title="npm" icon="box" href="#npm">
+    npm install -g tgcloud-mcp ثم tgcloud-mcp setup
+  </Card>
+  <Card title="أمر واحد" icon="terminal" href="#curl-bash">
+    curl | bash — نسخ وبناء وشعار ومعالج
+  </Card>
+  <Card title="Docker" icon="layers" href="#docker">
+    ghcr.io/sdamarketing/tgcloud-mcp عبر stdio بلا Node على الجهاز
+  </Card>
+  <Card title="إعداد العملاء" icon="plug" href="#clients">
+    opencode وClaude Code وCursor وVS Code
+  </Card>
+</CardGroup>
+
+## من npm {#npm}
 
 ```bash
 npm install -g tgcloud-mcp
@@ -22,21 +37,23 @@ tgcloud-mcp setup
 npx skills add sdamarketing/tgcloud_mcp
 ```
 
-## أمر واحد (macOS / Linux / WSL)
+## أمر واحد {#curl-bash}
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
 ```
 
 ينسخ المستودع إلى `~/.tgcloud-mcp`، يبني، ثم يشغّل المعالج. إعادة التشغيل تُحدّث.
+يعرض النص شعارًا داخل إطار (تدرّج أزرق في طرفية truecolor) ومؤشر دوران أثناء
+النسخ والتثبيت والبناء. المعالج يقرأ `/dev/tty`، لذلك يسأل حتى مع `curl | bash`.
 
-## Docker
+## Docker {#docker}
 
 ```bash
 docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
 ```
 
-## إعداد يدوي
+## إعداد يدوي {#clients}
 
 **opencode** (`~/.config/opencode/opencode.json`):
 

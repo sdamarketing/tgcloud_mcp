@@ -7,7 +7,22 @@ description: Установка tgcloud-mcp и подключение MCP-кли
 
 Нужен **Node.js 20+**. CLI платформы требует Node.js 18+.
 
-## Из npm
+<CardGroup cols={2}>
+  <Card title="npm" icon="box" href="#npm">
+    npm install -g tgcloud-mcp, затем tgcloud-mcp setup
+  </Card>
+  <Card title="Одна команда" icon="terminal" href="#curl-bash">
+    curl | bash — клон, сборка, баннер и мастер
+  </Card>
+  <Card title="Docker" icon="layers" href="#docker">
+    ghcr.io/sdamarketing/tgcloud-mcp, stdio, без Node на хосте
+  </Card>
+  <Card title="Конфиги клиентов" icon="plug" href="#clients">
+    opencode, Claude Code, Cursor, VS Code
+  </Card>
+</CardGroup>
+
+## Из npm {#npm}
 
 ```bash
 npm install -g tgcloud-mcp
@@ -26,21 +41,24 @@ Claude Code и opencode продолжают использовать MCP-кон
 npx skills add sdamarketing/tgcloud_mcp
 ```
 
-## Одной командой (macOS / Linux / WSL)
+## Одна команда {#curl-bash}
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
 ```
 
 Клонирует в `~/.tgcloud-mcp`, собирает, запускает мастер. Повторный запуск обновляет.
+Скрипт рисует баннер в рамке (синий градиент в truecolor-терминале) и спиннер
+на время клонирования, установки и сборки. Мастер читает `/dev/tty`, поэтому
+вопросы задаются и при `curl | bash`.
 
-## Docker
+## Docker {#docker}
 
 ```bash
 docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
 ```
 
-## Конфиги клиентов вручную
+## Конфиги клиентов {#clients}
 
 **opencode** (`~/.config/opencode/opencode.json`):
 

@@ -9,8 +9,9 @@
 
 [![CI](https://github.com/sdamarketing/tgcloud_mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/sdamarketing/tgcloud_mcp/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/tgcloud-mcp?style=flat-square)](https://www.npmjs.com/package/tgcloud-mcp)
-[![skills.sh](https://skills.sh/b/sdamarketing/tgcloud_mcp)](https://skills.sh/sdamarketing/tgcloud_mcp)
+[![skills.sh](https://skills.sh/b/sdamarketing/tgcloud_mcp?style=flat-square)](https://skills.sh/sdamarketing/tgcloud_mcp)
 [![ghcr](https://img.shields.io/badge/ghcr-sdamarketing%2Ftgcloud--mcp-blue?style=flat-square)](https://github.com/sdamarketing/tgcloud_mcp/pkgs/container/tgcloud-mcp)
+[![install](https://img.shields.io/badge/curl%20%7C%20bash-install-229ED9?style=flat-square)](https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh)
 
 Teaches an AI assistant to manage Telegram serverless bots
 ([core.telegram.org/bots/serverless](https://core.telegram.org/bots/serverless)):
@@ -20,6 +21,21 @@ you say "create a bot", "deploy", "show the webhook" — the assistant runs
 Works with any MCP client: **opencode, Claude Code, Claude Desktop, Cursor, VS Code (Copilot), Windsurf, Zed**.
 The same server and skill are also one [Agent Plugin](https://agent-plugins.org)
 (`agent-plugin/`) for Codex, Cursor, Copilot, Kiro, and VS Code.
+
+## Documentation
+
+The docs site (docs7) and the Context7 index:
+[context7.com/sdamarketing/tgcloud_mcp](https://context7.com/sdamarketing/tgcloud_mcp).
+
+| Section | Contents |
+|---|---|
+| [Getting started](docs/index.en.mdx) | Overview, [quickstart](docs/quickstart.en.mdx), [installation](docs/installation.en.mdx) |
+| [Usage](docs/tools.en.mdx) | [Tools](docs/tools.en.mdx), [resources](docs/resources.en.mdx), [security](docs/security.en.mdx) |
+| Help | [Troubleshooting](docs/troubleshooting.en.mdx), [cookbook](docs/cookbook.en.mdx) |
+| Reference | [SETUP](docs/SETUP.md), [evening walkthrough](docs/cookbook-srl-bot.md) |
+
+Other languages: [ru](README.ru.md), [zh](README.zh.md), [ar](README.ar.md), [de](README.de.md), [fr](README.fr.md).
+Commands: `tgcloud-mcp setup`, `tgcloud-mcp update`, `tgcloud-mcp links`, `tgcloud-mcp --help`.
 
 ## What it does
 

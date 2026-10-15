@@ -8,7 +8,22 @@ description: All 16 tgcloud-mcp tools
 Every tool takes `project_dir` — an absolute path to a tgcloud project
 (`create_project` takes `parent_dir` and `name` instead).
 
-## Lifecycle
+<CardGroup cols={2}>
+  <Card title="Lifecycle" icon="hammer" href="#lifecycle">
+    create, init, login, add, upgrade
+  </Card>
+  <Card title="Sync" icon="refresh" href="#sync">
+    status, diff, push, deploy, pull, fetch, reset
+  </Card>
+  <Card title="Data" icon="database" href="#data">
+    run a handler or endpoint, migrate
+  </Card>
+  <Card title="Webhook" icon="link" href="#webhook">
+    status and sync, including a silent bot
+  </Card>
+</CardGroup>
+
+## Lifecycle {#lifecycle}
 
 | Tool | CLI command | Description |
 |---|---|---|
@@ -18,7 +33,7 @@ Every tool takes `project_dir` — an absolute path to a tgcloud project
 | `add_module` | `tgcloud add` | New module: `handlers/<type>`, `endpoints/<name>`, `lib/<path>` |
 | `upgrade` | `tgcloud upgrade` | Move a pre-0.2.0 layout into `tgcloud/`. `dry_run: true` by default; applying needs `confirm: true` |
 
-## Sync
+## Sync {#sync}
 
 | Tool | CLI command | Description |
 |---|---|---|
@@ -30,14 +45,14 @@ Every tool takes `project_dir` — an absolute path to a tgcloud project
 | `fetch` | `tgcloud fetch` | Cloud → snapshot only |
 | `reset` | `tgcloud reset` | Discard local module edits; requires `confirm: true` |
 
-## Data
+## Data {#data}
 
 | Tool | CLI command | Description |
 |---|---|---|
 | `run_handler` | `tgcloud run` | Run a handler or endpoint without deploying. `args` and `ctx` are JSON5 |
 | `migrate` | `tgcloud migrate` | `dry_run: true` (default) previews. Applying needs `dry_run: false` and `confirm: true`. `apply: "safe"` is `--safe`; `apply: "yes"` (default when applying) is `--yes`. `local: true` is `--local` |
 
-## Webhook
+## Webhook {#webhook}
 
 | Tool | CLI command | Description |
 |---|---|---|

@@ -14,6 +14,21 @@
 Тот же сервер и скилл — один [Agent Plugin](https://agent-plugins.org) (`agent-plugin/`)
 для Codex, Cursor, Copilot, Kiro и VS Code.
 
+## Документация
+
+Сайт документации (docs7) и индекс для LLM:
+[context7.com/sdamarketing/tgcloud_mcp](https://context7.com/sdamarketing/tgcloud_mcp).
+
+| Раздел | Содержание |
+|---|---|
+| [Начало работы](docs/index.ru.mdx) | Обзор, [быстрый старт](docs/quickstart.ru.mdx), [установка](docs/installation.ru.mdx) |
+| [Эксплуатация](docs/tools.ru.mdx) | [Инструменты](docs/tools.ru.mdx), [ресурсы](docs/resources.ru.mdx), [безопасность](docs/security.ru.mdx) |
+| Помощь | [Траблшутинг](docs/troubleshooting.ru.mdx), [кукбук](docs/cookbook.ru.mdx) |
+| Справочник | [SETUP](docs/SETUP.ru.md), [бот за вечер](docs/cookbook-srl-bot.md) |
+
+Команды: `tgcloud-mcp setup`, `tgcloud-mcp update`, `tgcloud-mcp links`, `tgcloud-mcp --help`.
+Установщик `curl | bash` рисует баннер и спиннер.
+
 ## Что умеет
 
 16 инструментов:

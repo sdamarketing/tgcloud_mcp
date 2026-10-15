@@ -7,7 +7,22 @@ description: tgcloud-mcp 的全部 16 个工具
 
 每个工具都接收 `project_dir`，即 tgcloud 项目的绝对路径（`create_project` 改为接收 `parent_dir` 和 `name`）。
 
-## 生命周期
+<CardGroup cols={2}>
+  <Card title="生命周期" icon="hammer" href="#lifecycle">
+    create、init、login、add、upgrade
+  </Card>
+  <Card title="同步" icon="refresh" href="#sync">
+    status、diff、push、deploy、pull、fetch、reset
+  </Card>
+  <Card title="数据" icon="database" href="#data">
+    运行 handler 或 endpoint，migrate
+  </Card>
+  <Card title="Webhook" icon="link" href="#webhook">
+    状态与同步，包括沉默的机器人
+  </Card>
+</CardGroup>
+
+## 生命周期 {#lifecycle}
 
 | 工具 | CLI | 说明 |
 |---|---|---|
@@ -17,7 +32,7 @@ description: tgcloud-mcp 的全部 16 个工具
 | `add_module` | `tgcloud add` | 新模块：`handlers/<type>`、`endpoints/<name>`、`lib/<path>` |
 | `upgrade` | `tgcloud upgrade` | 把 0.2.0 之前的布局移入 `tgcloud/`。默认 `dry_run: true`；真正执行需要 `confirm: true` |
 
-## 同步
+## 同步 {#sync}
 
 | 工具 | CLI | 说明 |
 |---|---|---|
@@ -29,14 +44,14 @@ description: tgcloud-mcp 的全部 16 个工具
 | `fetch` | `tgcloud fetch` | 云端 → 只更新快照 |
 | `reset` | `tgcloud reset` | 丢弃本地模块修改；需要 `confirm: true` |
 
-## 数据
+## 数据 {#data}
 
 | 工具 | CLI | 说明 |
 |---|---|---|
 | `run_handler` | `tgcloud run` | 不部署即可运行 handler 或 endpoint。`args` 与 `ctx` 为 JSON5 |
 | `migrate` | `tgcloud migrate` | 默认 `dry_run: true` 只预览。应用时需要 `dry_run: false` 和 `confirm: true`。`apply: "safe"` 即 `--safe`；应用时默认 `apply: "yes"` 即 `--yes`。`local: true` 即 `--local` |
 
-## Webhook
+## Webhook {#webhook}
 
 | 工具 | CLI | 说明 |
 |---|---|---|

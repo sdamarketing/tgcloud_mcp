@@ -7,7 +7,22 @@ description: 安装 tgcloud-mcp 并连接 MCP 客户端
 
 需要 **Node.js 20+**。平台 CLI 本身需要 Node.js 18+。
 
-## 从 npm 安装
+<CardGroup cols={2}>
+  <Card title="npm" icon="box" href="#npm">
+    npm install -g tgcloud-mcp，然后 tgcloud-mcp setup
+  </Card>
+  <Card title="一条命令" icon="terminal" href="#curl-bash">
+    curl | bash — 克隆、构建、横幅和向导
+  </Card>
+  <Card title="Docker" icon="layers" href="#docker">
+    ghcr.io/sdamarketing/tgcloud-mcp，stdio，主机不必装 Node
+  </Card>
+  <Card title="客户端配置" icon="plug" href="#clients">
+    opencode、Claude Code、Cursor、VS Code
+  </Card>
+</CardGroup>
+
+## 从 npm 安装 {#npm}
 
 ```bash
 npm install -g tgcloud-mcp
@@ -22,21 +37,23 @@ Claude Code 和 opencode 继续使用 MCP 配置。Skill 用下面的命令安�
 npx skills add sdamarketing/tgcloud_mcp
 ```
 
-## 一条命令（macOS / Linux / WSL）
+## 一条命令 {#curl-bash}
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
 ```
 
 克隆到 `~/.tgcloud-mcp`，构建，然后运行向导。再次运行即更新。
+脚本会打印带框横幅（真彩色终端上为蓝色渐变），并在克隆、安装和构建时显示进度。
+向导从 `/dev/tty` 读取，因此 `curl | bash` 时仍会提问。
 
-## Docker
+## Docker {#docker}
 
 ```bash
 docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
 ```
 
-## 手动配置
+## 手动配置 {#clients}
 
 **opencode**（`~/.config/opencode/opencode.json`）：
 
