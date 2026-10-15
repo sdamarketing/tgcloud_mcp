@@ -120,6 +120,11 @@ function wireVSCode(dest) {
   console.log('    Если плагины выключены: "chat.plugins.enabled": true');
 }
 
+if (!process.stdin.isTTY) {
+  console.error('Мастер настройки нужен в терминале. Запустите: tgcloud-mcp setup');
+  process.exit(1);
+}
+
 const rl = createInterface({ input: process.stdin, output: process.stdout });
 const ask = (q) => new Promise((res) => rl.question(q, res));
 

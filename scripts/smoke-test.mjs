@@ -1,8 +1,20 @@
 #!/usr/bin/env node
 // Smoke-тест: поднимает сервер по stdio и проверяет initialize, tools/list, resources/list.
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 
-const server = spawn('node', ['dist/index.js'], { stdio: ['pipe', 'pipe', 'pipe'] });
+const help = spawnSync(process.execPath, ['bin/tgcloud-mcp.mjs', '--help'], { encoding: 'utf8' });
+if (help.status !== 0 || !help.stdout.includes('tgcloud-mcp setup')) {
+  console.error('FAIL: bin --help');
+  process.exit(1);
+}
+const setup = spawnSync(process.execPath, ['bin/tgcloud-mcp.mjs', 'setup'], { encoding: 'utf8', input: '' });
+if (setup.status !== 1 || !`${setup.stderr}${setup.stdout}`.includes('терминале')) {
+  console.error('FAIL: setup без TTY должен отказаться, а не молчать');
+  console.error(setup.stderr || setup.stdout);
+  process.exit(1);
+}
+
+const server = spawn(process.execPath, ['bin/tgcloud-mcp.mjs'], { stdio: ['pipe', 'pipe', 'pipe'] });
 let buffer = '';
 const pending = new Map();
 let nextId = 1;
