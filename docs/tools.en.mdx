@@ -1,42 +1,54 @@
 ---
 title: Tools
-description: All 14 tgcloud-mcp tools
+description: All 16 tgcloud-mcp tools
 ---
 
 # Tools
 
-Every tool takes `project_dir` — an absolute path to a tgcloud project.
+Every tool takes `project_dir` — an absolute path to a tgcloud project
+(`create_project` takes `parent_dir` and `name` instead).
 
 ## Lifecycle
 
 | Tool | CLI command | Description |
 |---|---|---|
 | `create_project` | `npm create @tgcloud/bot` | Scaffold a new project (`parent_dir`, `name`) |
-| `init_project` | `tgcloud init` | Scaffold into an existing empty directory |
+| `init_project` | `tgcloud init` | Scaffold into an existing directory, including a detected Mini App |
 | `login_bot` | `tgcloud login` | Link a bot via CLI access token (`app<id>:<secret>`); token via stdin, masked |
 | `add_module` | `tgcloud add` | New module: `handlers/<type>`, `endpoints/<name>`, `lib/<path>` |
+| `upgrade` | `tgcloud upgrade` | Move a pre-0.2.0 layout into `tgcloud/`. `dry_run: true` by default; applying needs `confirm: true` |
 
 ## Sync
 
 | Tool | CLI command | Description |
 |---|---|---|
-| `status` | `tgcloud status` | Local changes vs snapshot (offline) |
+| `status` | `tgcloud status` | Local changes vs snapshot (offline), including static diffs and webhook drift |
 | `diff` | `tgcloud diff` | Line-by-line diff (offline) |
-| `push` | `tgcloud push` | Atomic deploy; `force: true` requires `confirm: true` |
-| `pull` | `tgcloud pull` | Cloud → snapshot and working files |
+| `push` | `tgcloud push` | Atomic deploy. Does not build the front-end and does not migrate. `force: true` requires `confirm: true` |
+| `deploy` | `npm run build` + `tgcloud push` | Build when `package.json` has a build script, then push. `skip_build: true` pushes only |
+| `pull` | `tgcloud pull` | Cloud → snapshot and working files. Does not write the Mini App build folder |
 | `fetch` | `tgcloud fetch` | Cloud → snapshot only |
-| `reset` | `tgcloud reset` | ⚠️ Discard local changes; requires `confirm: true` |
+| `reset` | `tgcloud reset` | Discard local module edits; requires `confirm: true` |
 
 ## Data
 
 | Tool | CLI command | Description |
 |---|---|---|
-| `run_handler` | `tgcloud run` | Run a module server-side without deploying; `args`/`ctx` in JSON5 |
-| `migrate` | `tgcloud migrate` | `dry_run: true` (default) previews; applying needs `dry_run: false` + `confirm: true` (runs `--yes`) |
+| `run_handler` | `tgcloud run` | Run a handler or endpoint without deploying. `args` and `ctx` are JSON5 |
+| `migrate` | `tgcloud migrate` | `dry_run: true` (default) previews. Applying needs `dry_run: false` and `confirm: true`. `apply: "safe"` is `--safe`; `apply: "yes"` (default when applying) is `--yes`. `local: true` is `--local` |
 
 ## Webhook
 
 | Tool | CLI command | Description |
 |---|---|---|
-| `webhook_status` | `tgcloud webhook` | URL, allowed_updates, pending updates, delivery errors |
-| `webhook_sync` | `tgcloud webhook sync` | Re-point the webhook; `drop_pending: true` requires `confirm: true` |
+| `webhook_status` | `tgcloud webhook` | URL, allowed_updates, pending updates, delivery errors, in sync or not |
+| `webhook_sync` | `tgcloud webhook sync` | Re-point the webhook. `drop_pending: true` requires `confirm: true` |
+
+Adding or removing a handler can leave the webhook out of sync. `push` does not guarantee a refresh. Call `webhook_sync` after that kind of deploy.
+
+## Recipes
+
+- **Silent bot**: `webhook_status` → `status` / `diff` → `push` → `webhook_sync`
+- **Revision conflict on push**: `fetch` → `diff` → `push` (or `force` with `confirm`)
+- **Schema change**: edit `schema.js` → `push` → `migrate` (dry-run) → `migrate` with `confirm`. Prefer `apply: "safe"` when nothing is dropped
+- **Mini App front-end**: `deploy`, not a bare `push`

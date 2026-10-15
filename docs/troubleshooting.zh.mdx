@@ -1,0 +1,38 @@
+---
+title: 排错
+description: 常见错误与处理
+---
+
+# 排错
+
+## `"tgcloud login" requires an interactive terminal`
+
+CLI 需要 TTY。使用 `login_bot`：它用 `TGCLOUD_ASSUME_TTY=1` 把令牌写入 stdin。CI 中设置 `TGCLOUD_TOKEN='app...'`。
+
+## `Token format looks wrong. Expected "app<id>:<secret>"`
+
+你传的是 Bot API 令牌。需要的是 **CLI access token**：@BotFather → 机器人 → Serverless → CLI Access。
+
+## `Could not reach the tgcloud server`
+
+到不了 `cloud.telegram.org`。检查网络和代理，并用 `TGCLOUD_CLI` 指向带 `HTTPS_PROXY` 与 `NODE_USE_ENV_PROXY=1` 的包装脚本。
+
+## `This bot already has N deployed modules (revision R)`
+
+云端和本地修订不一致：`fetch` → `diff` → `push`（或在知情的情况下 `push { force: true, confirm: true }`）。
+
+## `non-interactive session — specify --safe, --yes, or --dry-run`
+
+使用 `migrate`。默认是 `--dry-run`。应用时需要 `dry_run: false` 和 `confirm: true`。`apply: "safe"` 对应 `--safe`（跳过 warning 删除）。`apply: "yes"` 对应 `--yes`（应用 warning 删除，跳过手动的类型变更）。
+
+## 根目录有 `schema.js` 时命令拒绝执行
+
+这是 CLI 0.2.0 之前的布局。先 `upgrade` 且 `dry_run: true`，再 `upgrade { dry_run: false, confirm: true }`。
+
+## `run_handler` 里出现 `chat not found`
+
+假的 chat id 会出现这个结果：数据库写入成功，只有真正发到 Telegram 的那一步失败。handler 逻辑仍然执行了。
+
+## Mini App 显示旧的前端
+
+`push` 不运行打包器。调用 `deploy`，或先构建再 push。`tgcloud.jsonc` 里的 `immutable` 会把匹配文件缓存一年，只用于带内容哈希的路径，例如 `/assets/*`。

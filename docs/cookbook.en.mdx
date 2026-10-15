@@ -5,17 +5,21 @@ description: A serverless bot with a Mini App in one evening
 
 # Cookbook
 
-Full step-by-step recipe in the repo:
+The long recipe, with CLI output captured from a real bot ("Learning diary"),
+is in the repo. The narrative of that file is Russian; the commands are the
+platform's and do not depend on the prose language:
+
 [docs/cookbook-srl-bot.md](https://github.com/sdamarketing/tgcloud_mcp/blob/main/docs/cookbook-srl-bot.md)
 
-Built around a real bot ("Learning diary"):
+What it walks through:
 
-1. Scaffold and login (two token types)
-2. Message handler + DB table
-3. Deploy and migrations (`--dry-run` / `--yes`)
+1. Scaffold and login (two kinds of token)
+2. Message handler and a database table
+3. Deploy and migrations (`--dry-run`, `--safe`, `--yes`)
 4. Inline buttons (`callback_query`)
-5. Mini App: `endpoints/` + static + `tgcloud.jsonc`
-6. Debugging a silent bot
+5. Mini App: `endpoints/`, static files, `tgcloud.jsonc`, then `deploy` so the build is fresh
+6. Debugging a silent bot (`webhook_status`, then `webhook_sync`)
 
-CLI output formats are captured from real runs; pitfalls (relative imports
-with `.js`, no foreign keys, `.deprecated`-only drops) are covered.
+Pitfalls covered there and in `tgcloud://docs/*`: relative imports with `.js`,
+no foreign keys, drops only through `.deprecated`, push does not build and does
+not migrate, a new handler can leave the webhook out of sync.

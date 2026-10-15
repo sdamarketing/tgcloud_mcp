@@ -1,31 +1,26 @@
-# Лимиты и квоты платформы
+# Platform limits
 
-Собрано из официальных источников: core.telegram.org/bots/serverless и
-`docs/tgcloud-sdk.md` из свежего скаффолда (@tgcloud/cli 0.2.x).
+Collected from core.telegram.org/bots/serverless and `docs/tgcloud-sdk.md` in a fresh @tgcloud/cli 0.2.x scaffold.
 
-## Явно задокументированные
+## Documented
 
-| Где | Лимит |
+| Where | Limit |
 |---|---|
-| Upload файлов через Bot API (`InputFile`) | 50 МБ/файл, **10 МБ для фото** |
-| Download по `file_id` (`api.getFile*`) | 20 МБ (`getFile` cap) |
-| `fetch` — размер HTTP-ответа | 32 МБ (по сайту; тело ответа текстовое либо поток `res.body`) |
-| `console`-логи | видны в `tgcloud run` (без публичного лимита) |
-| Объявление FK | запрещено совсем (`.references()`/`foreignKey()` бросают) |
-| handlers/, endpoints/ | один уровень вложенности (плоско) |
-| Имена endpoints | буквы/цифры/`_`, не с цифры |
+| Bot API upload (`InputFile`) | 50 MB per file, **10 MB for photos** |
+| Download by `file_id` (`api.getFile*`) | 20 MB (`getFile` cap) |
+| `fetch` response body | 32 MB (text, or a `res.body` stream) |
+| `console` logs | shown by `tgcloud run` (no public size cap) |
+| Foreign keys | forbidden (`.references()` / `foreignKey()` throw) |
+| `handlers/`, `endpoints/` | one level, flat |
+| Endpoint names | letters, digits, `_`, not starting with a digit |
+| Runtime imports | `sdk` and project modules only; no npm, no filesystem |
 
-## НЕ задокументировано публично (на 2026-10)
+## Not published (as of 2026-10)
 
-Квоты рантайма — **память, CPU, wall-time таймаут хендлера/endpoint'а, лимиты на
-количество вызовов, размер БД** — в публичной документации отсутствуют.
+Runtime quotas — **memory, CPU, wall-time timeout of a handler or endpoint, call rate, database size** — are absent from the public docs. Do not invent numbers.
 
-Как действовать вместо выдумок:
+1. Measure the path you have: `tgcloud run <module> '<json5>'` prints the elapsed time.
+2. Ask Telegram: @BotFather → the bot → Serverless, or the platform's official channels.
+3. Keep handlers short. Move heavy work off the update path and out through `fetch`.
 
-1. Замерить своё: `tgcloud run <module> '<json5>'` печатает фактическое время выполнения.
-2. Уточнить у Telegram: @BotFather → бот → Serverless, или официальные каналы платформы.
-3. Проектировать консервативно: короткие хендлеры, без тяжёлой работы в апдейт-пути;
-   тяжёлое — выносить внешним fetch'ем.
-
-> Если найдёте официальные цифры — обновите этот файл и `src/resources.ts`
-> (`npm run docs:check` сверяет список файлов).
+> When official numbers appear, update this file. `npm run docs:check` only checks that every file in `resources/docs/` is registered.

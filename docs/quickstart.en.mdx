@@ -9,6 +9,7 @@ description: From zero to a live bot in five minutes of dialogue
 
 @BotFather → your bot → **Serverless → CLI Access → Access token**.
 Format `app<id>:<secret>` — NOT the Bot API token (`123456:AA…`).
+Turn Serverless on for the bot before this step.
 
 ## 2. Talk to the agent
 
@@ -24,8 +25,15 @@ The bot is live. Test the logic without a real chat:
 Agent: run_handler { module: 'handlers/message', args: '{ chat: { id: 1 }, text: "hi" }' }
 ```
 
+`run_handler` also runs endpoints. Pass init data in `ctx`.
+
 ## 3. What's next
 
-- [Tools](tools.en) — all 14 commands
+- [Tools](tools.en) — all 16 commands
 - [Security](security.en) — guardrails and tokens
-- [Cookbook](cookbook.en) — a bot with DB, buttons and a Mini App
+- [Cookbook](cookbook.en) — a bot with a database, buttons, and a Mini App
+
+After front-end edits, the agent should call `deploy` (build, then push).
+A plain `push` uploads the build folder as it is and does not run the bundler.
+A schema change is `push`, then `migrate` (preview), then `migrate` with
+`confirm: true`. Prefer `apply: "safe"` when the preview has no drops.

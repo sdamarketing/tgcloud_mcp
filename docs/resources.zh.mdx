@@ -1,0 +1,21 @@
+---
+title: 资源
+description: tgcloud://docs/* 上的内置平台文档
+---
+
+# 资源
+
+服务器把平台参考作为 MCP 资源暴露出来。助手不调用工具就能阅读。正文是英文，与 core.telegram.org/bots/serverless 相同，便于对照官方页面。
+
+| URI | 内容 |
+|---|---|
+| `tgcloud://docs/project-structure` | `tgcloud/` 布局、handlers、endpoints、lib、schema.js。项目导入是**带** `.js` 的相对路径。Mini App 静态托管 |
+| `tgcloud://docs/cli` | CLI 参考：命令、`--dry-run` / `--safe` / `--yes` / `--local`、upgrade、webhook |
+| `tgcloud://docs/sdk-db` | `sdk/db`：列类型（`text`、`integer`、`real`、`numeric`、`blob`、`boolean`、`json`）与 mode、查询构造器、原始 SQL、无外键、通过 `.deprecated` 删除 |
+| `tgcloud://docs/sdk-api` | `sdk/api`：完整 Bot API、`BotApiError`、`InputFile` |
+| `tgcloud://docs/sdk-fetch` | `sdk/fetch`：HTTP 客户端、body 辅助函数、32 MB 上限 |
+| `tgcloud://docs/limits` | 已记录的限制，以及尚未公布的配额 |
+
+在脚手架项目里，先读 `AGENTS.md` 和 `docs/tgcloud-sdk.md`。它们与创建该项目的 CLI 一致。不在项目目录中时，再用这些资源。
+
+仓库中的原文是 `resources/docs/*.md`。`npm run docs:check` 检查每个文件都已注册、两份 skill 副本一致，以及每个英文页面都有 ru、zh、ar、de、fr 对应页。

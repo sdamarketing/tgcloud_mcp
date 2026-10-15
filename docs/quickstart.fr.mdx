@@ -1,0 +1,39 @@
+---
+title: Démarrage
+description: D'un dossier vide à un bot en ligne en quelques minutes de dialogue
+---
+
+# Démarrage
+
+## 1. Jeton
+
+@BotFather → votre bot → **Serverless → CLI Access → Access token**.
+Format `app<id>:<secret>`, et non le jeton Bot API (`123456:AA…`).
+Activez Serverless pour ce bot avant cette étape.
+
+## 2. Parlez à l'assistant
+
+```
+Vous :      crée un bot dans ~/bots/echo
+Assistant : create_project → demande le jeton d'accès CLI → login_bot
+            → modifie tgcloud/handlers/message.js → push → webhook_sync
+```
+
+Le bot est en ligne. Pour tester la logique sans vraie conversation :
+
+```
+Assistant : run_handler { module: 'handlers/message', args: '{ chat: { id: 1 }, text: "hi" }' }
+```
+
+`run_handler` exécute aussi les endpoints. Les init data vont dans `ctx`.
+
+## 3. Ensuite
+
+- [Outils](tools.fr) — les 16 commandes
+- [Sécurité](security.fr) — gardes et jetons
+- [Recette](cookbook.fr) — un bot avec base, boutons et Mini App
+
+Après une modification du front, l'assistant doit appeler `deploy` (build, puis push).
+Un simple `push` envoie le dossier de build tel qu'il est sur le disque et ne lance pas le bundler.
+Un changement de schéma : `push`, puis `migrate` (aperçu), puis `migrate` avec `confirm: true`.
+S'il n'y a pas de suppression dans l'aperçu, prenez `apply: "safe"`.

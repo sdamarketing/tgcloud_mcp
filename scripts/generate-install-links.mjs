@@ -21,6 +21,8 @@ const configs = {
 };
 
 console.log('Установка из npm, без клонирования — фрагменты конфигов:\n');
+console.log('Agent Plugin (plugin.json + mcp.json + skill): agent-plugin/');
+console.log('Копия для клиентов: ~/.tgcloud-mcp/agent-plugin  (кладёт её tgcloud-mcp setup)\n');
 for (const [name, cfg] of Object.entries(configs)) {
   console.log(`# ${name}`);
   console.log(JSON.stringify(cfg, null, 2) + '\n');

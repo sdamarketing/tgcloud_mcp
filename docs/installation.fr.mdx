@@ -1,0 +1,66 @@
+---
+title: Installation
+description: Installer tgcloud-mcp et brancher le client MCP
+---
+
+# Installation
+
+**Node.js 20+** est requis. La CLI de la plateforme demande Node.js 18+.
+
+## Depuis npm
+
+```bash
+npm install -g tgcloud-mcp
+tgcloud-mcp setup
+```
+
+L'assistant écrit la configuration MCP et demande s'il faut installer l'[Agent Plugin](https://agent-plugins.org) (`agent-plugin/` dans ce dépôt). Une copie va dans `~/.tgcloud-mcp/agent-plugin`. Cursor reçoit `~/.cursor/plugins/local/tgcloud`. VS Code reçoit une entrée `chat.pluginLocations`. Codex, Copilot et Kiro chargent ce même dossier depuis leur interface de plugins.
+
+Claude Code et opencode restent sur la configuration MCP. Le skill :
+
+```bash
+npx skills add sdamarketing/tgcloud_mcp
+```
+
+## Une commande (macOS / Linux / WSL)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
+```
+
+Clone dans `~/.tgcloud-mcp`, construit, lance l'assistant. Le relancer met à jour.
+
+## Docker
+
+```bash
+docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
+```
+
+## Configuration manuelle
+
+**opencode** (`~/.config/opencode/opencode.json`) :
+
+```json
+{ "mcp": { "tgcloud": { "type": "local", "command": ["npx", "-y", "tgcloud-mcp"], "enabled": true } } }
+```
+
+**Claude Code / Cursor :**
+
+```json
+{ "mcpServers": { "tgcloud": { "command": "npx", "args": ["-y", "tgcloud-mcp"] } } }
+```
+
+**VS Code** (`mcp.json`) :
+
+```json
+{ "servers": { "tgcloud": { "type": "stdio", "command": "npx", "args": ["-y", "tgcloud-mcp"] } } }
+```
+
+## Variables d'environnement
+
+| Variable | Défaut | Rôle |
+|---|---|---|
+| `TGCLOUD_CLI` | `npx` | Commande qui lance la CLI (peut être un wrapper de proxy) |
+| `TGCLOUD_CLI_ARGS` | `tgcloud` | Arguments placés avant la sous-commande |
+| `TGCLOUD_TIMEOUT_MS` | `120000` | Délai d'une commande. `deploy` laisse au moins 300000 ms à `npm run build` |
+| `TGCLOUD_TOKEN` | — | Jeton d'accès CLI à la place de `tgcloud login` |

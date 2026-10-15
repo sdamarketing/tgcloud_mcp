@@ -1,0 +1,21 @@
+---
+title: Ressourcen
+description: Eingebaute Plattformdoku unter tgcloud://docs/*
+---
+
+# Ressourcen
+
+Der Server stellt die Plattformreferenz als MCP-Ressourcen bereit. Der Assistent liest sie ohne Werkzeugaufruf. Der Text ist Englisch, dieselbe Sprache wie core.telegram.org/bots/serverless, damit er gegen diese Seite geprüft werden kann.
+
+| URI | Inhalt |
+|---|---|
+| `tgcloud://docs/project-structure` | Layout von `tgcloud/`, Handler, Endpoints, lib, schema.js. Projektimporte sind relative Pfade **mit** `.js`. Static-Hosting der Mini App |
+| `tgcloud://docs/cli` | CLI-Referenz: Befehle, `--dry-run` / `--safe` / `--yes` / `--local`, upgrade, webhook |
+| `tgcloud://docs/sdk-db` | `sdk/db`: Spaltentypen (`text`, `integer`, `real`, `numeric`, `blob`, `boolean`, `json`) und Modi, Query-Builder, Raw-SQL, keine Fremdschlüssel, Löschen nur über `.deprecated` |
+| `tgcloud://docs/sdk-api` | `sdk/api`: gesamte Bot API, `BotApiError`, `InputFile` |
+| `tgcloud://docs/sdk-fetch` | `sdk/fetch`: HTTP-Client, Body-Helfer, Grenze 32 MB |
+| `tgcloud://docs/limits` | Dokumentierte Grenzen und die Kontingente, die nicht veröffentlicht sind |
+
+Lies in einem Gerüst-Projekt zuerst `AGENTS.md` und `docs/tgcloud-sdk.md`. Sie passen zur CLI, die das Projekt angelegt hat. Die Ressourcen sind der Ersatz, wenn du nicht in einem Projekt stehst.
+
+Quelle im Repo: `resources/docs/*.md`. `npm run docs:check` prüft, dass jede Datei registriert ist, dass die beiden Skill-Kopien übereinstimmen und dass jede englische Seite Geschwister in ru, zh, ar, de und fr hat.

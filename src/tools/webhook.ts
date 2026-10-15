@@ -5,16 +5,17 @@ import { dangerTool, runTool } from '../utils.js';
 
 const projectDir = z
   .string()
-  .describe('Абсолютный путь к каталогу проекта tgcloud (содержит .tgcloud/)');
+  .describe('Absolute path to a tgcloud project directory (contains .tgcloud/)');
 
 export function registerWebhookTools(server: McpServer, runner: TgcloudRunner) {
   server.registerTool(
     'webhook_status',
     {
-      title: 'Статус вебхука',
+      title: 'Webhook status',
       description:
-        'Показывает текущее состояние вебхука бота (tgcloud webhook): URL, allowed_updates, ' +
-        'накопившиеся апдейты и ошибки доставки. Первый шаг диагностики «бот молчит».',
+        'Shows the platform-managed webhook (tgcloud webhook): URL, allowed_updates, pending ' +
+        'update count, the last delivery error, and whether it is in sync with the deployed handlers. ' +
+        'First step when a bot is silent. Deploying or removing a handler can leave it out of sync.',
       inputSchema: z.object({ project_dir: projectDir }),
     },
     async (args) =>
@@ -27,17 +28,18 @@ export function registerWebhookTools(server: McpServer, runner: TgcloudRunner) {
   server.registerTool(
     'webhook_sync',
     {
-      title: 'Перенастроить вебхук',
+      title: 'Re-sync the webhook',
       description:
-        'Перенаправляет вебхук на проект и пересобирает allowed_updates (tgcloud webhook sync). ' +
-        'drop_pending=true отбрасывает накопившиеся апдейты — деструктивно, требует confirm: true.',
+        'Points the webhook at the platform and rebuilds allowed_updates from deployed handlers ' +
+        '(tgcloud webhook sync). Call it after adding or removing a handler. ' +
+        'drop_pending=true discards updates Telegram already queued — destructive, requires confirm: true.',
       inputSchema: z.object({
         project_dir: projectDir,
         drop_pending: z
           .boolean()
           .optional()
-          .describe('Отбросить накопившиеся апдейты (--drop-pending, требует confirm: true)'),
-        confirm: z.boolean().optional().describe('Обязательный confirm: true при drop_pending=true'),
+          .describe('Discard queued updates (--drop-pending, requires confirm: true)'),
+        confirm: z.boolean().optional().describe('Required confirm: true when drop_pending is true'),
       }),
     },
     async (args) => {

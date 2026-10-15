@@ -9,44 +9,48 @@ const DOCS: Array<{ name: string; uri: string; title: string; file: string; desc
   {
     name: 'tgcloud-project-structure',
     uri: 'tgcloud://docs/project-structure',
-    title: 'Структура проекта tgcloud и правила импортов',
+    title: 'tgcloud project layout and import rules',
     file: 'project-structure.md',
-    description: 'handlers/, lib/, schema.js, .tgcloud/; только bare-импорты, без относительных путей и расширений',
+    description:
+      'tgcloud/ handlers, endpoints, lib, schema.js, tgcloud.jsonc. Project imports are relative paths WITH a .js extension. SDK imports are bare (sdk, sdk/db).',
   },
   {
     name: 'tgcloud-cli',
     uri: 'tgcloud://docs/cli',
-    title: 'Справочник tgcloud CLI',
+    title: 'tgcloud CLI reference',
     file: 'cli.md',
-    description: 'init, login, add, run, status, diff, push, pull, fetch, reset, migrate, webhook, completion',
+    description:
+      'init, login, add, run, status, diff, push, pull, fetch, reset, migrate (--dry-run/--safe/--yes/--local), webhook, upgrade, completion',
   },
   {
     name: 'tgcloud-sdk-db',
     uri: 'tgcloud://docs/sdk-db',
-    title: 'sdk/db — база данных',
+    title: 'sdk/db — database',
     file: 'sdk-db.md',
-    description: 'schema.js, таблицы и модификаторы, query builder, insert/update/delete, raw SQL',
+    description:
+      'schema.js column types (text, integer, real, numeric, blob, boolean, json) and modes, query builder, insert/update/delete, raw SQL, no foreign keys',
   },
   {
     name: 'tgcloud-sdk-api',
     uri: 'tgcloud://docs/sdk-api',
     title: 'sdk/api — Telegram Bot API',
     file: 'sdk-api.md',
-    description: 'Вызов любых методов Bot API, развёрнутый result, BotApiError',
+    description: 'Any Bot API method, unwrapped result, BotApiError, InputFile uploads',
   },
   {
     name: 'tgcloud-sdk-fetch',
     uri: 'tgcloud://docs/sdk-fetch',
-    title: 'sdk/fetch — HTTP-клиент',
+    title: 'sdk/fetch — HTTP client',
     file: 'sdk-fetch.md',
-    description: 'fetch с body-хелперами и бинарными телами (InputFile/FormData), потоки, лимит 32 МБ',
+    description: 'fetch with body helpers and binary bodies (InputFile/FormData), streams, 32 MB cap',
   },
   {
     name: 'tgcloud-limits',
     uri: 'tgcloud://docs/limits',
-    title: 'Лимиты и квоты платформы',
+    title: 'Platform limits',
     file: 'limits.md',
-    description: 'Задокументированные лимиты (upload/getFile/fetch) и честный список того, что не опубликовано (память, CPU, таймауты)',
+    description:
+      'Documented limits (upload, getFile, fetch) and the unpublished list (memory, CPU, timeouts)',
   },
 ];
 

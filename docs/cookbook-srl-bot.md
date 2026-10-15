@@ -5,6 +5,9 @@ description: "Пошаговый рецепт по платформе @tgcloud �
 
 # Кукбук: serverless-бот с мини-аппом за вечер
 
+> Рассказ в этом файле на русском. Команды CLI и имена инструментов от языка не зависят.
+> English, 中文, العربية, Deutsch and Français overviews: `docs/cookbook.<lang>.mdx`.
+
 Пошаговый рецепт по платформе Telegram serverless (@tgcloud) на примере реального
 бота «Дневник обучения» (srl_assistant_bot): хранит заметки в базе, отвечает
 кнопками, показывает записи в Mini App.

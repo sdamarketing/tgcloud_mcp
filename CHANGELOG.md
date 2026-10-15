@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0] — 2026-10-15
+
+- Инструменты: `upgrade` (layout до CLI 0.2.0, dry-run по умолчанию) и `deploy` (`npm run build`, затем `push`)
+- `migrate`: `apply: "safe" | "yes"` и `local: true` (`--safe` / `--yes` / `--local`)
+- Справочник `tgcloud://docs/*` и описания инструментов на английском; поправлены импорты (относительный путь с `.js`), вебхук после push, типы колонок `real` / `numeric` / `blob`
+- Agent Plugin 1.0: `agent-plugin/` (`plugin.json`, `mcp.json`, скилл). `tgcloud-mcp setup` копирует его в `~/.tgcloud-mcp/agent-plugin` и подключает Cursor и VS Code
+- Документация: английский канон, переводы ru, zh, ar, de, fr. `docs:check` сверяет пары страниц и две копии скилла
+
 ## [0.2.1] — 2026-10-09
 
 - package.json: `mcpName` (требование Official MCP Registry), `repository`/`homepage`/`bugs` (требование npm provenance)

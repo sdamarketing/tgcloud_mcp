@@ -1,26 +1,26 @@
 import * as z from 'zod/v4';
 import type { McpServer } from '@modelcontextprotocol/server';
 import type { TgcloudRunner } from '../runner.js';
-import { runTool } from '../utils.js';
+import { dangerTool, runTool } from '../utils.js';
 
 const projectDir = z
   .string()
-  .describe('Абсолютный путь к каталогу проекта tgcloud (содержит .tgcloud/)');
+  .describe('Absolute path to a tgcloud project directory (contains .tgcloud/)');
 
 export function registerLifecycleTools(server: McpServer, runner: TgcloudRunner) {
   server.registerTool(
     'create_project',
     {
-      title: 'Создать проект бота',
+      title: 'Create a bot project',
       description:
-        'Скаффолдит новый проект serverless-бота через `npm create @tgcloud/bot <name>` ' +
-        'внутри каталога parent_dir. Требуется Node.js 18+ и доступ к npm registry.',
+        'Scaffolds a serverless bot with `npm create @tgcloud/bot <name>` inside parent_dir. ' +
+        'Needs Node.js 18+ and the npm registry. Does not overwrite existing files.',
       inputSchema: z.object({
-        parent_dir: z.string().describe('Абсолютный путь к каталогу, где будет создан проект'),
+        parent_dir: z.string().describe('Absolute path of the directory that will contain the new project'),
         name: z
           .string()
-          .regex(/^[a-z0-9][a-z0-9._-]*$/i, 'Имя проекта: латиница, цифры, точки, - и _')
-          .describe('Имя каталога нового проекта, например my-bot'),
+          .regex(/^[a-z0-9][a-z0-9._-]*$/i, 'Project name: letters, digits, dots, hyphens, underscores')
+          .describe('New project directory name, for example my-bot'),
       }),
     },
     async (args) =>
@@ -36,9 +36,12 @@ export function registerLifecycleTools(server: McpServer, runner: TgcloudRunner)
   server.registerTool(
     'init_project',
     {
-      title: 'Инициализировать пустой проект',
+      title: 'Initialize a project in place',
       description:
-        'Скаффолдит проект tgcloud в существующем (обычно пустом) каталоге: schema.js, handlers/, lib/. Работает офлайн.',
+        'Scaffolds tgcloud into an existing directory (tgcloud init, offline): tgcloud/schema.js, ' +
+        'handlers/, endpoints/, lib/, tgcloud.jsonc, AGENTS.md, docs/tgcloud-sdk.md. ' +
+        'In a front-end project it detects the bundler, sets static.source, and adds an npm run deploy ' +
+        'script (build, then push) without overwriting files you already have.',
       inputSchema: z.object({ project_dir: projectDir }),
     },
     async (args) =>
@@ -51,21 +54,19 @@ export function registerLifecycleTools(server: McpServer, runner: TgcloudRunner)
   server.registerTool(
     'login_bot',
     {
-      title: 'Привязать бота к проекту',
+      title: 'Link a bot to the project',
       description:
-        'Выполняет `tgcloud login`: привязывает бота к проекту по CLI access token ' +
-        '(формат app<id>:<secret>; @BotFather → ваш бот → Serverless → CLI Access → Access token). ' +
-        'Это НЕ API-токен бота вида 123456:AA…. ' +
-        'CLI требует интерактивный терминал, поэтому токен передаётся через stdin с ' +
-        'TGCLOUD_ASSUME_TTY=1; во всех выводах токен маскируется. ' +
-        'НИКОГДА не показывай токен пользователю после вызова. ' +
-        'Для CI вместо login достаточно переменной окружения TGCLOUD_TOKEN на shell.',
+        'Runs `tgcloud login` with a CLI access token (app<id>:<secret> from @BotFather → your bot → ' +
+        'Serverless → CLI Access → Access token). This is NOT the Bot API token (123456:AA…). ' +
+        'The CLI wants a TTY, so the token is written to stdin with TGCLOUD_ASSUME_TTY=1 and masked ' +
+        'in every tool result. NEVER show the token to the user after this call. ' +
+        'In CI, set TGCLOUD_TOKEN and skip login.',
       inputSchema: z.object({
         project_dir: projectDir,
         token: z
           .string()
-          .regex(/^app\d+:[A-Za-z0-9_-]+$/, 'Ожидается CLI access token формата app<id>:<secret>')
-          .describe('CLI access token из @BotFather (Serverless → CLI Access), формат app<id>:<secret>'),
+          .regex(/^app\d+:[A-Za-z0-9_-]+$/, 'Expected a CLI access token of the form app<id>:<secret>')
+          .describe('CLI access token from @BotFather (Serverless → CLI Access), form app<id>:<secret>'),
       }),
     },
     async (args) =>
@@ -83,22 +84,23 @@ export function registerLifecycleTools(server: McpServer, runner: TgcloudRunner)
   server.registerTool(
     'add_module',
     {
-      title: 'Добавить модуль',
+      title: 'Add a module',
       description:
-        'Скаффолдит модуль через `tgcloud add <target>` (в tgcloud/-layout). ' +
-        'handlers/<type> — хендлер апдейтов (плоско, один уровень; типы: message, callback_query, ' +
-        'inline_query, chat_member, my_chat_member и др.); endpoints/<name> — серверная функция ' +
-        'Mini App (POST /api/<name>); lib/<path> — общий модуль (вложенные пути допускаются). ' +
-        'Существующие файлы не перезаписываются.',
+        'Scaffolds a module with `tgcloud add <target>` (tgcloud/ layout). ' +
+        'handlers/<type> is one flat update handler (message, edited_message, callback_query, ' +
+        'inline_query, chosen_inline_result, shipping_query, pre_checkout_query, poll, poll_answer, ' +
+        'my_chat_member, chat_member, chat_join_request, message_reaction, channel_post, …). ' +
+        'endpoints/<name> is a Mini App function (POST /api/<name>; identifier, not starting with a digit). ' +
+        'lib/<path> is shared code and may be nested. Existing files are never overwritten.',
       inputSchema: z.object({
         project_dir: projectDir,
         target: z
           .string()
           .regex(
             /^(handlers|endpoints|lib)\/[a-z0-9._/-]+$/i,
-            'target: handlers/<type>, endpoints/<name> или lib/<path>',
+            'target: handlers/<type>, endpoints/<name>, or lib/<path>',
           )
-          .describe('Путь модуля, например handlers/callback_query, endpoints/getProfile или lib/cart'),
+          .describe('Module path, for example handlers/callback_query, endpoints/getProfile, or lib/cart'),
       }),
     },
     async (args) =>
@@ -107,5 +109,37 @@ export function registerLifecycleTools(server: McpServer, runner: TgcloudRunner)
         const out = await runner.tgcloud(['add', args.target], { cwd });
         return runner.format(out);
       }),
+  );
+
+  server.registerTool(
+    'upgrade',
+    {
+      title: 'Upgrade a pre-0.2.0 project layout',
+      description:
+        'One-time move of schema.js, handlers/, and lib/ from the project root into tgcloud/ ' +
+        '(tgcloud upgrade). Required before other commands on projects created before CLI 0.2.0. ' +
+        'Keeps the bot link; nothing needs to be redeployed. dry_run defaults to true and only ' +
+        'prints the planned moves. Applying (dry_run: false) requires confirm: true.',
+      inputSchema: z.object({
+        project_dir: projectDir,
+        dry_run: z
+          .boolean()
+          .optional()
+          .describe('true (default) — print planned moves only (--dry-run)'),
+        confirm: z.boolean().optional().describe('Required confirm: true when dry_run is false'),
+      }),
+    },
+    async (args) => {
+      if (args.dry_run !== false) {
+        return runTool(async () => {
+          const cwd = runner.resolveProjectDir(args.project_dir);
+          return runner.format(await runner.tgcloud(['upgrade', '--dry-run'], { cwd }));
+        });
+      }
+      return dangerTool(args, async () => {
+        const cwd = runner.resolveProjectDir(args.project_dir);
+        return runner.format(await runner.tgcloud(['upgrade'], { cwd }));
+      });
+    },
   );
 }

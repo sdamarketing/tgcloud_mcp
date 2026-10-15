@@ -1,0 +1,38 @@
+---
+title: حل المشكلات
+description: أخطاء شائعة وعلاجها
+---
+
+# حل المشكلات
+
+## `"tgcloud login" requires an interactive terminal`
+
+الواجهة تحتاج طرفية تفاعلية. استخدم `login_bot`: يمرر الرمز عبر stdin مع `TGCLOUD_ASSUME_TTY=1`. في CI: ‏`TGCLOUD_TOKEN='app...'`.
+
+## `Token format looks wrong. Expected "app<id>:<secret>"`
+
+أُرسل رمز Bot API. المطلوب هو **CLI access token**: ‏@BotFather ← البوت ← Serverless ← CLI Access.
+
+## `Could not reach the tgcloud server`
+
+`cloud.telegram.org` غير متاح. تحقق من الشبكة والبروكسي، ووجّه الواجهة عبر `TGCLOUD_CLI` إلى غلاف فيه `HTTPS_PROXY` و`NODE_USE_ENV_PROXY=1`.
+
+## `This bot already has N deployed modules (revision R)`
+
+السحابة والمشروع غير متزامنين: `fetch` ← `diff` ← `push` (أو عن علم `push { force: true, confirm: true }`).
+
+## `non-interactive session — specify --safe, --yes, or --dry-run`
+
+استخدم `migrate`. الافتراضي `--dry-run`. التطبيق يحتاج `dry_run: false` و`confirm: true`. يقابل `apply: "safe"` العلم `--safe` (يتجاوز حذف التحذير). ويقابل `apply: "yes"` العلم `--yes` (يطبّق حذف التحذير ويتجاوز تغيير النوع اليدوي).
+
+## الأوامر ترفض مشروعًا فيه `schema.js` في الجذر
+
+هذا تخطيط ما قبل CLI 0.2.0. نفّذ `upgrade` مع `dry_run: true` ثم `upgrade { dry_run: false, confirm: true }`.
+
+## `chat not found` داخل `run_handler`
+
+متوقع مع معرف دردشة وهمي: الكتابة في القاعدة تنجح، ويفشل فقط الإرسال الحقيقي إلى تيليغرام. منطق الـ handler يُنفَّذ رغم ذلك.
+
+## Mini App يعرض واجهة قديمة
+
+`push` لا يشغّل المُجمّع. استدعِ `deploy`، أو ابنِ ثم انشر. `immutable` في `tgcloud.jsonc` يخزّن الملفات المطابقة لسنة؛ استعمله فقط للمسارات ذات التجزئة مثل `/assets/*`.

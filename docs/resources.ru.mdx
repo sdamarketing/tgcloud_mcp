@@ -5,18 +5,23 @@ description: Встроенная справка платформы tgcloud://do
 
 # Ресурсы
 
-Сервер отдаёт справку платформы как MCP-ресурсы — агент читает их без вызова инструментов:
+Сервер отдаёт справку платформы как MCP-ресурсы. Агент читает их без вызова
+инструмента. Текст английский — тот же язык, что у core.telegram.org/bots/serverless,
+чтобы справочник можно было сверять со страницей платформы.
 
 | URI | Содержание |
 |---|---|
-| `tgcloud://docs/project-structure` | Структура проекта: `tgcloud/`, handlers/endpoints/lib/schema.js, правила импортов (относительные пути с `.js`), Mini App |
-| `tgcloud://docs/cli` | Справочник tgcloud CLI: команды, флаги, неинтерактивные режимы |
-| `tgcloud://docs/sdk-db` | `sdk/db`: схема, query builder, insert/update/delete, raw SQL, ограничения (нет FK, дропы через `.deprecated`) |
-| `tgcloud://docs/sdk-api` | `sdk/api`: весь Bot API, `BotApiError` |
+| `tgcloud://docs/project-structure` | Каталог `tgcloud/`, handlers, endpoints, lib, schema.js. Импорты проекта — относительный путь **с** `.js`. Хостинг статики Mini App |
+| `tgcloud://docs/cli` | Справочник CLI: команды, `--dry-run` / `--safe` / `--yes` / `--local`, upgrade, webhook |
+| `tgcloud://docs/sdk-db` | `sdk/db`: типы колонок (`text`, `integer`, `real`, `numeric`, `blob`, `boolean`, `json`) и mode, query builder, raw SQL, без foreign keys, дропы через `.deprecated` |
+| `tgcloud://docs/sdk-api` | `sdk/api`: весь Bot API, `BotApiError`, `InputFile` |
 | `tgcloud://docs/sdk-fetch` | `sdk/fetch`: HTTP-клиент, body-хелперы, лимит 32 МБ |
+| `tgcloud://docs/limits` | Задокументированные лимиты и квоты, которые не опубликованы |
 
-Источник: core.telegram.org/bots/serverless, сверено с реальным скаффолдом
-`npm create @tgcloud/bot` (@tgcloud/cli 0.2.x).
+Внутри скаффолда сначала читайте `AGENTS.md` и `docs/tgcloud-sdk.md`.
+Они совпадают с CLI, который создал проект. Ресурсы — запасной справочник,
+когда проекта под рукой нет.
 
-Держатель истины в репо: `resources/docs/*.md`; синхронность с ресурсами
-проверяет `npm run docs:check`.
+Держатель истины в репозитории: `resources/docs/*.md`. `npm run docs:check`
+проверяет, что каждый файл зарегистрирован, что две копии скилла совпадают
+и что у каждой английской страницы есть соседи ru, zh, ar, de и fr.

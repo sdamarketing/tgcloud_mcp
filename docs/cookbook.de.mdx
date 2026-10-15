@@ -1,0 +1,21 @@
+---
+title: Kochbuch
+description: Ein serverloser Bot mit Mini App an einem Abend
+---
+
+# Kochbuch
+
+Das lange Rezept mit CLI-Ausgabe eines echten Bots liegt im Repo. Die Erzählung dieser Datei ist Russisch; die Befehle gehören der Plattform und hängen nicht an der Prosa:
+
+[docs/cookbook-srl-bot.md](https://github.com/sdamarketing/tgcloud_mcp/blob/main/docs/cookbook-srl-bot.md)
+
+Der Gang:
+
+1. Gerüst und Login (zwei Token-Arten)
+2. Nachrichten-Handler und eine Datenbanktabelle
+3. Deploy und Migrationen (`--dry-run`, `--safe`, `--yes`)
+4. Inline-Buttons (`callback_query`)
+5. Mini App: `endpoints/`, statische Dateien, `tgcloud.jsonc`, dann `deploy`, damit der Build frisch ist
+6. Einen stummen Bot untersuchen (`webhook_status`, dann `webhook_sync`)
+
+Stolpersteine dort und in `tgcloud://docs/*`: relative Importe mit `.js`, keine Fremdschlüssel, Löschen nur über `.deprecated`, push baut nicht und migriert nicht, ein neuer Handler kann den Webhook aus dem Takt bringen.

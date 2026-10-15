@@ -5,34 +5,56 @@
     "primary": "#229ED9"
   },
   "navigation": {
-    "groups": [
+    "languages": [
       {
-        "group": "Начало работы",
-        "pages": ["index.ru", "installation.ru", "quickstart.ru"]
+        "language": "en",
+        "groups": [
+          { "group": "Getting started", "pages": ["index.en", "installation.en", "quickstart.en"] },
+          { "group": "Usage", "pages": ["tools.en", "resources.en", "security.en"] },
+          { "group": "Help", "pages": ["troubleshooting.en", "cookbook.en"] },
+          { "group": "Reference", "pages": ["SETUP", "cookbook-srl-bot"] }
+        ]
       },
       {
-        "group": "Эксплуатация",
-        "pages": ["tools.ru", "resources.ru", "security.ru"]
+        "language": "ru",
+        "groups": [
+          { "group": "Начало работы", "pages": ["index.ru", "installation.ru", "quickstart.ru"] },
+          { "group": "Эксплуатация", "pages": ["tools.ru", "resources.ru", "security.ru"] },
+          { "group": "Помощь", "pages": ["troubleshooting.ru", "cookbook.ru"] },
+          { "group": "Справочник", "pages": ["SETUP.ru", "cookbook-srl-bot"] }
+        ]
       },
       {
-        "group": "Помощь",
-        "pages": ["troubleshooting.ru", "cookbook.ru"]
+        "language": "zh",
+        "groups": [
+          { "group": "开始", "pages": ["index.zh", "installation.zh", "quickstart.zh"] },
+          { "group": "使用", "pages": ["tools.zh", "resources.zh", "security.zh"] },
+          { "group": "帮助", "pages": ["troubleshooting.zh", "cookbook.zh"] }
+        ]
       },
       {
-        "group": "Справочник",
-        "pages": ["SETUP", "cookbook-srl-bot"]
+        "language": "ar",
+        "groups": [
+          { "group": "البداية", "pages": ["index.ar", "installation.ar", "quickstart.ar"] },
+          { "group": "الاستخدام", "pages": ["tools.ar", "resources.ar", "security.ar"] },
+          { "group": "مساعدة", "pages": ["troubleshooting.ar", "cookbook.ar"] }
+        ]
       },
       {
-        "group": "Getting started",
-        "pages": ["index.en", "installation.en", "quickstart.en"]
+        "language": "de",
+        "groups": [
+          { "group": "Einstieg", "pages": ["index.de", "installation.de", "quickstart.de"] },
+          { "group": "Verwendung", "pages": ["tools.de", "resources.de", "security.de"] },
+          { "group": "Hilfe", "pages": ["troubleshooting.de", "cookbook.de"] }
+        ]
       },
       {
-        "group": "Usage",
-        "pages": ["tools.en", "resources.en", "security.en"]
-      },
-      {
-        "group": "Help",
-        "pages": ["troubleshooting.en", "cookbook.en"]
+        "language": "fr",
+        "groups": [
+          { "group": "Démarrer", "pages": ["index.fr", "installation.fr", "quickstart.fr"] },
+          { "group": "Utilisation", "pages": ["tools.fr", "resources.fr", "security.fr"] },
+          { "group": "Aide", "pages": ["troubleshooting.fr", "cookbook.fr"] }
+        ]
       }
     ]
   }

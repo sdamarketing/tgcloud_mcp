@@ -39,8 +39,8 @@ export async function dangerTool(args: { confirm?: boolean }, fn: () => Promise<
   return runTool(async () => {
     if (args.confirm !== true) {
       throw new Error(
-        'Отказано: деструктивная операция. Покажите пользователю, что именно будет изменено, ' +
-          'получите явное подтверждение и повторите вызов с confirm=true.',
+        'Refused: destructive operation. Show the user exactly what will change, ' +
+          'get an explicit yes, and call again with confirm=true.',
       );
     }
     return fn();

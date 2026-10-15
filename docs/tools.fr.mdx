@@ -1,0 +1,53 @@
+---
+title: Outils
+description: Les 16 outils de tgcloud-mcp
+---
+
+# Outils
+
+Chaque outil reçoit `project_dir`, un chemin absolu vers un projet tgcloud (`create_project` reçoit `parent_dir` et `name` à la place).
+
+## Cycle de vie
+
+| Outil | CLI | Description |
+|---|---|---|
+| `create_project` | `npm create @tgcloud/bot` | Nouveau projet (`parent_dir`, `name`) |
+| `init_project` | `tgcloud init` | Échafaudage dans un dossier existant, y compris une Mini App reconnue |
+| `login_bot` | `tgcloud login` | Lie le bot avec le jeton d'accès CLI (`app<id>:<secret>`) ; jeton via stdin, masqué |
+| `add_module` | `tgcloud add` | Nouveau module : `handlers/<type>`, `endpoints/<name>`, `lib/<path>` |
+| `upgrade` | `tgcloud upgrade` | Déplace une disposition d'avant 0.2.0 dans `tgcloud/`. `dry_run: true` par défaut ; appliquer exige `confirm: true` |
+
+## Synchronisation
+
+| Outil | CLI | Description |
+|---|---|---|
+| `status` | `tgcloud status` | Écarts locaux par rapport à l'instantané (hors ligne), y compris les fichiers statiques et le webhook |
+| `diff` | `tgcloud diff` | Diff ligne à ligne (hors ligne) |
+| `push` | `tgcloud push` | Déploiement atomique. Ne construit pas le front et ne migre pas. `force: true` exige `confirm: true` |
+| `deploy` | `npm run build` + `tgcloud push` | Construit si `package.json` a un script build, puis push. `skip_build: true` ne fait que push |
+| `pull` | `tgcloud pull` | Nuage → instantané et fichiers de travail. N'écrit pas le dossier de build de la Mini App |
+| `fetch` | `tgcloud fetch` | Nuage → instantané seulement |
+| `reset` | `tgcloud reset` | Abandonne les modifications locales des modules ; exige `confirm: true` |
+
+## Données
+
+| Outil | CLI | Description |
+|---|---|---|
+| `run_handler` | `tgcloud run` | Exécute un handler ou un endpoint sans déployer. `args` et `ctx` sont du JSON5 |
+| `migrate` | `tgcloud migrate` | `dry_run: true` (défaut) ne fait qu'un aperçu. Appliquer exige `dry_run: false` et `confirm: true`. `apply: "safe"` vaut `--safe` ; `apply: "yes"` (défaut à l'application) vaut `--yes`. `local: true` vaut `--local` |
+
+## Webhook
+
+| Outil | CLI | Description |
+|---|---|---|
+| `webhook_status` | `tgcloud webhook` | URL, allowed_updates, file d'attente, dernière erreur, synchronisé ou non |
+| `webhook_sync` | `tgcloud webhook sync` | Réoriente le webhook. `drop_pending: true` exige `confirm: true` |
+
+Ajouter ou retirer un handler peut désynchroniser le webhook. `push` ne garantit pas le rafraîchissement. Appelez `webhook_sync` après ce genre de déploiement.
+
+## Parcours
+
+- **Bot silencieux** : `webhook_status` → `status` / `diff` → `push` → `webhook_sync`
+- **Conflit de révision au push** : `fetch` → `diff` → `push` (ou `force` avec `confirm`)
+- **Schéma** : modifier `schema.js` → `push` → `migrate` (dry-run) → `migrate` avec `confirm`. Sans suppression, `apply: "safe"`
+- **Front de Mini App** : `deploy`, pas un simple `push`

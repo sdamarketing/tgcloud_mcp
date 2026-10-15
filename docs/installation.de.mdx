@@ -1,0 +1,66 @@
+---
+title: Installation
+description: tgcloud-mcp installieren und den MCP-Client verbinden
+---
+
+# Installation
+
+**Node.js 20+** ist nötig. Die Plattform-CLI selbst braucht Node.js 18+.
+
+## Von npm
+
+```bash
+npm install -g tgcloud-mcp
+tgcloud-mcp setup
+```
+
+Der Assistent schreibt die MCP-Konfiguration und fragt, ob das [Agent Plugin](https://agent-plugins.org) installiert werden soll (`agent-plugin/` in diesem Repo). Eine Kopie liegt in `~/.tgcloud-mcp/agent-plugin`. Cursor bekommt `~/.cursor/plugins/local/tgcloud`. VS Code bekommt einen Eintrag in `chat.pluginLocations`. Codex, Copilot und Kiro laden dasselbe Verzeichnis über ihre Plugin-Oberfläche.
+
+Claude Code und opencode bleiben bei der MCP-Konfiguration. Den Skill gibt es so:
+
+```bash
+npx skills add sdamarketing/tgcloud_mcp
+```
+
+## Ein Befehl (macOS / Linux / WSL)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
+```
+
+Klont nach `~/.tgcloud-mcp`, baut und startet den Assistenten. Erneutes Ausführen aktualisiert.
+
+## Docker
+
+```bash
+docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
+```
+
+## Manuelle Client-Konfiguration
+
+**opencode** (`~/.config/opencode/opencode.json`):
+
+```json
+{ "mcp": { "tgcloud": { "type": "local", "command": ["npx", "-y", "tgcloud-mcp"], "enabled": true } } }
+```
+
+**Claude Code / Cursor:**
+
+```json
+{ "mcpServers": { "tgcloud": { "command": "npx", "args": ["-y", "tgcloud-mcp"] } } }
+```
+
+**VS Code** (`mcp.json`):
+
+```json
+{ "servers": { "tgcloud": { "type": "stdio", "command": "npx", "args": ["-y", "tgcloud-mcp"] } } }
+```
+
+## Umgebungsvariablen
+
+| Variable | Vorgabe | Zweck |
+|---|---|---|
+| `TGCLOUD_CLI` | `npx` | Befehl, der die CLI startet (darf ein Proxy-Wrapper sein) |
+| `TGCLOUD_CLI_ARGS` | `tgcloud` | Argumente vor dem Unterbefehl |
+| `TGCLOUD_TIMEOUT_MS` | `120000` | Timeout eines Befehls. `deploy` lässt `npm run build` mindestens 300000 ms |
+| `TGCLOUD_TOKEN` | — | CLI-access-Token statt `tgcloud login` |

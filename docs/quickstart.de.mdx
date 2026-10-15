@@ -1,0 +1,39 @@
+---
+title: Schnellstart
+description: In wenigen Dialogminuten vom leeren Ordner zum laufenden Bot
+---
+
+# Schnellstart
+
+## 1. Token
+
+@BotFather → dein Bot → **Serverless → CLI Access → Access token**.
+Format `app<id>:<secret>`, nicht das Bot-API-Token (`123456:AA…`).
+Schalte Serverless für diesen Bot vorher ein.
+
+## 2. Sprich mit dem Assistenten
+
+```
+Du:        Lege einen Bot in ~/bots/echo an
+Assistent: create_project → fragt nach dem CLI-access-Token → login_bot
+           → ändert tgcloud/handlers/message.js → push → webhook_sync
+```
+
+Der Bot ist live. Die Logik lässt sich ohne echten Chat prüfen:
+
+```
+Assistent: run_handler { module: 'handlers/message', args: '{ chat: { id: 1 }, text: "hi" }' }
+```
+
+`run_handler` führt auch Endpoints aus. Init-Daten gehören in `ctx`.
+
+## 3. Weiter
+
+- [Werkzeuge](tools.de) — alle 16 Befehle
+- [Sicherheit](security.de) — Schutzregeln und Tokens
+- [Kochbuch](cookbook.de) — Bot mit Datenbank, Buttons und Mini App
+
+Nach Änderungen am Frontend ruft der Assistent `deploy` auf (bauen, dann push).
+Ein bloßes `push` lädt den Build-Ordner so hoch, wie er auf der Platte liegt, und startet den Bundler nicht.
+Eine Schemaänderung ist `push`, dann `migrate` (Vorschau), dann `migrate` mit `confirm: true`.
+Wenn die Vorschau nichts löscht, nimm `apply: "safe"`.

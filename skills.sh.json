@@ -4,7 +4,7 @@
   "groupings": [
     {
       "title": "Telegram bots",
-      "description": "Serverless-боты Telegram на платформе @tgcloud: скаффолд, деплой, миграции БД, вебхуки, Mini Apps.",
+      "description": "Telegram serverless bots on @tgcloud: scaffold, deploy, database migrations, webhooks, Mini Apps.",
       "skills": ["tgcloud"]
     }
   ]

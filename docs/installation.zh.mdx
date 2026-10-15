@@ -1,0 +1,66 @@
+---
+title: 安装
+description: 安装 tgcloud-mcp 并连接 MCP 客户端
+---
+
+# 安装
+
+需要 **Node.js 20+**。平台 CLI 本身需要 Node.js 18+。
+
+## 从 npm 安装
+
+```bash
+npm install -g tgcloud-mcp
+tgcloud-mcp setup
+```
+
+向导会写入 MCP 配置，并询问是否安装 [Agent Plugin](https://agent-plugins.org)（仓库中的 `agent-plugin/`）。副本放在 `~/.tgcloud-mcp/agent-plugin`。Cursor 使用 `~/.cursor/plugins/local/tgcloud`。VS Code 会增加一条 `chat.pluginLocations`。Codex、Copilot 和 Kiro 通过各自的插件界面加载同一目录。
+
+Claude Code 和 opencode 继续使用 MCP 配置。Skill 用下面的命令安装：
+
+```bash
+npx skills add sdamarketing/tgcloud_mcp
+```
+
+## 一条命令（macOS / Linux / WSL）
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
+```
+
+克隆到 `~/.tgcloud-mcp`，构建，然后运行向导。再次运行即更新。
+
+## Docker
+
+```bash
+docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
+```
+
+## 手动配置
+
+**opencode**（`~/.config/opencode/opencode.json`）：
+
+```json
+{ "mcp": { "tgcloud": { "type": "local", "command": ["npx", "-y", "tgcloud-mcp"], "enabled": true } } }
+```
+
+**Claude Code / Cursor：**
+
+```json
+{ "mcpServers": { "tgcloud": { "command": "npx", "args": ["-y", "tgcloud-mcp"] } } }
+```
+
+**VS Code**（`mcp.json`）：
+
+```json
+{ "servers": { "tgcloud": { "type": "stdio", "command": "npx", "args": ["-y", "tgcloud-mcp"] } } }
+```
+
+## 环境变量
+
+| 变量 | 默认值 | 作用 |
+|---|---|---|
+| `TGCLOUD_CLI` | `npx` | 启动 CLI 的命令（可以是代理包装） |
+| `TGCLOUD_CLI_ARGS` | `tgcloud` | 子命令前面的参数 |
+| `TGCLOUD_TIMEOUT_MS` | `120000` | 单条命令超时。`deploy` 为 `npm run build` 至少留 300000 毫秒 |
+| `TGCLOUD_TOKEN` | — | CLI access token，用来代替 `tgcloud login` |

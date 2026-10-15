@@ -1,0 +1,39 @@
+---
+title: بداية سريعة
+description: من الصفر إلى بوت يعمل خلال حوار قصير
+---
+
+# بداية سريعة
+
+## 1. الرمز
+
+@BotFather ← بوتك ← **Serverless ← CLI Access ← Access token**.
+الصيغة `app<id>:<secret>` وليست رمز Bot API‏ (`123456:AA…`).
+فعّل Serverless لهذا البوت قبل هذه الخطوة.
+
+## 2. قل للمساعد
+
+```
+أنت:   أنشئ بوتًا في ~/bots/echo
+المساعد: create_project ← يطلب CLI access token ← login_bot
+        ← يعدّل tgcloud/handlers/message.js ← push ← webhook_sync
+```
+
+البوت يعمل. لاختبار المنطق من غير محادثة حقيقية:
+
+```
+المساعد: run_handler { module: 'handlers/message', args: '{ chat: { id: 1 }, text: "hi" }' }
+```
+
+`run_handler` يشغّل endpoints أيضًا. مرّر init data في `ctx`.
+
+## 3. بعد ذلك
+
+- [الأدوات](tools.ar) — الأوامر الستة عشر
+- [الأمان](security.ar) — الحواجز والرموز
+- [الدليل](cookbook.ar) — بوت بقاعدة وبيانات وأزرار وMini App
+
+بعد تعديل الواجهة الأمامية يستدعي المساعد `deploy` (بناء ثم push).
+`push` وحده يرفع مجلد البناء كما هو ولا يشغّل المُجمّع.
+تغيير المخطط: `push` ثم `migrate` (معاينة) ثم `migrate` مع `confirm: true`.
+إذا لم تحوِ المعاينة حذفًا فاستخدم `apply: "safe"`.

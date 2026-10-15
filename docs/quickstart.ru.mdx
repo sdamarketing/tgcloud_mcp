@@ -8,7 +8,8 @@ description: От нуля до живого бота за пять минут �
 ## 1. Токен
 
 @BotFather → ваш бот → **Serverless → CLI Access → Access token**.
-Формат `app<id>:<secret>` — это НЕ API-токен вида `123456:AA…`.
+Формат `app<id>:<secret>`. Это не Bot API токен (`123456:AA…`).
+Сначала включите Serverless у этого бота.
 
 ## 2. Диалог с агентом
 
@@ -24,8 +25,15 @@ description: От нуля до живого бота за пять минут �
 Агент: run_handler { module: 'handlers/message', args: '{ chat: { id: 1 }, text: "hi" }' }
 ```
 
+`run_handler` запускает и endpoints. Init data передаётся в `ctx`.
+
 ## 3. Что дальше
 
-- [Инструменты](tools.ru) — все 14 команд
+- [Инструменты](tools.ru) — все 16 команд
 - [Безопасность](security.ru) — guardrails и токены
-- [Кукбук](cookbook.ru) — бот с БД, кнопками и мини-аппом
+- [Кукбук](cookbook.ru) — бот с базой, кнопками и Mini App
+
+После правок фронтенда агент вызывает `deploy` (сборка, затем push).
+Обычный `push` заливает папку сборки как есть и бандлер не запускает.
+Изменение схемы: `push`, затем `migrate` (предпросмотр), затем `migrate`
+с `confirm: true`. Если в предпросмотре нет удалений, берите `apply: "safe"`.

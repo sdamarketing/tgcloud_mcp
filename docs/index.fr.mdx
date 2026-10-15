@@ -1,0 +1,27 @@
+---
+title: tgcloud-mcp
+description: Serveur MCP pour les bots Telegram serverless (@tgcloud)
+---
+
+# tgcloud-mcp
+
+[English](index.en) · [Русский](index.ru) · [中文](index.zh) · [العربية](index.ar) · [Deutsch](index.de)
+
+Un serveur MCP qui apprend à un assistant à gérer des **bots Telegram serverless** (plateforme `@tgcloud`, core.telegram.org/bots/serverless) : échafaudage, liaison du bot, handlers et endpoints, déploiement, migrations, webhooks.
+
+Fonctionne avec tout client MCP : opencode, Claude Code, Cursor, Claude Desktop, VS Code (Copilot), Windsurf, Zed. Le même serveur et le même skill sont aussi livrés comme un [Agent Plugin](https://agent-plugins.org) pour Codex, Cursor, Copilot, Kiro et VS Code.
+
+## Fonctions
+
+- **16 outils** pour la CLI `tgcloud`, dont `upgrade` (disposition d'avant 0.2.0) et `deploy` (build, puis push)
+- **Ressources** `tgcloud://docs/*` — référence intégrée de la plateforme, en anglais, alignée sur la documentation officielle
+- **Gardes** — les opérations destructives exigent `confirm: true` ; les jetons sont masqués
+- **Plusieurs projets** — chaque outil reçoit un `project_dir` absolu
+
+## Démarrage
+
+```bash
+npm install -g tgcloud-mcp && tgcloud-mcp setup
+```
+
+Ensuite : [Installation](installation.fr) → [Démarrage](quickstart.fr) → [Recette](cookbook.fr).

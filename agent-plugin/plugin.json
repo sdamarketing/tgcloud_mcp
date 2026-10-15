@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "tgcloud",
+  "version": "0.3.0",
+  "description": "Telegram serverless bots: scaffold, deploy, migrations, and webhooks through the tgcloud CLI.",
+  "author": {
+    "name": "sdamarketing",
+    "url": "https://github.com/sdamarketing"
+  },
+  "homepage": "https://github.com/sdamarketing/tgcloud_mcp",
+  "repository": "https://github.com/sdamarketing/tgcloud_mcp",
+  "license": "MIT",
+  "keywords": ["telegram", "tgcloud", "serverless", "bots", "mcp"]
+}

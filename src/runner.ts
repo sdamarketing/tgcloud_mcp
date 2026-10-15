@@ -33,19 +33,24 @@ export interface RunOutput {
 export class TgcloudRunner {
   constructor(private readonly config: TgcloudMcpConfig) {}
 
-  /** Проверяет project_dir: абсолютный путь к существующему каталогу. */
+  /** Configured per-command timeout. Build steps may pass a longer one. */
+  get timeoutMs(): number {
+    return this.config.timeoutMs;
+  }
+
+  /** Checks project_dir: an absolute path to an existing directory. */
   resolveProjectDir(dir: string): string {
     if (!isAbsolute(dir)) {
-      throw new Error(`project_dir должен быть абсолютным путём, получено: ${dir}`);
+      throw new Error(`project_dir must be an absolute path, got: ${dir}`);
     }
     let st;
     try {
       st = statSync(dir);
     } catch {
-      throw new Error(`Каталог не существует: ${dir}`);
+      throw new Error(`Directory does not exist: ${dir}`);
     }
     if (!st.isDirectory()) {
-      throw new Error(`Не является каталогом: ${dir}`);
+      throw new Error(`Not a directory: ${dir}`);
     }
     return resolve(dir);
   }
@@ -65,9 +70,9 @@ export class TgcloudRunner {
     const out = await this.tgcloud(args, opts);
     const text = [out.stdout, out.stderr].filter(Boolean).join('\n').trim();
     if (out.code !== 0) {
-      throw new TgcloudError(`tgcloud завершился с кодом ${out.code}:\n${text}`, out.code, out.stderr);
+      throw new TgcloudError(`tgcloud exited with code ${out.code}:\n${text}`, out.code, out.stderr);
     }
-    return text || '(команда выполнена, вывод пуст)';
+    return text || '(command finished with empty output)';
   }
 
   private spawn(command: string, args: string[], opts: RunOptions): Promise<RunOutput> {
@@ -85,7 +90,7 @@ export class TgcloudRunner {
         if (!settled) {
           settled = true;
           child.kill('SIGKILL');
-          rejectPromise(new Error(`Таймаут команды (${timeoutMs} мс): ${command} ${args.join(' ')}`));
+          rejectPromise(new Error(`Command timed out (${timeoutMs} ms): ${command} ${args.join(' ')}`));
         }
       }, timeoutMs);
 
@@ -99,7 +104,7 @@ export class TgcloudRunner {
         if (!settled) {
           settled = true;
           clearTimeout(timer);
-          rejectPromise(new Error(`Не удалось запустить ${command}: ${err.message}`));
+          rejectPromise(new Error(`Failed to start ${command}: ${err.message}`));
         }
       });
       child.on('close', (code) => {

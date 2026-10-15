@@ -1,0 +1,31 @@
+---
+title: Sicherheit
+description: Schutzregeln, Tokens und Bestätigung
+---
+
+# Sicherheit
+
+`tgcloud-mcp` ist ein inoffizieller Community-Server und nicht mit Telegram verbunden. Das offizielle Werkzeug der Plattform ist `@tgcloud/cli`. Dieser Server startet nur diese CLI und gibt ihre Ausgabe zurück. Hinweise zur Lieferkette stehen in [SECURITY.md](https://github.com/sdamarketing/tgcloud_mcp/blob/main/SECURITY.md).
+
+## Zerstörende Aufrufe brauchen `confirm: true`
+
+- `reset` — Arbeitsdateien der Module auf den Cloud-Snapshot zurücksetzen
+- `push` mit `force: true` — Cloud-Zustand überschreiben
+- `upgrade` mit `dry_run: false` — ein Projekt von vor 0.2.0 nach `tgcloud/` verschieben
+- `migrate` mit `dry_run: false` — Migrationen anwenden, bei `apply: "yes"` einschließlich `.deprecated`-Löschungen
+- `webhook_sync` mit `drop_pending: true` — die wartende Update-Warteschlange verwerfen
+
+Ohne `confirm: true` lehnt das Werkzeug ab und verlangt, dass der Assistent dem Nutzer genau zeigt, was sich ändert, und ein ausdrückliches Ja holt.
+
+`deploy` baut und macht push ohne `--force`. Es fragt nicht nach `confirm` und migriert nicht.
+
+## Tokens
+
+- Das CLI-access-Token (`app<id>:<secret>`) geht über stdin oder `TGCLOUD_TOKEN` an die CLI und wird in jeder Werkzeugausgabe **maskiert**, ebenso Bot-API-Tokens.
+- Lege Tokens nicht in Projektdateien ab. `.tgcloud/`, wo die CLI Zugangsdaten speichert, steht durch das Gerüst in `.gitignore`.
+
+## Netz
+
+Der Server braucht Zugang zu `cloud.telegram.org`. Wenn Telegram von der Maschine aus nicht erreichbar ist, lenke den CLI-Wrapper über einen Proxy (`TGCLOUD_CLI` → ein Skript mit `HTTPS_PROXY` und `NODE_USE_ENV_PROXY=1`).
+
+Der Server schickt Tokens nirgendwohin außer durch die CLI, und die spricht mit der Plattform. Er führt keinen Code aus, den du nicht als CLI-Befehl angefordert hast.

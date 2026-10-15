@@ -1,0 +1,38 @@
+---
+title: Fehlerbehebung
+description: Häufige Fehler und was dagegen hilft
+---
+
+# Fehlerbehebung
+
+## `"tgcloud login" requires an interactive terminal`
+
+Die CLI braucht ein TTY. Nimm das Werkzeug `login_bot`: Es schreibt das Token über stdin mit `TGCLOUD_ASSUME_TTY=1`. In CI: `TGCLOUD_TOKEN='app...'`.
+
+## `Token format looks wrong. Expected "app<id>:<secret>"`
+
+Das war das Bot-API-Token. Nötig ist das **CLI-access-Token**: @BotFather → Bot → Serverless → CLI Access.
+
+## `Could not reach the tgcloud server`
+
+`cloud.telegram.org` ist nicht erreichbar. Prüfe Netz und Proxy und lenke die CLI über `TGCLOUD_CLI` auf einen Wrapper mit `HTTPS_PROXY` und `NODE_USE_ENV_PROXY=1`.
+
+## `This bot already has N deployed modules (revision R)`
+
+Cloud und Projekt sind auseinandergelaufen: `fetch` → `diff` → `push` (oder wissentlich `push { force: true, confirm: true }`).
+
+## `non-interactive session — specify --safe, --yes, or --dry-run`
+
+Nimm `migrate`. Vorgabe ist `--dry-run`. Anwenden braucht `dry_run: false` und `confirm: true`. `apply: "safe"` ist `--safe` (Warnungs-Löschungen bleiben aus). `apply: "yes"` ist `--yes` (Warnungs-Löschungen werden angewendet, manuelle Typänderungen nicht).
+
+## Befehle lehnen ein Projekt mit `schema.js` im Wurzelverzeichnis ab
+
+Das ist das Layout vor CLI 0.2.0. Erst `upgrade` mit `dry_run: true`, dann `upgrade { dry_run: false, confirm: true }`.
+
+## `chat not found` in `run_handler`
+
+Bei einer erfundenen Chat-Id erwartet: Datenbankschreibvorgänge gelingen, nur die echte Telegram-Zustellung scheitert. Die Handler-Logik läuft trotzdem.
+
+## Die Mini App zeigt ein altes Frontend
+
+`push` startet den Bundler nicht. Rufe `deploy` auf, oder baue und mache danach push. `immutable` in `tgcloud.jsonc` hält passende Dateien ein Jahr im Cache — nur für Pfade mit Inhalts-Hash, zum Beispiel `/assets/*`.

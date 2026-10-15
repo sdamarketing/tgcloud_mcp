@@ -1,0 +1,53 @@
+---
+title: 工具
+description: tgcloud-mcp 的全部 16 个工具
+---
+
+# 工具
+
+每个工具都接收 `project_dir`，即 tgcloud 项目的绝对路径（`create_project` 改为接收 `parent_dir` 和 `name`）。
+
+## 生命周期
+
+| 工具 | CLI | 说明 |
+|---|---|---|
+| `create_project` | `npm create @tgcloud/bot` | 新建项目（`parent_dir`、`name`） |
+| `init_project` | `tgcloud init` | 在现有目录中生成脚手架，能识别 Mini App |
+| `login_bot` | `tgcloud login` | 用 CLI access token（`app<id>:<secret>`）绑定；令牌经 stdin，输出中掩码 |
+| `add_module` | `tgcloud add` | 新模块：`handlers/<type>`、`endpoints/<name>`、`lib/<path>` |
+| `upgrade` | `tgcloud upgrade` | 把 0.2.0 之前的布局移入 `tgcloud/`。默认 `dry_run: true`；真正执行需要 `confirm: true` |
+
+## 同步
+
+| 工具 | CLI | 说明 |
+|---|---|---|
+| `status` | `tgcloud status` | 本地相对快照的变化（离线），含静态文件差异和 webhook 是否同步 |
+| `diff` | `tgcloud diff` | 逐行 diff（离线） |
+| `push` | `tgcloud push` | 原子部署。不构建前端，不迁移数据库。`force: true` 需要 `confirm: true` |
+| `deploy` | `npm run build` + `tgcloud push` | 若 `package.json` 有 build 脚本则先构建再 push。`skip_build: true` 只 push |
+| `pull` | `tgcloud pull` | 云端 → 快照和工作文件。不写入 Mini App 构建目录 |
+| `fetch` | `tgcloud fetch` | 云端 → 只更新快照 |
+| `reset` | `tgcloud reset` | 丢弃本地模块修改；需要 `confirm: true` |
+
+## 数据
+
+| 工具 | CLI | 说明 |
+|---|---|---|
+| `run_handler` | `tgcloud run` | 不部署即可运行 handler 或 endpoint。`args` 与 `ctx` 为 JSON5 |
+| `migrate` | `tgcloud migrate` | 默认 `dry_run: true` 只预览。应用时需要 `dry_run: false` 和 `confirm: true`。`apply: "safe"` 即 `--safe`；应用时默认 `apply: "yes"` 即 `--yes`。`local: true` 即 `--local` |
+
+## Webhook
+
+| 工具 | CLI | 说明 |
+|---|---|---|
+| `webhook_status` | `tgcloud webhook` | URL、allowed_updates、积压、投递错误、是否与 handlers 同步 |
+| `webhook_sync` | `tgcloud webhook sync` | 重新指向平台。`drop_pending: true` 需要 `confirm: true` |
+
+新增或删除 handler 后，webhook 可能不同步。`push` 不保证刷新。这种部署之后调用 `webhook_sync`。
+
+## 流程
+
+- **机器人没反应**：`webhook_status` → `status` / `diff` → `push` → `webhook_sync`
+- **push 时修订冲突**：`fetch` → `diff` → `push`（或带 `confirm` 的 `force`）
+- **改 schema**：编辑 `schema.js` → `push` → `migrate`（dry-run）→ 带 `confirm` 的 `migrate`。没有删除时用 `apply: "safe"`
+- **Mini App 前端**：用 `deploy`，不要只 `push`

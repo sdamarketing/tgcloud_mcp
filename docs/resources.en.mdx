@@ -5,19 +5,23 @@ description: Built-in platform docs at tgcloud://docs/*
 
 # Resources
 
-The server exposes the platform reference as MCP resources — the agent reads
-them without tool calls:
+The server exposes the platform reference as MCP resources. The agent reads
+them without a tool call. The text is English, the same language as
+core.telegram.org/bots/serverless, so it can be checked against that page.
 
 | URI | Content |
 |---|---|
-| `tgcloud://docs/project-structure` | Project layout: `tgcloud/`, handlers/endpoints/lib/schema.js, import rules (relative paths WITH `.js`), Mini Apps |
-| `tgcloud://docs/cli` | tgcloud CLI reference: commands, flags, non-interactive modes |
-| `tgcloud://docs/sdk-db` | `sdk/db`: schema DSL, query builder, raw SQL, limits (no FKs, drops via `.deprecated`) |
-| `tgcloud://docs/sdk-api` | `sdk/api`: full Bot API, `BotApiError` |
+| `tgcloud://docs/project-structure` | `tgcloud/` layout, handlers, endpoints, lib, schema.js. Project imports are relative paths **with** `.js`. Mini App static hosting |
+| `tgcloud://docs/cli` | CLI reference: commands, `--dry-run` / `--safe` / `--yes` / `--local`, upgrade, webhook |
+| `tgcloud://docs/sdk-db` | `sdk/db`: column types (`text`, `integer`, `real`, `numeric`, `blob`, `boolean`, `json`) and modes, query builder, raw SQL, no foreign keys, drops via `.deprecated` |
+| `tgcloud://docs/sdk-api` | `sdk/api`: full Bot API, `BotApiError`, `InputFile` |
 | `tgcloud://docs/sdk-fetch` | `sdk/fetch`: HTTP client, body helpers, 32 MB cap |
+| `tgcloud://docs/limits` | Documented limits, and the quotas that are not published |
 
-Source: core.telegram.org/bots/serverless, verified against a real
-`npm create @tgcloud/bot` scaffold (@tgcloud/cli 0.2.x).
+Inside a scaffolded project, read `AGENTS.md` and `docs/tgcloud-sdk.md` first.
+Those files match the CLI that created the project. The resources are the
+fallback when you are not inside one.
 
-Source of truth in the repo: `resources/docs/*.md`; `npm run docs:check`
-keeps resources in sync.
+Source of truth in the repo: `resources/docs/*.md`. `npm run docs:check`
+checks that every file is registered, that the two skill copies match, and
+that every English page has ru, zh, ar, de, and fr siblings.

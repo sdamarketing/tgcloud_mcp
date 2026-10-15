@@ -1,41 +1,43 @@
 # Security Policy
 
-## Статус проекта
+Human-facing guardrails are also in the docs: [English](docs/security.en.mdx),
+[Russian](docs/security.ru.mdx), [Chinese](docs/security.zh.mdx),
+[Arabic](docs/security.ar.mdx), [German](docs/security.de.mdx),
+[French](docs/security.fr.mdx).
 
-`tgcloud-mcp` — **неофициальный** (community) MCP-сервер для платформы Telegram
-serverless bots. Он **не аффилирован с Telegram**; официальный инструмент
-платформы — CLI `@tgcloud/cli`. Этот сервер только запускает локальный CLI и
-возвращает его вывод.
+## Project status
 
-## Что сервер делает и чего не делает
+`tgcloud-mcp` is an **unofficial** community MCP server for Telegram serverless
+bots. It is **not affiliated with Telegram**. The platform's official tool is
+the `@tgcloud/cli` CLI. This server only launches that local CLI and returns
+its output.
 
-**Делает:**
+## What the server does
 
-- запускает `tgcloud` CLI локально (`TGCLOUD_CLI`, по умолчанию `npx tgcloud`),
-  в каталоге проекта `project_dir`;
-- CLI access token передаёт CLI через stdin (`login_bot`) или берётся из
-  `TGCLOUD_TOKEN`; в выводах инструментов токены маскируются;
-- требует `confirm: true` для деструктивных операций.
+- Runs the `tgcloud` CLI locally (`TGCLOUD_CLI`, default `npx tgcloud`) in the
+  project directory `project_dir`.
+- Passes the CLI access token to the CLI on stdin (`login_bot`) or reads
+  `TGCLOUD_TOKEN`. Tokens are masked in tool output.
+- Requires `confirm: true` for destructive operations (`reset`, `push --force`,
+  applying `upgrade`, applying `migrate`, `webhook sync --drop-pending`).
 
-**Не делает:**
+It does not send tokens or data anywhere except through the CLI, which talks
+to the platform API (cloud.telegram.org). It has no network calls of its own.
+It does not run arbitrary code beyond the CLI command you asked for.
+`deploy` additionally runs `npm run build` in the project when that script exists.
 
-- не отправляет токены и данные никуда, кроме официального API платформы
-  (куда ходит сам CLI — cloud.telegram.org);
-- не содержит сетевых вызовов кроме как через CLI;
-- не выполняет произвольный код, кроме явно запрошенных команд CLI.
-
-Единственный процесс, который сервер запускает — настраиваемый `TGCLOUD_CLI`.
-Экзотический вариант (обёртка с прокси) — осознанный выбор пользователя.
+The only process the server starts is the configurable `TGCLOUD_CLI`. A proxy
+wrapper is a choice you make.
 
 ## Supply chain
 
-- Публикация в npm — только из GitHub Actions по тегу `v*`, через OIDC
-  Trusted Publisher (`sdamarketing/tgcloud_mcp` + `publish.yml`) с Sigstore
+- npm publishes only from GitHub Actions on a `v*` tag, through OIDC trusted
+  publishing (`sdamarketing/tgcloud_mcp` + `publish.yml`) with Sigstore
   provenance: `npm view tgcloud-mcp dist.attestations`.
-- Проверить прованенс: страница пакета на npmjs.com → Provenance.
-- Docker-образ строится тем же CI из того же коммита (ghcr.io).
+- Check provenance on the package page at npmjs.com → Provenance.
+- The Docker image is built by the same CI from the same commit (ghcr.io).
 
-## Отчёт об уязвимости
+## Reporting a vulnerability
 
-Откройте [GitHub Issue](https://github.com/sdamarketing/tgcloud_mcp/issues)
-или напишите владельцу репозитория. Не публикуйте детали эксплойта до фикса.
+Open a [GitHub issue](https://github.com/sdamarketing/tgcloud_mcp/issues)
+or write to the repository owner. Do not publish exploit details before a fix.

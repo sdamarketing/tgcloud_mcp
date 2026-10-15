@@ -57,8 +57,8 @@ notify('notifications/initialized');
 const tools = await request('tools/list');
 const toolNames = (tools.result?.tools ?? []).map((t) => t.name);
 const expectedTools = [
-  'create_project', 'init_project', 'login_bot', 'add_module',
-  'status', 'diff', 'push', 'pull', 'fetch', 'reset',
+  'create_project', 'init_project', 'login_bot', 'add_module', 'upgrade',
+  'status', 'diff', 'push', 'pull', 'fetch', 'reset', 'deploy',
   'run_handler', 'migrate', 'webhook_status', 'webhook_sync',
 ];
 const missing = expectedTools.filter((n) => !toolNames.includes(n));

@@ -1,6 +1,6 @@
 {
   "name": "tgcloud-mcp",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "MCP server for Telegram serverless bots (@tgcloud) — project lifecycle, deploys, migrations and webhooks through the tgcloud CLI",
   "type": "module",
   "main": "dist/index.js",
@@ -19,7 +19,7 @@
     "links": "node scripts/generate-install-links.mjs",
     "docs:check": "node scripts/check-docs-drift.mjs",
     "update": "node scripts/self-update.mjs",
-    "test": "npm run build && npm run smoke && node tests/e2e.mjs",
+    "test": "npm run build && npm run smoke && node tests/e2e.mjs && npm run docs:check",
     "prepublishOnly": "npm run test"
   },
   "dependencies": {
@@ -35,6 +35,7 @@
     "bin",
     "resources",
     "skills",
+    "agent-plugin",
     "README.md",
     "LICENSE"
   ],

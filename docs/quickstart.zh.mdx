@@ -1,0 +1,36 @@
+---
+title: 快速开始
+description: 几分钟对话，从零到一个在线机器人
+---
+
+# 快速开始
+
+## 1. 令牌
+
+@BotFather → 你的机器人 → **Serverless → CLI Access → Access token**。
+格式是 `app<id>:<secret>`，不是 Bot API 令牌（`123456:AA…`）。
+先为这个机器人打开 Serverless。
+
+## 2. 对助手说
+
+```
+你：   在 ~/bots/echo 创建一个机器人
+助手： create_project → 索要 CLI access token → login_bot
+      → 编辑 tgcloud/handlers/message.js → push → webhook_sync
+```
+
+机器人已经在线。不必真的发消息也能测逻辑：
+
+```
+助手： run_handler { module: 'handlers/message', args: '{ chat: { id: 1 }, text: "hi" }' }
+```
+
+`run_handler` 也能运行 endpoint。init data 放在 `ctx` 里。
+
+## 3. 接下来
+
+- [工具](tools.zh) — 全部 16 个命令
+- [安全](security.zh) — 护栏与令牌
+- [教程](cookbook.zh) — 带数据库、按钮和 Mini App 的机器人
+
+改完前端后应调用 `deploy`（先构建再 push）。单独的 `push` 只上传磁盘上现有的构建目录，不会运行打包器。改 schema 的顺序是 `push`，然后 `migrate`（预览），再带 `confirm: true` 的 `migrate`。预览里没有删除时用 `apply: "safe"`。

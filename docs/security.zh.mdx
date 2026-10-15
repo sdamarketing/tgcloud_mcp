@@ -1,0 +1,31 @@
+---
+title: 安全
+description: 护栏、令牌与确认
+---
+
+# 安全
+
+`tgcloud-mcp` 是非官方的社区服务器，与 Telegram 无隶属关系。平台的官方工具是 `@tgcloud/cli`。本服务器只启动该 CLI 并返回其输出。供应链说明见 [SECURITY.md](https://github.com/sdamarketing/tgcloud_mcp/blob/main/SECURITY.md)。
+
+## 破坏性操作需要 `confirm: true`
+
+- `reset` — 把工作区中的模块文件退回云端快照
+- `force: true` 的 `push` — 覆盖云端状态
+- `dry_run: false` 的 `upgrade` — 把 0.2.0 之前的项目移入 `tgcloud/`
+- `dry_run: false` 的 `migrate` — 应用迁移；`apply` 为 `"yes"` 时包括 `.deprecated` 删除
+- `drop_pending: true` 的 `webhook_sync` — 丢弃积压的 update
+
+没有 `confirm: true` 时工具会拒绝，并要求助手向用户展示将要改变的内容、得到明确同意后再调用。
+
+`deploy` 会构建并 push，且不带 `--force`。它不要求 `confirm`，也不会迁移数据库。
+
+## 令牌
+
+- CLI access token（`app<id>:<secret>`）通过 stdin 或 `TGCLOUD_TOKEN` 交给 CLI，并在所有工具输出中**掩码**。Bot API 令牌同样会被掩码。
+- 不要把令牌写进项目文件。CLI 保存凭据的 `.tgcloud/` 已由脚手架加入 `.gitignore`。
+
+## 网络
+
+服务器需要访问 `cloud.telegram.org`。如果本机到不了 Telegram，用代理包装 CLI（`TGCLOUD_CLI` 指向带 `HTTPS_PROXY` 和 `NODE_USE_ENV_PROXY=1` 的脚本）。
+
+除了经由 CLI 访问平台之外，服务器不把令牌发到别处。它也不执行你没有点名的命令。

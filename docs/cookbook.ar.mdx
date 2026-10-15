@@ -1,0 +1,21 @@
+---
+title: الدليل
+description: بوت بلا خادم مع Mini App في أمسية واحدة
+---
+
+# الدليل
+
+الوصفة الطويلة، وفيها مخرجات CLI مأخوذة من بوت حقيقي، موجودة في المستودع. سرد ذلك الملف بالروسية؛ الأوامر أوامر المنصة ولا تعتمد على لغة الشرح:
+
+[docs/cookbook-srl-bot.md](https://github.com/sdamarketing/tgcloud_mcp/blob/main/docs/cookbook-srl-bot.md)
+
+يمشي على:
+
+1. الهيكل وتسجيل الدخول (نوعان من الرموز)
+2. معالج الرسائل وجدول في القاعدة
+3. النشر والترحيل (`--dry-run` و`--safe` و`--yes`)
+4. أزرار مضمّنة (`callback_query`)
+5. Mini App: ‏`endpoints/` والملفات الثابتة و`tgcloud.jsonc` ثم `deploy` حتى يكون البناء حديثًا
+6. تشخيص بوت صامت (`webhook_status` ثم `webhook_sync`)
+
+المزالق هناك وفي `tgcloud://docs/*`: الاستيراد النسبي مع `.js`، ولا مفاتيح أجنبية، والحذف فقط عبر `.deprecated`، وpush لا يبني ولا يرحّل، وقد يُخرج handler جديد الـ webhook عن التزامن.

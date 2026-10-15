@@ -51,7 +51,7 @@ server.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initi
 check('initialize', init.result?.serverInfo?.name === 'tgcloud');
 
 const tools = await req('tools/list');
-check('tools/list = 14', (tools.result?.tools ?? []).length === 14);
+check('tools/list = 16', (tools.result?.tools ?? []).length === 16);
 
 const resources = await req('resources/list');
 check('resources/list = 6', (resources.result?.resources ?? []).length === 6);
@@ -65,7 +65,7 @@ check('status (нет каталога) → isError', bad.result?.isError === tr
 
 const rel = await call('status', { project_dir: 'relative/path' });
 const relText = rel.result?.content?.[0]?.text ?? '';
-check('status (относительный путь) → отказ', relText.includes('абсолютным'));
+check('status (относительный путь) → отказ', relText.includes('absolute path'));
 
 const danger = await call('reset', { project_dir: '/tmp' });
 check('reset без confirm → отказ', (danger.result?.content?.[0]?.text ?? '').includes('confirm=true'));

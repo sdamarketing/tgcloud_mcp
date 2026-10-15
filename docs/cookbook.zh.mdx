@@ -1,0 +1,21 @@
+---
+title: 教程
+description: 一个晚上做出带 Mini App 的无服务器机器人
+---
+
+# 教程
+
+带真实 CLI 输出的长教程在仓库里。那份叙述是俄文；命令属于平台，不依赖叙述语言：
+
+[docs/cookbook-srl-bot.md](https://github.com/sdamarketing/tgcloud_mcp/blob/main/docs/cookbook-srl-bot.md)
+
+它覆盖：
+
+1. 脚手架与登录（两种令牌）
+2. 消息 handler 和一张数据库表
+3. 部署与迁移（`--dry-run`、`--safe`、`--yes`）
+4. 内联按钮（`callback_query`）
+5. Mini App：`endpoints/`、静态文件、`tgcloud.jsonc`，然后用 `deploy` 保证构建是新的
+6. 机器人没反应时的排查（`webhook_status`，然后 `webhook_sync`）
+
+那里和 `tgcloud://docs/*` 都会提醒：相对导入必须带 `.js`、没有外键、删除只能通过 `.deprecated`、push 既不构建也不迁移、新 handler 可能让 webhook 失去同步。

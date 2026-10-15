@@ -1,0 +1,27 @@
+---
+title: tgcloud-mcp
+description: خادم MCP لبوتات تيليغرام بلا خادم (@tgcloud)
+---
+
+# tgcloud-mcp
+
+[English](index.en) · [Русский](index.ru) · [中文](index.zh) · [Deutsch](index.de) · [Français](index.fr)
+
+خادم MCP يعلّم مساعد الذكاء الاصطناعي إدارة **بوتات تيليغرام بلا خادم** (منصة `@tgcloud`، core.telegram.org/bots/serverless): إنشاء المشروع، ربط البوت، وhandlers وendpoints، والنشر، وترحيل قاعدة البيانات، وwebhook.
+
+يعمل مع أي عميل MCP: opencode وClaude Code وCursor وClaude Desktop وVS Code (Copilot) وWindsurf وZed. الخادم نفسه والمهارة يُشحنان أيضًا كـ [Agent Plugin](https://agent-plugins.org) واحد لـ Codex وCursor وCopilot وKiro وVS Code.
+
+## القدرات
+
+- **16 أداة** تغطي أوامر `tgcloud` CLI، ومنها `upgrade` (تخطيط ما قبل 0.2.0) و`deploy` (بناء ثم push)
+- **موارد** `tgcloud://docs/*` — مرجع المنصة مدمج، بالإنجليزية، مطابق للوثائق الرسمية
+- **حواجز** — العمليات المدمرة تتطلب `confirm: true`، والرموز تُخفى في المخرجات
+- **عدة مشاريع** — كل أداة تأخذ `project_dir` مسارًا مطلقًا
+
+## بداية سريعة
+
+```bash
+npm install -g tgcloud-mcp && tgcloud-mcp setup
+```
+
+التالي: [التثبيت](installation.ar) ← [بداية سريعة](quickstart.ar) ← [الدليل](cookbook.ar).

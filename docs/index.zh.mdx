@@ -1,0 +1,27 @@
+---
+title: tgcloud-mcp
+description: 用于 Telegram 无服务器机器人（@tgcloud）的 MCP 服务器
+---
+
+# tgcloud-mcp
+
+[English](index.en) · [Русский](index.ru) · [العربية](index.ar) · [Deutsch](index.de) · [Français](index.fr)
+
+这个 MCP 服务器让 AI 助手管理 **Telegram 无服务器机器人**（`@tgcloud` 平台，core.telegram.org/bots/serverless）：创建项目、绑定机器人、handlers 与 endpoints、部署、数据库迁移、webhook。
+
+适用于任何 MCP 客户端：opencode、Claude Code、Cursor、Claude Desktop、VS Code (Copilot)、Windsurf、Zed。同一套服务器和 skill 也作为一份 [Agent Plugin](https://agent-plugins.org) 提供给 Codex、Cursor、Copilot、Kiro 和 VS Code。
+
+## 功能
+
+- **16 个工具** — 覆盖 `tgcloud` CLI，包括 `upgrade`（0.2.0 之前的目录布局）和 `deploy`（先构建再 push）
+- **资源** `tgcloud://docs/*` — 内置平台参考，英文，与官方文档对齐
+- **护栏** — 破坏性操作需要 `confirm: true`，令牌会被掩码
+- **多项目** — 每个工具都接收绝对路径 `project_dir`
+
+## 快速开始
+
+```bash
+npm install -g tgcloud-mcp && tgcloud-mcp setup
+```
+
+接下来：[安装](installation.zh) → [快速开始](quickstart.zh) → [教程](cookbook.zh)。

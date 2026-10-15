@@ -1,0 +1,31 @@
+---
+title: Sécurité
+description: Gardes, jetons et confirmation
+---
+
+# Sécurité
+
+`tgcloud-mcp` est un serveur communautaire non officiel, sans lien avec Telegram. L'outil officiel de la plateforme est `@tgcloud/cli`. Ce serveur ne fait que lancer cette CLI et renvoyer sa sortie. La chaîne d'approvisionnement est décrite dans [SECURITY.md](https://github.com/sdamarketing/tgcloud_mcp/blob/main/SECURITY.md).
+
+## Les opérations destructives exigent `confirm: true`
+
+- `reset` — ramener les fichiers de modules à l'instantané du nuage
+- `push` avec `force: true` — écraser l'état du nuage
+- `upgrade` avec `dry_run: false` — déplacer un projet d'avant 0.2.0 dans `tgcloud/`
+- `migrate` avec `dry_run: false` — appliquer les migrations, y compris les suppressions `.deprecated` quand `apply` vaut `"yes"`
+- `webhook_sync` avec `drop_pending: true` — abandonner la file d'updates
+
+Sans `confirm: true`, l'outil refuse et demande à l'assistant de montrer à l'utilisateur exactement ce qui va changer et d'obtenir un oui explicite.
+
+`deploy` construit et pousse sans `--force`. Il ne demande pas `confirm` et ne migre pas.
+
+## Jetons
+
+- Le jeton d'accès CLI (`app<id>:<secret>`) va à la CLI via stdin ou `TGCLOUD_TOKEN` et est **masqué** dans chaque résultat, comme les jetons Bot API.
+- Ne stockez pas les jetons dans les fichiers du projet. `.tgcloud/`, où la CLI enregistre les identifiants, est ignoré par git grâce à l'échafaudage.
+
+## Réseau
+
+Le serveur doit atteindre `cloud.telegram.org`. Si Telegram est injoignable, dirigez l'enveloppe de la CLI à travers un proxy (`TGCLOUD_CLI` → un script avec `HTTPS_PROXY` et `NODE_USE_ENV_PROXY=1`).
+
+Le serveur n'envoie les jetons nulle part ailleurs que par la CLI, qui parle à la plateforme. Il n'exécute pas de code au-delà de la commande CLI demandée.

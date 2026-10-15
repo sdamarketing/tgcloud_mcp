@@ -5,30 +5,32 @@ import { dangerTool, runTool } from '../utils.js';
 
 const projectDir = z
   .string()
-  .describe('Абсолютный путь к каталогу проекта tgcloud (содержит .tgcloud/)');
+  .describe('Absolute path to a tgcloud project directory (contains .tgcloud/)');
 
 const confirm = z
   .boolean()
   .optional()
-  .describe('Обязательный confirm: true для применения миграций, удаляющих данные (deprecated-колонки/таблицы)');
+  .describe('Required confirm: true to apply migrations, including drops of .deprecated columns and tables');
 
 export function registerDataTools(server: McpServer, runner: TgcloudRunner) {
   server.registerTool(
     'run_handler',
     {
-      title: 'Прогнать хендлер без деплоя',
+      title: 'Run a module without deploying',
       description:
-        'Выполняет модуль на платформе c локальными файлами, без деплоя (tgcloud run). ' +
-        'Быстрый способ проверить хендлер: payload и контекст — в формате JSON5. ' +
-        'Возвращает вывод и захваченные console-логи.',
+        'Runs a handler or an endpoint on the platform using local files, without publishing them ' +
+        '(tgcloud run). args is the payload (a Message for handlers/message, or the endpoint input) ' +
+        'as a JSON5 object. ctx is the second argument (--ctx): the raw update for a handler, or ' +
+        'initData for an endpoint, for example { initData: { user: { id: 1, first_name: "Ann" } } }. ' +
+        'Returns the value, captured console logs, and elapsed time.',
       inputSchema: z.object({
         project_dir: projectDir,
-        module: z.string().describe('Путь модуля, например handlers/message'),
+        module: z.string().describe('Module path, for example handlers/message or endpoints/getProfile'),
         args: z
           .string()
           .optional()
-          .describe('Аргумент-хендлера в JSON5, например \'{ chat: { id: 1 }, text: "hi" }\''),
-        ctx: z.string().optional().describe('Контекст выполнения в JSON5 (передаётся как --ctx)'),
+          .describe('Handler payload or endpoint input as JSON5, for example \'{ chat: { id: 1 }, text: "hi" }\''),
+        ctx: z.string().optional().describe('Second-argument context as JSON5 (passed as --ctx)'),
       }),
     },
     async (args) =>
@@ -44,34 +46,46 @@ export function registerDataTools(server: McpServer, runner: TgcloudRunner) {
   server.registerTool(
     'migrate',
     {
-      title: 'Миграции базы данных',
+      title: 'Database migrations',
       description:
-        'Применяет изменения schema.js к базе (tgcloud migrate). ' +
-        'По умолчанию dry_run=true — только показывает diff без изменений (--dry-run). ' +
-        'Применение (dry_run=false) требует confirm: true и идёт неинтерактивно через --yes: ' +
-        'если в схеме есть .deprecated(...)-колонки/таблицы, данные будут удалены безвозвратно. ' +
-        'В интерактивном терминале migrate без флагов спрашивает по каждому изменению ' +
-        '([y]es / [n]o / [q]uit); для агента используй только --dry-run и --yes.',
+        'Applies schema.js changes to the database (tgcloud migrate). push never does this. ' +
+        'dry_run defaults to true (--dry-run): preview only. ' +
+        'Applying (dry_run: false) requires confirm: true. apply "safe" passes --safe ' +
+        '(auto-apply safe changes, skip warnings and manual steps). apply "yes" or omitting apply ' +
+        'passes --yes (safe changes plus every warning, including .deprecated drops that delete data; ' +
+        'manual type changes are still skipped). local: true diffs against the local schema.js ' +
+        'instead of the deployed one (--local) and can be combined with either mode. ' +
+        'Show the user the preview before applying. Warn when the preview contains a drop.',
       inputSchema: z.object({
         project_dir: projectDir,
         dry_run: z
           .boolean()
           .optional()
-          .describe('true (по умолчанию) — только предпросмотр изменений (--dry-run)'),
+          .describe('true (default) — preview only (--dry-run)'),
+        apply: z
+          .enum(['safe', 'yes'])
+          .optional()
+          .describe('When dry_run is false: "safe" → --safe, "yes" (default) → --yes'),
+        local: z
+          .boolean()
+          .optional()
+          .describe('Diff against local schema.js instead of the deployed schema (--local)'),
         confirm,
       }),
     },
     async (args) => {
+      const flag = args.dry_run !== false ? '--dry-run' : args.apply === 'safe' ? '--safe' : '--yes';
+      const cliArgs = ['migrate', flag];
+      if (args.local) cliArgs.push('--local');
       if (args.dry_run !== false) {
         return runTool(async () => {
           const cwd = runner.resolveProjectDir(args.project_dir);
-          return runner.format(await runner.tgcloud(['migrate', '--dry-run'], { cwd }));
+          return runner.format(await runner.tgcloud(cliArgs, { cwd }));
         });
       }
       return dangerTool(args, async () => {
         const cwd = runner.resolveProjectDir(args.project_dir);
-        const out = await runner.tgcloud(['migrate', '--yes'], { cwd });
-        return runner.format(out);
+        return runner.format(await runner.tgcloud(cliArgs, { cwd }));
       });
     },
   );

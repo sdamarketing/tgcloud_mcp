@@ -5,18 +5,21 @@ description: MCP server for Telegram serverless bots (@tgcloud)
 
 # tgcloud-mcp
 
-An MCP server that teaches your AI assistant to manage **Telegram serverless
+[Русский](index.ru) · [中文](index.zh) · [العربية](index.ar) · [Deutsch](index.de) · [Français](index.fr)
+
+An MCP server that teaches an AI assistant to manage **Telegram serverless
 bots** (the `@tgcloud` platform, core.telegram.org/bots/serverless): project
 scaffolding, bot linking, handlers and endpoints, deploys, DB migrations,
 webhooks.
 
 Works with any MCP client: opencode, Claude Code, Cursor, Claude Desktop,
-VS Code (Copilot), Windsurf, Zed.
+VS Code (Copilot), Windsurf, Zed. The same server and skill also ship as one
+[Agent Plugin](https://agent-plugins.org) for Codex, Cursor, Copilot, Kiro, and VS Code.
 
 ## Features
 
-- **14 tools** — full coverage of the `tgcloud` CLI: lifecycle, sync, data, webhook
-- **Resources** `tgcloud://docs/*` — built-in platform reference
+- **16 tools** — the `tgcloud` CLI, including `upgrade` (pre-0.2.0 layout) and `deploy` (build, then push)
+- **Resources** `tgcloud://docs/*` — built-in platform reference, in English, aligned with the official docs
 - **Guardrails** — destructive operations require `confirm: true`; tokens are masked
 - **Multi-project** — every tool takes an absolute `project_dir`
 

@@ -5,7 +5,7 @@ description: Установка tgcloud-mcp и подключение MCP-кли
 
 # Установка
 
-Требуется **Node.js 20+**.
+Нужен **Node.js 20+**. CLI платформы требует Node.js 18+.
 
 ## Из npm
 
@@ -14,13 +14,25 @@ npm install -g tgcloud-mcp
 tgcloud-mcp setup     # мастер настройки клиента
 ```
 
+Мастер записывает MCP-конфиг и спрашивает, ставить ли
+[Agent Plugin](https://agent-plugins.org) (каталог `agent-plugin/` в репозитории).
+Копия попадает в `~/.tgcloud-mcp/agent-plugin`. Для Cursor — в
+`~/.cursor/plugins/local/tgcloud`. Для VS Code — запись в `chat.pluginLocations`.
+Codex, Copilot и Kiro подхватывают тот же каталог через свой UI плагинов.
+
+Claude Code и opencode продолжают использовать MCP-конфиг. Скилл:
+
+```bash
+npx skills add sdamarketing/tgcloud_mcp
+```
+
 ## Одной командой (macOS / Linux / WSL)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/install.sh | bash
 ```
 
-Клонирует в `~/.tgcloud-mcp`, собирает, запускает мастер. Повторный запуск = обновление.
+Клонирует в `~/.tgcloud-mcp`, собирает, запускает мастер. Повторный запуск обновляет.
 
 ## Docker
 
@@ -54,5 +66,5 @@ docker run -i --rm ghcr.io/sdamarketing/tgcloud-mcp
 |---|---|---|
 | `TGCLOUD_CLI` | `npx` | Команда запуска CLI (можно обёртку с прокси) |
 | `TGCLOUD_CLI_ARGS` | `tgcloud` | Аргументы перед субкомандой |
-| `TGCLOUD_TIMEOUT_MS` | `120000` | Таймаут одной команды CLI |
+| `TGCLOUD_TIMEOUT_MS` | `120000` | Таймаут одной команды. `deploy` даёт сборке не меньше 300000 мс |
 | `TGCLOUD_TOKEN` | — | CLI access token вместо `tgcloud login` |

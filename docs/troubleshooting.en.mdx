@@ -17,20 +17,32 @@ You passed the Bot API token. Get the **CLI access token**:
 
 ## `Could not reach the tgcloud server`
 
-`cloud.telegram.org` is unreachable. Check network/proxy; route the CLI via a
+`cloud.telegram.org` is unreachable. Check network and proxy; route the CLI via a
 wrapper (`HTTPS_PROXY` + `NODE_USE_ENV_PROXY=1`) through `TGCLOUD_CLI`.
 
 ## `This bot already has N deployed modules (revision R)`
 
 Cloud and project are out of sync: `fetch` → `diff` → `push`
-(or consciously `push { force: true, confirm: true }`).
+(or, knowingly, `push { force: true, confirm: true }`).
 
 ## `non-interactive session — specify --safe, --yes, or --dry-run`
 
-Use the `migrate` tool: `--dry-run` by default; applying needs
-`dry_run: false` + `confirm: true` (maps to `--yes`).
+Use `migrate`. The default is `--dry-run`. Applying needs `dry_run: false` and
+`confirm: true`. `apply: "safe"` maps to `--safe` (skip warning drops).
+`apply: "yes"` maps to `--yes` (apply warning drops, skip manual type changes).
+
+## Commands refuse a project that has `schema.js` at the root
+
+That is a pre-0.2.0 layout. `upgrade` with `dry_run: true`, then
+`upgrade { dry_run: false, confirm: true }`.
 
 ## `chat not found` in `run_handler`
 
-Expected with a fake chat id: DB writes succeed, only the real Telegram
-delivery fails. Handler logic still executes.
+Expected with a fake chat id: database writes succeed, only the real Telegram
+delivery fails. Handler logic still runs.
+
+## Mini App shows an old front-end
+
+`push` does not run the bundler. Call `deploy`, or build and then push.
+`immutable` in `tgcloud.jsonc` caches matched files for a year — use it only
+for content-hashed paths such as `/assets/*`.

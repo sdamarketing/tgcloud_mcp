@@ -1,0 +1,53 @@
+---
+title: الأدوات
+description: أدوات tgcloud-mcp الست عشرة
+---
+
+# الأدوات
+
+كل أداة تأخذ `project_dir`، وهو مسار مطلق لمشروع tgcloud (`create_project` يأخذ `parent_dir` و`name` بدلًا من ذلك).
+
+## دورة الحياة
+
+| الأداة | أمر CLI | الوصف |
+|---|---|---|
+| `create_project` | `npm create @tgcloud/bot` | إنشاء مشروع (`parent_dir` و`name`) |
+| `init_project` | `tgcloud init` | إنشاء الهيكل في مجلد موجود، بما فيه Mini App إن تعرّف عليه |
+| `login_bot` | `tgcloud login` | ربط البوت برمز CLI access‏ (`app<id>:<secret>`) عبر stdin، ويُخفى في المخرجات |
+| `add_module` | `tgcloud add` | وحدة جديدة: `handlers/<type>` أو `endpoints/<name>` أو `lib/<path>` |
+| `upgrade` | `tgcloud upgrade` | نقل تخطيط ما قبل 0.2.0 إلى `tgcloud/`. الافتراضي `dry_run: true`؛ التطبيق يتطلب `confirm: true` |
+
+## المزامنة
+
+| الأداة | أمر CLI | الوصف |
+|---|---|---|
+| `status` | `tgcloud status` | التغييرات المحلية مقابل اللقطة (دون شبكة)، بما فيها الملفات الثابتة وانحراف webhook |
+| `diff` | `tgcloud diff` | فرق سطرًا بسطر (دون شبكة) |
+| `push` | `tgcloud push` | نشر ذرّي. لا يبني الواجهة ولا يرحّل القاعدة. `force: true` يتطلب `confirm: true` |
+| `deploy` | `npm run build` + `tgcloud push` | يبني إن وُجد سكربت build ثم push. `skip_build: true` ينشر فقط |
+| `pull` | `tgcloud pull` | السحابة ← اللقطة وملفات العمل. لا يكتب مجلد بناء Mini App |
+| `fetch` | `tgcloud fetch` | السحابة ← اللقطة فقط |
+| `reset` | `tgcloud reset` | إلغاء تعديلات الوحدات المحلية؛ يتطلب `confirm: true` |
+
+## البيانات
+
+| الأداة | أمر CLI | الوصف |
+|---|---|---|
+| `run_handler` | `tgcloud run` | تشغيل handler أو endpoint من غير نشر. `args` و`ctx` بصيغة JSON5 |
+| `migrate` | `tgcloud migrate` | `dry_run: true` افتراضيًا للمعاينة. التطبيق يحتاج `dry_run: false` و`confirm: true`. `apply: "safe"` هو `--safe`، و`apply: "yes"` (الافتراضي عند التطبيق) هو `--yes`. `local: true` هو `--local` |
+
+## Webhook
+
+| الأداة | أمر CLI | الوصف |
+|---|---|---|
+| `webhook_status` | `tgcloud webhook` | العنوان وallowed_updates والطابور وآخر خطأ، وهل هو متزامن |
+| `webhook_sync` | `tgcloud webhook sync` | إعادة التوجيه. `drop_pending: true` يتطلب `confirm: true` |
+
+إضافة handler أو حذفه قد تُخرج webhook عن التزامن. `push` لا يضمن التحديث. استدعِ `webhook_sync` بعد هذا النوع من النشر.
+
+## مسارات
+
+- **البوت صامت**: `webhook_status` ← `status` / `diff` ← `push` ← `webhook_sync`
+- **تعارض المراجعة عند push**: `fetch` ← `diff` ← `push` (أو `force` مع `confirm`)
+- **تغيير المخطط**: عدّل `schema.js` ← `push` ← `migrate` (dry-run) ← `migrate` مع `confirm`. إن لم يوجد حذف فاستخدم `apply: "safe"`
+- **واجهة Mini App**: `deploy` وليس `push` وحده

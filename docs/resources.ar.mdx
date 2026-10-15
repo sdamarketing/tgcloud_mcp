@@ -1,0 +1,21 @@
+---
+title: الموارد
+description: وثائق المنصة المدمجة على tgcloud://docs/*
+---
+
+# الموارد
+
+يعرض الخادم مرجع المنصة كموارد MCP. يقرأها المساعد من غير استدعاء أداة. النص إنجليزي، بلغة الصفحة core.telegram.org/bots/serverless، حتى يمكن مطابقته بها.
+
+| URI | المحتوى |
+|---|---|
+| `tgcloud://docs/project-structure` | تخطيط `tgcloud/` وhandlers وendpoints وlib وschema.js. استيراد وحدات المشروع مسار نسبي **مع** `.js`. استضافة ملفات Mini App |
+| `tgcloud://docs/cli` | مرجع CLI: الأوامر و`--dry-run` / `--safe` / `--yes` / `--local` وupgrade وwebhook |
+| `tgcloud://docs/sdk-db` | `sdk/db`: أنواع الأعمدة (`text` و`integer` و`real` و`numeric` و`blob` و`boolean` و`json`) والأوضاع، ومنشئ الاستعلام، وSQL الخام، ومن غير مفاتيح أجنبية، والحذف عبر `.deprecated` |
+| `tgcloud://docs/sdk-api` | `sdk/api`: واجهة Bot API كاملة و`BotApiError` و`InputFile` |
+| `tgcloud://docs/sdk-fetch` | `sdk/fetch`: عميل HTTP ومساعدات الجسم وحد 32 ميغابايت |
+| `tgcloud://docs/limits` | الحدود المنشورة والحصص التي لم تُنشر |
+
+داخل مشروع مُولَّد اقرأ أولًا `AGENTS.md` و`docs/tgcloud-sdk.md`. هما يطابقان واجهة CLI التي أنشأت المشروع. الموارد احتياط حين لا تكون داخل مشروع.
+
+المصدر في المستودع: `resources/docs/*.md`. يتحقق `npm run docs:check` من تسجيل كل ملف، ومن تطابق نسختي المهارة، ومن وجود صفحات ru وzh وar وde وfr لكل صفحة إنجليزية.
