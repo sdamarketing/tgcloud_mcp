@@ -12,7 +12,7 @@ description: 安装 tgcloud-mcp 并连接 MCP 客户端
     npm install -g tgcloud-mcp，然后 tgcloud-mcp setup
   </Card>
   <Card title="一条命令" icon="terminal" href="#curl-bash">
-    curl | bash — 克隆、构建、横幅和向导
+    curl | bash — 先选语言，再横幅和向导
   </Card>
   <Card title="Docker" icon="layers" href="#docker">
     ghcr.io/sdamarketing/tgcloud-mcp，stdio，主机不必装 Node
@@ -44,8 +44,10 @@ curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/insta
 ```
 
 克隆到 `~/.tgcloud-mcp`，构建，然后运行向导。再次运行即更新。
-脚本会打印带框横幅（真彩色终端上为蓝色渐变），并在克隆、安装和构建时显示进度。
-向导从 `/dev/tty` 读取，因此 `curl | bash` 时仍会提问。
+脚本先询问语言（English、Русский、中文、العربية、Deutsch、Français；
+直接回车是英语，也可以设置 `TGCLOUD_MCP_LANG`）。然后打印带框横幅
+（真彩色终端上为蓝色渐变），并在克隆、安装和构建时显示进度。
+向导使用同一语言，并从 `/dev/tty` 读取，因此 `curl | bash` 时仍会提问。
 
 ## Docker {#docker}
 

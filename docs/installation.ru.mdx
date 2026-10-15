@@ -12,7 +12,7 @@ description: Установка tgcloud-mcp и подключение MCP-кли
     npm install -g tgcloud-mcp, затем tgcloud-mcp setup
   </Card>
   <Card title="Одна команда" icon="terminal" href="#curl-bash">
-    curl | bash — клон, сборка, баннер и мастер
+    curl | bash — сначала язык, затем баннер и мастер
   </Card>
   <Card title="Docker" icon="layers" href="#docker">
     ghcr.io/sdamarketing/tgcloud-mcp, stdio, без Node на хосте
@@ -48,9 +48,11 @@ curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/insta
 ```
 
 Клонирует в `~/.tgcloud-mcp`, собирает, запускает мастер. Повторный запуск обновляет.
-Скрипт рисует баннер в рамке (синий градиент в truecolor-терминале) и спиннер
-на время клонирования, установки и сборки. Мастер читает `/dev/tty`, поэтому
-вопросы задаются и при `curl | bash`.
+Сначала вопрос о языке (English, Русский, 中文, العربية, Deutsch, Français;
+Enter — английский, либо `TGCLOUD_MCP_LANG`). Затем баннер в рамке (синий
+градиент в truecolor-терминале) и спиннер на время клонирования, установки и
+сборки. Мастер идёт на том же языке и читает `/dev/tty`, поэтому вопросы
+задаются и при `curl | bash`.
 
 ## Docker {#docker}
 

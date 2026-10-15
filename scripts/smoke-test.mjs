@@ -8,7 +8,7 @@ if (help.status !== 0 || !help.stdout.includes('tgcloud-mcp setup')) {
   process.exit(1);
 }
 const setup = spawnSync(process.execPath, ['bin/tgcloud-mcp.mjs', 'setup'], { encoding: 'utf8', input: '' });
-if (setup.status !== 1 || !`${setup.stderr}${setup.stdout}`.includes('терминале')) {
+if (setup.status !== 1 || !`${setup.stderr}${setup.stdout}`.includes('terminal')) {
   console.error('FAIL: setup без TTY должен отказаться, а не молчать');
   console.error(setup.stderr || setup.stdout);
   process.exit(1);

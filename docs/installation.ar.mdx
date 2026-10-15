@@ -12,7 +12,7 @@ description: تثبيت tgcloud-mcp وربطه بعميل MCP
     npm install -g tgcloud-mcp ثم tgcloud-mcp setup
   </Card>
   <Card title="أمر واحد" icon="terminal" href="#curl-bash">
-    curl | bash — نسخ وبناء وشعار ومعالج
+    curl | bash — اللغة أولًا، ثم الشعار والمعالج
   </Card>
   <Card title="Docker" icon="layers" href="#docker">
     ghcr.io/sdamarketing/tgcloud-mcp عبر stdio بلا Node على الجهاز
@@ -44,8 +44,10 @@ curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/insta
 ```
 
 ينسخ المستودع إلى `~/.tgcloud-mcp`، يبني، ثم يشغّل المعالج. إعادة التشغيل تُحدّث.
-يعرض النص شعارًا داخل إطار (تدرّج أزرق في طرفية truecolor) ومؤشر دوران أثناء
-النسخ والتثبيت والبناء. المعالج يقرأ `/dev/tty`، لذلك يسأل حتى مع `curl | bash`.
+يسأل أولًا عن اللغة (English وРусский و中文 والعربية وDeutsch وFrançais؛
+Enter تعني الإنجليزية، أو عيّن `TGCLOUD_MCP_LANG`). ثم يعرض شعارًا داخل إطار
+(تدرّج أزرق في طرفية truecolor) ومؤشر دوران أثناء النسخ والتثبيت والبناء.
+المعالج يتابع باللغة نفسها ويقرأ `/dev/tty`، لذلك يسأل حتى مع `curl | bash`.
 
 ## Docker {#docker}
 

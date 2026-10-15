@@ -12,7 +12,7 @@ Requires **Node.js 20+**. The platform CLI itself requires Node.js 18+.
     npm install -g tgcloud-mcp, then tgcloud-mcp setup
   </Card>
   <Card title="One command" icon="terminal" href="#curl-bash">
-    curl | bash — clone, build, banner, wizard
+    curl | bash — language, then the banner and wizard
   </Card>
   <Card title="Docker" icon="layers" href="#docker">
     ghcr.io/sdamarketing/tgcloud-mcp, stdio, no Node on the host
@@ -48,9 +48,11 @@ curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/insta
 ```
 
 Clones to `~/.tgcloud-mcp`, builds, runs the wizard. Re-running updates.
-The script prints a boxed banner (blue gradient on a truecolor terminal) and a
-spinner while it clones, installs, and builds. The wizard reads `/dev/tty`, so
-it still asks questions when you pipe the script with `curl | bash`.
+It asks for a language first (English, Russian, Chinese, Arabic, German, French;
+Enter is English, or set `TGCLOUD_MCP_LANG`). Then it prints a boxed banner
+(blue gradient on a truecolor terminal) and a spinner while it clones, installs,
+and builds. The wizard uses the same language and reads `/dev/tty`, so it still
+asks questions when you pipe the script with `curl | bash`.
 
 ## Docker {#docker}
 

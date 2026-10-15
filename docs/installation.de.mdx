@@ -12,7 +12,7 @@ description: tgcloud-mcp installieren und den MCP-Client verbinden
     npm install -g tgcloud-mcp, danach tgcloud-mcp setup
   </Card>
   <Card title="Ein Befehl" icon="terminal" href="#curl-bash">
-    curl | bash — Klon, Build, Banner und Assistent
+    curl | bash — zuerst die Sprache, dann Banner und Assistent
   </Card>
   <Card title="Docker" icon="layers" href="#docker">
     ghcr.io/sdamarketing/tgcloud-mcp, stdio, ohne Node auf dem Host
@@ -44,9 +44,11 @@ curl -fsSL https://raw.githubusercontent.com/sdamarketing/tgcloud_mcp/main/insta
 ```
 
 Klont nach `~/.tgcloud-mcp`, baut und startet den Assistenten. Erneutes Ausführen aktualisiert.
-Das Skript zeigt ein Banner im Rahmen (blauer Verlauf bei Truecolor) und einen
-Spinner für Klonen, Installation und Build. Der Assistent liest `/dev/tty`,
-deshalb stellt er auch bei `curl | bash` Fragen.
+Zuerst die Sprache (English, Русский, 中文, العربية, Deutsch, Français;
+Enter ist Englisch, oder `TGCLOUD_MCP_LANG`). Danach ein Banner im Rahmen
+(blauer Verlauf bei Truecolor) und ein Spinner für Klonen, Installation und
+Build. Der Assistent spricht dieselbe Sprache und liest `/dev/tty`, deshalb
+stellt er auch bei `curl | bash` Fragen.
 
 ## Docker {#docker}
 
