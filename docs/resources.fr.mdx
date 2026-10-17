@@ -19,3 +19,9 @@ Le serveur expose la référence de la plateforme comme ressources MCP. L'assist
 Dans un projet échafaudé, lisez d'abord `AGENTS.md` et `docs/tgcloud-sdk.md`. Ils correspondent à la CLI qui a créé le projet. Les ressources servent quand vous n'êtes pas dans un projet.
 
 Source dans le dépôt : `resources/docs/*.md`. `npm run docs:check` vérifie que chaque fichier est enregistré, que les deux copies du skill sont identiques, et que chaque page anglaise a des sœurs ru, zh, ar, de et fr.
+
+## Limites de la plateforme
+
+`tgcloud://docs/limits` rassemble les limites publiées : 50 Mo par envoi Bot API (10 Mo pour les photos), 20 Mo par téléchargement `getFile`, et 32 Mo par corps de réponse `fetch`.
+
+Les quotas d'exécution — mémoire, CPU, délai d'exécution d'un handler ou d'un endpoint, fréquence d'appel, taille de la base — ne sont **pas publiés**. N'inventez pas de chiffres. `run_handler` affiche le temps d'exécution d'un run : mesurez votre chemin avec, et gardez les handlers courts.
