@@ -19,3 +19,9 @@ description: tgcloud://docs/* 上的内置平台文档
 在脚手架项目里，先读 `AGENTS.md` 和 `docs/tgcloud-sdk.md`。它们与创建该项目的 CLI 一致。不在项目目录中时，再用这些资源。
 
 仓库中的原文是 `resources/docs/*.md`。`npm run docs:check` 检查每个文件都已注册、两份 skill 副本一致，以及每个英文页面都有 ru、zh、ar、de、fr 对应页。
+
+## 平台限制
+
+`tgcloud://docs/limits` 汇总已公布的限制：Bot API 每次上传 50 MB（照片 10 MB）、`getFile` 每次下载 20 MB、`fetch` 响应体 32 MB。
+
+运行时配额——内存、CPU、handler 与 endpoint 的墙钟超时、调用频率、数据库大小——**尚未公布**。不要臆测数字。`run_handler` 会打印一次运行的耗时：用它测量你的路径，并让 handler 保持简短。

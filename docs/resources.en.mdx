@@ -25,3 +25,14 @@ fallback when you are not inside one.
 Source of truth in the repo: `resources/docs/*.md`. `npm run docs:check`
 checks that every file is registered, that the two skill copies match, and
 that every English page has ru, zh, ar, de, and fr siblings.
+
+## Platform limits
+
+`tgcloud://docs/limits` collects the published limits: 50 MB per Bot API upload
+(10 MB for photos), 20 MB per `getFile` download, and 32 MB per `fetch`
+response body.
+
+Runtime quotas — memory, CPU, the wall-time timeout of a handler or endpoint,
+call rate, database size — are **not published**. Do not assume numbers.
+`run_handler` reports the elapsed time of a run: measure the path you have, and
+keep handlers short.
