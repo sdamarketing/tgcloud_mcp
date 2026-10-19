@@ -19,3 +19,9 @@ Der Server stellt die Plattformreferenz als MCP-Ressourcen bereit. Der Assistent
 Lies in einem Gerüst-Projekt zuerst `AGENTS.md` und `docs/tgcloud-sdk.md`. Sie passen zur CLI, die das Projekt angelegt hat. Die Ressourcen sind der Ersatz, wenn du nicht in einem Projekt stehst.
 
 Quelle im Repo: `resources/docs/*.md`. `npm run docs:check` prüft, dass jede Datei registriert ist, dass die beiden Skill-Kopien übereinstimmen und dass jede englische Seite Geschwister in ru, zh, ar, de und fr hat.
+
+## Plattformgrenzen
+
+`tgcloud://docs/limits` sammelt die veröffentlichten Grenzen: 50 MB pro Bot-API-Upload (10 MB für Fotos), 20 MB pro `getFile`-Download und 32 MB pro `fetch`-Antwortkörper.
+
+Laufzeitkontingente — Speicher, CPU, der Wall-Time-Timeout von Handler und Endpoint, Aufrufrate, Datenbankgröße — sind **nicht veröffentlicht**. Erfinde keine Zahlen. `run_handler` gibt die Laufzeit eines Laufs aus: Miss damit deinen Pfad und halte Handler kurz.
