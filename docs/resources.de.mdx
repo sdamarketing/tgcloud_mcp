@@ -22,6 +22,6 @@ Quelle im Repo: `resources/docs/*.md`. `npm run docs:check` prüft, dass jede Da
 
 ## Plattformgrenzen
 
-`tgcloud://docs/limits` sammelt die veröffentlichten Grenzen: 50 MB pro Bot-API-Upload (10 MB für Fotos), 20 MB pro `getFile`-Download und 32 MB pro `fetch`-Antwortkörper.
+`tgcloud://docs/limits` sammelt die veröffentlichten Grenzen: 50 MB pro Bot-API-Upload (10 MB für Fotos), 20 MB pro `getFile`-Download und 32 MB pro `fetch`-Antwortkörper. `console`-Ausgaben zeigt `tgcloud run`; eine Größenobergrenze ist nicht veröffentlicht.
 
-Laufzeitkontingente — Speicher, CPU, der Wall-Time-Timeout von Handler und Endpoint, Aufrufrate, Datenbankgröße — sind **nicht veröffentlicht**. Erfinde keine Zahlen. `run_handler` gibt die Laufzeit eines Laufs aus: Miss damit deinen Pfad und halte Handler kurz.
+Laufzeitkontingente — Speicher, CPU, der Wall-Time-Timeout von Handler und Endpoint, Aufrufrate, Datenbankgröße — sind **nicht veröffentlicht**. Erfinde keine Zahlen. `run_handler` gibt die Laufzeit eines Laufs aus: Miss damit deinen Pfad, halte Handler kurz und verschiebe schwere Arbeit aus dem Update-Pfad heraus über `fetch`. Die Werte erfährst du in @BotFather → Bot → Serverless oder über die offiziellen Kanäle der Plattform.

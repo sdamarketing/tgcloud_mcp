@@ -63,6 +63,7 @@ description: أدوات tgcloud-mcp الست عشرة
 ## مسارات
 
 - **البوت صامت**: `webhook_status` ← `status` / `diff` ← `push` ← `webhook_sync`
+- **سجلات النشر**: لا يوجد أمر لتنزيلها؛ اقرأ آخر خطأ تسليم في `webhook_status` ثم أعِد الإنتاج عبر `run_handler` (مخرجاته `console.*` محلية وليست للبوت المنشور)
 - **تعارض المراجعة عند push**: `fetch` ← `diff` ← `push` (أو `force` مع `confirm`)
 - **تغيير المخطط**: عدّل `schema.js` ← `push` ← `migrate` (dry-run) ← `migrate` مع `confirm`. إن لم يوجد حذف فاستخدم `apply: "safe"`
 - **واجهة Mini App**: `deploy` وليس `push` وحده

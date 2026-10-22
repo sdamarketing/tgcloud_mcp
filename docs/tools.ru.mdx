@@ -64,6 +64,7 @@ description: Все 16 инструментов tgcloud-mcp
 ## Рецепты
 
 - **Бот молчит**: `webhook_status` → `status` / `diff` → `push` → `webhook_sync`
+- **Логи деплоя**: команды для их скачивания нет; смотрите последнюю ошибку доставки в `webhook_status`, затем воспроизводите через `run_handler` (его `console.*` — локальный вывод, а не развёрнутого бота)
 - **Конфликт ревизий на push**: `fetch` → `diff` → `push` (или `force` с `confirm`)
 - **Схема**: правка `schema.js` → `push` → `migrate` (dry-run) → `migrate` с `confirm`. Если удалений нет, `apply: "safe"`
 - **Фронтенд Mini App**: `deploy`, не голый `push`

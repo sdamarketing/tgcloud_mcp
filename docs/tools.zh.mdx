@@ -63,6 +63,7 @@ description: tgcloud-mcp 的全部 16 个工具
 ## 流程
 
 - **机器人没反应**：`webhook_status` → `status` / `diff` → `push` → `webhook_sync`
+- **已部署日志**：没有下载命令；先看 `webhook_status` 的最后投递错误，再用 `run_handler` 复现（它的 `console.*` 是本地输出，不是已部署机器人的）
 - **push 时修订冲突**：`fetch` → `diff` → `push`（或带 `confirm` 的 `force`）
 - **改 schema**：编辑 `schema.js` → `push` → `migrate`（dry-run）→ 带 `confirm` 的 `migrate`。没有删除时用 `apply: "safe"`
 - **Mini App 前端**：用 `deploy`，不要只 `push`

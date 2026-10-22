@@ -63,6 +63,7 @@ Ajouter ou retirer un handler peut désynchroniser le webhook. `push` ne garanti
 ## Parcours
 
 - **Bot silencieux** : `webhook_status` → `status` / `diff` → `push` → `webhook_sync`
+- **Logs déployés** : aucune commande ne les télécharge ; lisez la dernière erreur de livraison dans `webhook_status`, puis reproduisez avec `run_handler` (sa sortie `console.*` est locale, pas celle du bot déployé)
 - **Conflit de révision au push** : `fetch` → `diff` → `push` (ou `force` avec `confirm`)
 - **Schéma** : modifier `schema.js` → `push` → `migrate` (dry-run) → `migrate` avec `confirm`. Sans suppression, `apply: "safe"`
 - **Front de Mini App** : `deploy`, pas un simple `push`

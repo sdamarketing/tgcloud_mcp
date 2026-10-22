@@ -41,6 +41,15 @@ That is a pre-0.2.0 layout. `upgrade` with `dry_run: true`, then
 Expected with a fake chat id: database writes succeed, only the real Telegram
 delivery fails. Handler logic still runs.
 
+## No logs from a deployed bot
+
+There is no command that downloads a deployed bot's logs. `tgcloud run`
+(`run_handler`) captures `console.*`, but it runs your local files on the
+platform without deploying — it is not the deployed bot's output. To diagnose a
+deployed failure, read `webhook_status` (`tgcloud webhook`): the last delivery
+error and the sync state are the first clues. Then reproduce the path with
+`run_handler`.
+
 ## Mini App shows an old front-end
 
 `push` does not run the bundler. Call `deploy`, or build and then push.

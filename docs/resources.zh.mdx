@@ -22,6 +22,6 @@ description: tgcloud://docs/* 上的内置平台文档
 
 ## 平台限制
 
-`tgcloud://docs/limits` 汇总已公布的限制：Bot API 每次上传 50 MB（照片 10 MB）、`getFile` 每次下载 20 MB、`fetch` 响应体 32 MB。
+`tgcloud://docs/limits` 汇总已公布的限制：Bot API 每次上传 50 MB（照片 10 MB）、`getFile` 每次下载 20 MB、`fetch` 响应体 32 MB。`console` 输出由 `tgcloud run` 显示，没有公布大小上限。
 
-运行时配额——内存、CPU、handler 与 endpoint 的墙钟超时、调用频率、数据库大小——**尚未公布**。不要臆测数字。`run_handler` 会打印一次运行的耗时：用它测量你的路径，并让 handler 保持简短。
+运行时配额——内存、CPU、handler 与 endpoint 的墙钟超时、调用频率、数据库大小——**尚未公布**。不要臆测数字。`run_handler` 会打印一次运行的耗时：用它测量你的路径，让 handler 保持简短，并把重活移出更新路径、改用 `fetch` 发出。具体数值请到 @BotFather → 机器人 → Serverless，或平台的官方渠道询问。

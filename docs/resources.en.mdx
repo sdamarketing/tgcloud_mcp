@@ -30,9 +30,12 @@ that every English page has ru, zh, ar, de, and fr siblings.
 
 `tgcloud://docs/limits` collects the published limits: 50 MB per Bot API upload
 (10 MB for photos), 20 MB per `getFile` download, and 32 MB per `fetch`
-response body.
+response body. `console` output is shown by `tgcloud run` and has no published
+size cap.
 
 Runtime quotas — memory, CPU, the wall-time timeout of a handler or endpoint,
 call rate, database size — are **not published**. Do not assume numbers.
-`run_handler` reports the elapsed time of a run: measure the path you have, and
-keep handlers short.
+`run_handler` reports the elapsed time of a run: measure the path you have, keep
+handlers short, and move heavy work off the update path and out through `fetch`.
+For the values, ask in @BotFather → the bot → Serverless, or the platform's
+official channels.
