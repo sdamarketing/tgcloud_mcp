@@ -64,6 +64,7 @@ Adding or removing a handler can leave the webhook out of sync. `push` does not 
 ## Recipes
 
 - **Silent bot**: `webhook_status` → `status` / `diff` → `push` → `webhook_sync`
+- **Deployed logs**: no command downloads them; read `webhook_status`'s last delivery error, then reproduce with `run_handler` (its `console.*` is local output, not the deployed bot's)
 - **Revision conflict on push**: `fetch` → `diff` → `push` (or `force` with `confirm`)
 - **Schema change**: edit `schema.js` → `push` → `migrate` (dry-run) → `migrate` with `confirm`. Prefer `apply: "safe"` when nothing is dropped
 - **Mini App front-end**: `deploy`, not a bare `push`

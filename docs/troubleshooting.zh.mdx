@@ -33,6 +33,10 @@ CLI 需要 TTY。使用 `login_bot`：它用 `TGCLOUD_ASSUME_TTY=1` 把令牌写
 
 假的 chat id 会出现这个结果：数据库写入成功，只有真正发到 Telegram 的那一步失败。handler 逻辑仍然执行了。
 
+## 拿不到已部署机器人的日志
+
+没有下载已部署机器人日志的命令。`tgcloud run`（`run_handler`）会捕获 `console.*`，但它是在不部署的情况下在平台上运行你的本地文件——不是已部署机器人的输出。要排查部署后的故障，读 `webhook_status`（`tgcloud webhook`）：最后的投递错误和同步状态是第一条线索。然后用 `run_handler` 复现该路径。
+
 ## Mini App 显示旧的前端
 
 `push` 不运行打包器。调用 `deploy`，或先构建再 push。`tgcloud.jsonc` 里的 `immutable` 会把匹配文件缓存一年，只用于带内容哈希的路径，例如 `/assets/*`。

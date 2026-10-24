@@ -22,6 +22,6 @@ Source dans le dépôt : `resources/docs/*.md`. `npm run docs:check` vérifie qu
 
 ## Limites de la plateforme
 
-`tgcloud://docs/limits` rassemble les limites publiées : 50 Mo par envoi Bot API (10 Mo pour les photos), 20 Mo par téléchargement `getFile`, et 32 Mo par corps de réponse `fetch`.
+`tgcloud://docs/limits` rassemble les limites publiées : 50 Mo par envoi Bot API (10 Mo pour les photos), 20 Mo par téléchargement `getFile`, et 32 Mo par corps de réponse `fetch`. La sortie `console` est affichée par `tgcloud run`, sans plafond de taille publié.
 
-Les quotas d'exécution — mémoire, CPU, délai d'exécution d'un handler ou d'un endpoint, fréquence d'appel, taille de la base — ne sont **pas publiés**. N'inventez pas de chiffres. `run_handler` affiche le temps d'exécution d'un run : mesurez votre chemin avec, et gardez les handlers courts.
+Les quotas d'exécution — mémoire, CPU, délai d'exécution d'un handler ou d'un endpoint, fréquence d'appel, taille de la base — ne sont **pas publiés**. N'inventez pas de chiffres. `run_handler` affiche le temps d'exécution d'un run : mesurez votre chemin avec, gardez les handlers courts et sortez le travail lourd du chemin de mise à jour via `fetch`. Pour les valeurs, demandez dans @BotFather → bot → Serverless ou sur les canaux officiels de la plateforme.

@@ -33,6 +33,16 @@ C'est la disposition d'avant la CLI 0.2.0. `upgrade` avec `dry_run: true`, puis 
 
 Attendu avec un identifiant de chat fictif : les écritures en base réussissent, seul l'envoi réel vers Telegram échoue. La logique du handler s'exécute quand même.
 
+## Aucun log d'un bot déployé
+
+Aucune commande ne télécharge les logs d'un bot déployé. `tgcloud run`
+(`run_handler`) capture `console.*`, mais il exécute vos fichiers locaux sur la
+plateforme sans déployer — ce n'est pas la sortie du bot déployé. Pour
+diagnostiquer un échec après déploiement, lisez `webhook_status`
+(`tgcloud webhook`) : la dernière erreur de livraison et l'état de
+synchronisation sont les premiers indices. Reproduisez ensuite le chemin avec
+`run_handler`.
+
 ## La Mini App montre un ancien front
 
 `push` ne lance pas le bundler. Appelez `deploy`, ou construisez puis poussez. `immutable` dans `tgcloud.jsonc` met en cache les fichiers correspondants pendant un an — seulement pour les chemins au contenu haché, par exemple `/assets/*`.

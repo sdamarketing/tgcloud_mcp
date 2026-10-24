@@ -63,6 +63,7 @@ Ein neuer oder entfernter Handler kann den Webhook aus dem Takt bringen. `push` 
 ## Abläufe
 
 - **Stummer Bot**: `webhook_status` → `status` / `diff` → `push` → `webhook_sync`
+- **Deploy-Logs**: kein Befehl lädt sie herunter; lies den letzten Zustellfehler in `webhook_status` und reproduziere dann mit `run_handler` (dessen `console.*` ist lokale Ausgabe, nicht die des deployten Bots)
 - **Revisionskonflikt bei push**: `fetch` → `diff` → `push` (oder `force` mit `confirm`)
 - **Schema**: `schema.js` ändern → `push` → `migrate` (dry-run) → `migrate` mit `confirm`. Ohne Löschungen `apply: "safe"`
 - **Mini-App-Frontend**: `deploy`, nicht ein bloßes `push`
