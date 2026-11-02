@@ -39,3 +39,8 @@ call rate, database size — are **not published**. Do not assume numbers.
 handlers short, and move heavy work off the update path and out through `fetch`.
 For the values, ask in @BotFather → the bot → Serverless, or the platform's
 official channels.
+
+The same resource lists the capabilities the runtime does **not** provide — no
+database transactions or atomic batch, no custom incoming HTTP endpoints
+(the platform owns the webhook), no secrets store or environment variables, and
+no scheduled jobs — with the supported alternative for each.

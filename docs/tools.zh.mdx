@@ -48,7 +48,7 @@ description: tgcloud-mcp 的全部 16 个工具
 
 | 工具 | CLI | 说明 |
 |---|---|---|
-| `run_handler` | `tgcloud run` | 不部署即可运行 handler 或 endpoint。`args` 与 `ctx` 为 JSON5 |
+| `run_handler` | `tgcloud run` | 不部署即可运行 handler 或 endpoint。`args` 与 `ctx` 为 JSON5。`args` 是第一个参数（载荷：handler 为 `Message`，endpoint 为输入）；`ctx` 是第二个（handler 的 `ctx.update` 是原始 Update，含 `update_id`；endpoint 为 `initData`） |
 | `migrate` | `tgcloud migrate` | 默认 `dry_run: true` 只预览。应用时需要 `dry_run: false` 和 `confirm: true`。`apply: "safe"` 即 `--safe`；应用时默认 `apply: "yes"` 即 `--yes`。`local: true` 即 `--local` |
 
 ## Webhook {#webhook}
