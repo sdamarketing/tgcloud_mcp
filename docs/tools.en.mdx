@@ -49,7 +49,7 @@ Every tool takes `project_dir` — an absolute path to a tgcloud project
 
 | Tool | CLI command | Description |
 |---|---|---|
-| `run_handler` | `tgcloud run` | Run a handler or endpoint without deploying. `args` and `ctx` are JSON5 |
+| `run_handler` | `tgcloud run` | Run a handler or endpoint without deploying. `args` and `ctx` are JSON5. `args` is the first argument (the payload: a `Message` for a handler, the input for an endpoint); `ctx` is the second (`ctx.update` is the raw Update for a handler, including `update_id`; `initData` for an endpoint) |
 | `migrate` | `tgcloud migrate` | `dry_run: true` (default) previews. Applying needs `dry_run: false` and `confirm: true`. `apply: "safe"` is `--safe`; `apply: "yes"` (default when applying) is `--yes`. `local: true` is `--local` |
 
 ## Webhook {#webhook}
